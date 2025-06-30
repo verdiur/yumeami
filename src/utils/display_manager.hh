@@ -2,7 +2,7 @@
 #include "raylib.h"
 
 namespace yumeami {
-namespace display {
+namespace graphics {
 
   struct DisplayManager
   {
@@ -15,5 +15,5 @@ namespace display {
 
   void draw_virtual_target(const DisplayManager& display_manager);
 
-} // namespace display
+} // namespace graphics
 } // namespace yumeami

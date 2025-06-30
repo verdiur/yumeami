@@ -3,7 +3,7 @@
 #include <algorithm>
 
 namespace yumeami {
-namespace display {
+namespace graphics {
 
   DisplayManager::DisplayManager(RenderTexture& virtual_target)
     : p_virtual_target(&virtual_target)
@@ -33,6 +33,6 @@ namespace display {
                    WHITE);
     EndDrawing();
   }
-} // namespace display
+} // namespace graphics
 
 } // namespace yumeami

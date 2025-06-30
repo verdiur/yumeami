@@ -20,7 +20,7 @@ main(int argc, char* argv[])
   RenderTexture virtual_target = LoadRenderTexture(virtual_width, virtual_height);
 
   // create display manager
-  yumeami::display::DisplayManager display_manager = { virtual_target };
+  yumeami::graphics::DisplayManager display_manager = { virtual_target };
 
   // game loop
   while (!WindowShouldClose()) {
@@ -33,7 +33,7 @@ main(int argc, char* argv[])
     ClearBackground(BLACK);
     EndTextureMode();
 
-    yumeami::display::draw_virtual_target(display_manager);
+    yumeami::graphics::draw_virtual_target(display_manager);
 
     // debug info
     BeginDrawing();

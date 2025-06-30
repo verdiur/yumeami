@@ -3,11 +3,8 @@
 // root namespace for the entire project
 namespace yumeami {
 
-// display-related things, like window scaling, DPI, VSync, etc.
-namespace display {
-}
-
-// graphics-related things, like sprites, VFX, etc.
+// namespace for everything graphics related. This includes sprite and drawing-related
+// things, but also display configuration, like screen scaling, window flags, etc.
 namespace graphics {
 }
 

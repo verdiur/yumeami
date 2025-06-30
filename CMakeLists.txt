@@ -40,6 +40,7 @@ FetchContent_MakeAvailable(EnTT)
 # main
 add_executable(${PROJECT_NAME}
   src/main.cc
+  src/units.hh
 
   src/utils/display_manager.hh
   src/utils/display_manager.cc
