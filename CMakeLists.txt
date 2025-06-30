@@ -39,6 +39,10 @@ FetchContent_MakeAvailable(EnTT)
 
 # main
 add_executable(${PROJECT_NAME}
+  src/main.cc
+
+  src/utils/display_manager.hh
+  src/utils/display_manager.cc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

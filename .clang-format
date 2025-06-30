@@ -1,0 +1,6 @@
+BasedOnStyle: Mozilla
+ColumnLimit: 90
+AllowShortFunctionsOnASingleLine: false
+
+NamespaceIndentation: Inner
+FixNamespaceComments: true
