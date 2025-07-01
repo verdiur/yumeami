@@ -23,7 +23,7 @@ setup_display_manager(const RenderTexture& virtual_target,
     (float)(GetScreenWidth() - virtual_width * scale_factor) / 2,
     (float)(GetScreenHeight() - virtual_height * scale_factor) / 2,
     (float)virtual_width * scale_factor,
-    (float)virtual_width * scale_factor,
+    (float)virtual_height * scale_factor,
   };
 }
 

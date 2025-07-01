@@ -1,3 +1,4 @@
+#include "game/world.hh"
 #include "raylib.h"
 #include "utils/display_manager.hh"
 
@@ -5,7 +6,7 @@ int
 main(int argc, char* argv[])
 {
   // real window dimensions
-  const int window_width = 640 * 2;
+  const int window_width = 800 * 2;
   const int window_height = 480 * 2;
 
   // virtual window dimensions
@@ -23,17 +24,19 @@ main(int argc, char* argv[])
   yumeami::DisplayManager display_manager = {};
   yumeami::setup_display_manager(virtual_target, display_manager);
 
+  // TODO: placeholder
+  // create world
+  yumeami::World world = yumeami::create_dummy_world();
+
   // game loop
   while (!WindowShouldClose()) {
     ClearBackground(BLACK);
 
-    // render world on virtual target...
+    // render world on virtual target
+    // TODO: placeholder
+    yumeami::draw_world(world, virtual_target);
 
     // render game on window
-    BeginTextureMode(virtual_target);
-    ClearBackground(BLACK);
-    EndTextureMode();
-
     yumeami::draw_virtual_target_on_window(virtual_target, display_manager);
 
     // debug info

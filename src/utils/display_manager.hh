@@ -20,7 +20,6 @@ struct DisplayManager
  * entire virtual target on the window, and setups the display manager accordingly.
  *
  * @param display_manager
- * @return
  */
 void
 setup_display_manager(const RenderTexture& virtual_target,

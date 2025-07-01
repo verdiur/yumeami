@@ -42,6 +42,10 @@ add_executable(${PROJECT_NAME}
   src/main.cc
   src/units.hh
 
+  src/game/components.hh
+  src/game/world.hh
+  src/game/world.cc
+
   src/utils/display_manager.hh
   src/utils/display_manager.cc
 )
