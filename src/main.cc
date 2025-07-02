@@ -7,7 +7,7 @@ int
 main(int argc, char* argv[])
 {
   // real window dimensions
-  const int window_width = 800 * 2;
+  const int window_width = 640 * 2;
   const int window_height = 480 * 2;
 
   // virtual window dimensions
@@ -17,6 +17,7 @@ main(int argc, char* argv[])
   // create raylib window
   InitWindow(window_width, window_height, "yumenet");
   SetWindowState(FLAG_VSYNC_HINT);
+  SetExitKey(KEY_ESCAPE);
 
   // create virtual render target
   RenderTexture virtual_target = LoadRenderTexture(virtual_width, virtual_height);
