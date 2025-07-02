@@ -12,6 +12,10 @@
 
 #pragma once
 
+namespace yumeami {
+
 using sprite_pixel_int = int;
 using tile_int = int;
 using tile_float = float;
+
+} // namespace yumeami

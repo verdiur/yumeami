@@ -1,7 +1,7 @@
 #pragma once
 #include "entt/entt.hpp"
 #include "raylib.h"
-#include "units.hh"
+#include "util/units.hh"
 
 namespace yumeami {
 
@@ -39,14 +39,6 @@ struct World
   // state
   entt::registry registry = {};
 };
-
-/**
- * @brief Draw world on a RenderTexture.
- *
- * @param world
- */
-void
-draw_world(World& world, RenderTexture& target);
 
 /**
  * @brief DEBUG FUNCTION

@@ -1,6 +1,7 @@
+#include "game/system/draw.hh"
 #include "game/world.hh"
 #include "raylib.h"
-#include "utils/display_manager.hh"
+#include "util/display_manager.hh"
 
 int
 main(int argc, char* argv[])
@@ -34,7 +35,7 @@ main(int argc, char* argv[])
 
     // render world on virtual target
     // TODO: placeholder
-    yumeami::draw_world(world, virtual_target);
+    yumeami::s::draw_world(world, virtual_target);
 
     // render game on window
     yumeami::draw_virtual_target_on_window(virtual_target, display_manager);

@@ -1,6 +1,16 @@
-#pragma once
-#include "units.hh"
+/**
+ * @file
+ * @brief Components that are only simple structs.
+ */
 
+#pragma once
+#include "util/units.hh"
+
+/**
+ * @namespace c
+ * @brief Namespace containing components. Abbreviated to "c" for convenience, as
+ * components are used extensively.
+ */
 namespace yumeami::c {
 
 /**
@@ -36,10 +46,7 @@ struct DrawTilePosition
  */
 struct DrawSortKey
 {
-  const tile_float* draw_tile_y;
+  const DrawTilePosition* draw_tile_position;
 };
-
-struct Aad
-{};
 
 } // namespace yumeami::c
