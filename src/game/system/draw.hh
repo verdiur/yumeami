@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/world.hh"
+#include "raylib.h"
 
 namespace yumeami::s {
 
