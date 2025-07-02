@@ -1,6 +1,5 @@
 #pragma once
 #include "entt/entt.hpp"
-#include "raylib.h"
 #include "util/units.hh"
 
 namespace yumeami {
