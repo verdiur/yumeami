@@ -1,4 +1,5 @@
 #pragma once
+#include "util/units.hh"
 
 namespace yumeami {
 
@@ -20,6 +21,18 @@ enum class Direction8
   TOP_LEFT,
   BOTTOM_RIGHT,
   TOP_RIGHT
+};
+
+struct GenericFloatTilePosition
+{
+  tile_float x;
+  tile_float y;
+};
+
+struct GenericIntTilePosition
+{
+  tile_int x;
+  tile_int y;
 };
 
 } // namespace yumeami

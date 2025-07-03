@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/simple_types.hh"
+
 namespace yumeami {
 
 enum class MovementStateEnum
@@ -11,7 +13,7 @@ enum class MovementStateEnum
   CHECK_COLLISION,
   CHECK_OOB,
   CHECK_WRAP, // not implemented yet
-  UPDATE_TRUE_TILE_POSITION,
+  UPDATE_TILE_POSITIONS,
   MOVE,
 };
 
@@ -24,7 +26,10 @@ namespace c {
    */
   struct MovementState
   {
-    MovementStateEnum state;
+    MovementStateEnum state; // current state of the state machine
+    float progress = 0;      // progression through movement (value from 0 to 1)
+    GenericFloatTilePosition from = {}; // position the movement starts from
+    GenericFloatTilePosition to = {};   // position the movement goes to
   };
 
 } // namespace c

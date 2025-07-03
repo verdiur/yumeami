@@ -1,20 +1,16 @@
 /**
  * @file
- * @brief Components that are only simple structs.
+ * @brief Components that are only simple data structs.
  */
 
 #pragma once
+#include "util/simple_types.hh"
 #include "util/units.hh"
 
-/**
- * @namespace c
- * @brief Namespace containing components. Abbreviated to "c" for convenience, as
- * components are used extensively.
- */
 namespace yumeami::c {
 
 /**
- * @class TrueTilePos
+ * @class TrueTilePosition
  * @brief Tile position, stored as integers. Used for the entity's true position (e.g.
  * when it's not moving between two tiles).
  *
@@ -26,7 +22,7 @@ struct TrueTilePosition
 };
 
 /**
- * @class DrawTilePos
+ * @class DrawTilePosition
  * @brief Tile position, stored as floats. Used for drawing the entity on the virtual
  * target.
  *
@@ -47,6 +43,26 @@ struct DrawTilePosition
 struct DrawSortKey
 {
   const DrawTilePosition* draw_tile_position;
+};
+
+/**
+ * @class Facing
+ * @brief Direction that the entity is facing in.
+ *
+ */
+struct Facing
+{
+  Direction4 direction;
+};
+
+/**
+ * @class Velocity
+ * @brief Will specify unit later TODO:
+ *
+ */
+struct Velocity
+{
+  float velocity;
 };
 
 } // namespace yumeami::c
