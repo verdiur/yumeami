@@ -3,7 +3,7 @@
 
 namespace yumeami {
 
-GenericFloatTilePosition
+FloatTilePosition
 calculate_facing_float_position(const c::Facing& facing,
                                 const c::TrueTilePosition& position)
 {
@@ -31,7 +31,7 @@ calculate_facing_float_position(const c::Facing& facing,
   return { .x = x, .y = y };
 }
 
-GenericIntTilePosition
+IntTilePosition
 calculate_facing_int_position(const c::Facing& facing,
                               const c::TrueTilePosition& position)
 {

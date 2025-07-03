@@ -15,7 +15,7 @@ run_movement_state_machine(c::MovementState& movement_state,
                            c::TrueTilePosition& true_tile_position,
                            c::DrawTilePosition& draw_tile_position,
                            c::Facing& facing,
-                           c::Velocity velocity);
+                           c::Velocity& velocity);
 
 namespace s {
 

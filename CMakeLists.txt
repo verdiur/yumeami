@@ -44,15 +44,17 @@ add_executable(${PROJECT_NAME}
   src/game/world.hh
   src/game/world.cc
   src/game/component/movement_state.hh
-  src/game/component/simple.hh
+  src/game/component/simple_components.hh
   src/game/system/draw.hh
   src/game/system/draw.cc
-  src/game/system/update_movement.hh
-  src/game/system/update_movement.cc
+  src/game/system/movement.hh
+  src/game/system/movement.cc
 
-  src/util/direction.hh
   src/util/display_manager.hh
   src/util/display_manager.cc
+  src/util/simple_functions.hh
+  src/util/simple_functions.cc
+  src/util/simple_types.hh
   src/util/units.hh
 )
 
