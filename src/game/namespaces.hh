@@ -26,14 +26,6 @@ namespace c {
  */
 namespace s {
 
-  /**
-   * @namespace impl
-   * @brief implementation details for systems. Do not use except for implementation of
-   * systems.
-   */
-  namespace impl {
-  }
-
 } // namespace s
 
 } // namespace yumeami

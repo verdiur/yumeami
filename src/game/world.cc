@@ -1,6 +1,6 @@
 #include "game/world.hh"
 #include "entt/entity/fwd.hpp"
-#include "game/component/simple.hh"
+#include "game/component/simple_components.hh"
 
 namespace yumeami {
 

@@ -1,5 +1,5 @@
 #include "game/system/draw.hh"
-#include "game/component/simple.hh"
+#include "game/component/simple_components.hh"
 #include "raylib.h"
 
 namespace yumeami::s {
