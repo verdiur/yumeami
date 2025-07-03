@@ -47,16 +47,17 @@ namespace impl {
         case UPDATE_TILE_POSITIONS: {
 
           // calculate targeted position
-          GenericIntTilePosition target_int =
+          IntTilePosition target_int =
             calculate_facing_int_position(facing, true_tile_position);
 
-          GenericFloatTilePosition target_float =
+          FloatTilePosition target_float =
             calculate_facing_float_position(facing, true_tile_position);
 
           // update positions
-          true_tile_position = { .x = target_int.x, .y = target_int.y };
-          movement_state.from = { .x = draw_tile_position.x, .y = draw_tile_position.y };
-          movement_state.to = { .x = target_float.x, .y = target_float.y };
+          // NOTE: static casts might be bad?
+          true_tile_position = static_cast<c::TrueTilePosition>(target_int);
+          movement_state.from = static_cast<c::DrawTilePosition>(target_float);
+          movement_state.to = static_cast<c::DrawTilePosition>(target_float);
         };
           movement_state.state = MOVE;
 

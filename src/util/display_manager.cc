@@ -15,15 +15,16 @@ setup_display_manager(const RenderTexture& virtual_target,
     std::min(GetScreenWidth() / virtual_width, GetScreenHeight() / virtual_height);
 
   // setup transform rectangles
-  display_manager.src_rect = {
-    0, 0, (float)virtual_target.texture.width, -(float)virtual_target.texture.height
-  };
+  display_manager.src_rect = { 0,
+                               0,
+                               static_cast<float>(virtual_target.texture.width),
+                               -static_cast<float>(virtual_target.texture.height) };
 
   display_manager.dst_rect = {
-    (float)(GetScreenWidth() - virtual_width * scale_factor) / 2,
-    (float)(GetScreenHeight() - virtual_height * scale_factor) / 2,
-    (float)virtual_width * scale_factor,
-    (float)virtual_height * scale_factor,
+    static_cast<float>(GetScreenWidth() - virtual_width * scale_factor) / 2,
+    static_cast<float>(GetScreenHeight() - virtual_height * scale_factor) / 2,
+    static_cast<float>(virtual_width * scale_factor),
+    static_cast<float>(virtual_height * scale_factor),
   };
 }
 

@@ -23,13 +23,14 @@ enum class Direction8
   TOP_RIGHT
 };
 
-struct GenericFloatTilePosition
+struct FloatTilePosition
 {
+
   tile_float x;
   tile_float y;
 };
 
-struct GenericIntTilePosition
+struct IntTilePosition
 {
   tile_int x;
   tile_int y;

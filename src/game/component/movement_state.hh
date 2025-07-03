@@ -26,10 +26,10 @@ namespace c {
    */
   struct MovementState
   {
-    MovementStateEnum state; // current state of the state machine
-    float progress = 0;      // progression through movement (value from 0 to 1)
-    GenericFloatTilePosition from = {}; // position the movement starts from
-    GenericFloatTilePosition to = {};   // position the movement goes to
+    MovementStateEnum state;     // current state of the state machine
+    float progress = 0;          // progression through movement (value from 0 to 1)
+    FloatTilePosition from = {}; // position the movement starts from
+    FloatTilePosition to = {};   // position the movement goes to
   };
 
 } // namespace c

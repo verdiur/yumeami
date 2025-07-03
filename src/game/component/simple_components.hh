@@ -5,7 +5,6 @@
 
 #pragma once
 #include "util/simple_types.hh"
-#include "util/units.hh"
 
 namespace yumeami::c {
 
@@ -15,11 +14,8 @@ namespace yumeami::c {
  * when it's not moving between two tiles).
  *
  */
-struct TrueTilePosition
-{
-  tile_int x;
-  tile_int y;
-};
+struct TrueTilePosition : public IntTilePosition
+{};
 
 /**
  * @class DrawTilePosition
@@ -27,11 +23,8 @@ struct TrueTilePosition
  * target.
  *
  */
-struct DrawTilePosition
-{
-  tile_float x;
-  tile_float y;
-};
+struct DrawTilePosition : public FloatTilePosition
+{};
 
 /**
  * @class DrawSortKey
