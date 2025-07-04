@@ -1,11 +1,9 @@
 #include "util/simple_functions.hh"
 #include "util/simple_types.hh"
 
-namespace yumeami {
-
-FloatTilePosition
-calculate_facing_float_position(const c::Facing& facing,
-                                const c::TrueTilePosition& position)
+yumeami::FloatTilePosition
+yumeami::calculate_facing_float_position(const comp::Facing& facing,
+                                         const comp::TrueTilePosition& position)
 {
   float x, y;
 
@@ -31,9 +29,9 @@ calculate_facing_float_position(const c::Facing& facing,
   return { .x = x, .y = y };
 }
 
-IntTilePosition
-calculate_facing_int_position(const c::Facing& facing,
-                              const c::TrueTilePosition& position)
+yumeami::IntTilePosition
+yumeami::calculate_facing_int_position(const comp::Facing& facing,
+                                       const comp::TrueTilePosition& position)
 {
   int x, y;
 
@@ -58,5 +56,3 @@ calculate_facing_int_position(const c::Facing& facing,
 
   return { .x = x, .y = y };
 }
-
-} // namespace yumeami

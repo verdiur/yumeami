@@ -4,14 +4,12 @@
 #include "util/simple_functions.hh"
 #include "util/simple_types.hh"
 
-namespace yumeami {
-
 void
-run_movement_state_machine(c::MovementState& movement_state,
-                           c::TrueTilePosition& true_tile_position,
-                           c::DrawTilePosition& draw_tile_position,
-                           c::Facing& facing,
-                           c::Velocity& velocity)
+yumeami::movement_state_machine(comp::MovementState& movement_state,
+                                comp::TrueTilePosition& true_tile_position,
+                                comp::DrawTilePosition& draw_tile_position,
+                                comp::Facing& facing,
+                                comp::Velocity& velocity)
 {
   using enum MovementStateEnum;
 
@@ -54,9 +52,9 @@ run_movement_state_machine(c::MovementState& movement_state,
 
         // update positions
         // NOTE: static casts might be bad?
-        true_tile_position = static_cast<c::TrueTilePosition>(target_int);
-        movement_state.from = static_cast<c::DrawTilePosition>(target_float);
-        movement_state.to = static_cast<c::DrawTilePosition>(target_float);
+        true_tile_position = static_cast<comp::TrueTilePosition>(target_int);
+        movement_state.from = static_cast<comp::DrawTilePosition>(target_float);
+        movement_state.to = static_cast<comp::DrawTilePosition>(target_float);
       };
         movement_state.state = MOVE;
 
@@ -70,26 +68,21 @@ run_movement_state_machine(c::MovementState& movement_state,
   }
 }
 
-namespace s {
-
-  void update_movement(entt::registry& registry)
-  {
-    auto view = registry.view<c::MovementState,
-                              c::TrueTilePosition,
-                              c::DrawTilePosition,
-                              c::Facing,
-                              c::Velocity>();
-    for (auto [entity,
-               movement_state,
-               true_tile_position,
-               draw_tile_position,
-               facing,
-               velocity] : view.each()) {
-      run_movement_state_machine(
-        movement_state, true_tile_position, draw_tile_position, facing, velocity);
-    }
+void
+yumeami::sys::update_movement(entt::registry& registry)
+{
+  auto view = registry.view<comp::MovementState,
+                            comp::TrueTilePosition,
+                            comp::DrawTilePosition,
+                            comp::Facing,
+                            comp::Velocity>();
+  for (auto [entity,
+             movement_state,
+             true_tile_position,
+             draw_tile_position,
+             facing,
+             velocity] : view.each()) {
+    movement_state_machine(
+      movement_state, true_tile_position, draw_tile_position, facing, velocity);
   }
-
-} // namespace s
-
-} // namespace yumeami
+}

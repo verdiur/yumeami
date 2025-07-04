@@ -3,7 +3,7 @@
 #include "game/world.hh"
 #include "raylib.h"
 
-namespace yumeami::s {
+namespace yumeami::sys {
 
 /**
  * @brief Draw world on a RenderTexture.
@@ -13,4 +13,4 @@ namespace yumeami::s {
 void
 draw_world(World& world, RenderTexture& target);
 
-} // namespace yumeami::s
+} // namespace yumeami::sys

@@ -2,11 +2,9 @@
 #include "raylib.h"
 #include <algorithm>
 
-namespace yumeami {
-
 void
-setup_display_manager(const RenderTexture& virtual_target,
-                      DisplayManager& display_manager)
+yumeami::setup_display_manager(const RenderTexture& virtual_target,
+                               DisplayManager& display_manager)
 {
   // calculate scaling
   const int virtual_width = virtual_target.texture.width;
@@ -29,8 +27,8 @@ setup_display_manager(const RenderTexture& virtual_target,
 }
 
 void
-draw_virtual_target_on_window(const RenderTexture& virtual_target,
-                              const DisplayManager& display_manager)
+yumeami::draw_virtual_target_on_window(const RenderTexture& virtual_target,
+                                       const DisplayManager& display_manager)
 {
   BeginDrawing();
   DrawTexturePro(virtual_target.texture,
@@ -41,5 +39,3 @@ draw_virtual_target_on_window(const RenderTexture& virtual_target,
                  WHITE);
   EndDrawing();
 }
-
-} // namespace yumeami

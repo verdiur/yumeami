@@ -2,19 +2,18 @@
 #include "game/component/simple_components.hh"
 #include "raylib.h"
 
-namespace yumeami::s {
-
 void
-draw_world(World& world, RenderTexture& target)
+yumeami::sys::draw_world(World& world, RenderTexture& target)
 {
   // sort entities by draw order
-  world.registry.sort<c::DrawSortKey>(
-    [](const c::DrawSortKey& lhs, const c::DrawSortKey& rhs) {
+  world.registry.sort<comp::DrawSortKey>(
+    [](const comp::DrawSortKey& lhs, const comp::DrawSortKey& rhs) {
       return lhs.draw_tile_position->y < rhs.draw_tile_position->y;
     });
 
   // the view must begin with the sort key, otherwise the order isn't retained
-  auto view = world.registry.view<const c::DrawSortKey, const c::DrawTilePosition>();
+  auto view =
+    world.registry.view<const comp::DrawSortKey, const comp::DrawTilePosition>();
 
   // begin drawing on target
   BeginTextureMode(target);
@@ -32,5 +31,3 @@ draw_world(World& world, RenderTexture& target)
   // end drawing on target
   EndTextureMode();
 }
-
-} // namespace yumeami::s
