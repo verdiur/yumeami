@@ -1,29 +1,34 @@
 #include "util/simple_functions.hh"
+#include "game/component/simple_components.hh"
 #include "util/simple_types.hh"
 
 yumeami::FloatTilePosition
 yumeami::calculate_facing_float_position(const comp::Facing& facing,
-                                         const comp::TrueTilePosition& position)
+                                         const comp::DrawTilePosition& position)
 {
   float x, y;
 
   switch (facing.direction) {
 
-    case Direction4::BOTTOM:
+    case Direction4::DOWN:
       x = (float)position.x;
       y = (float)(position.y + 1);
+      break;
 
-    case Direction4::TOP:
+    case Direction4::UP:
       x = (float)position.x;
       y = (float)(position.y - 1);
+      break;
 
     case Direction4::LEFT:
       x = (float)(position.x - 1);
       y = (float)position.y;
+      break;
 
     case Direction4::RIGHT:
       x = (float)(position.x + 1);
       y = (float)position.y;
+      break;
   }
 
   return { .x = x, .y = y };
@@ -37,21 +42,25 @@ yumeami::calculate_facing_int_position(const comp::Facing& facing,
 
   switch (facing.direction) {
 
-    case Direction4::BOTTOM:
+    case Direction4::DOWN:
       x = position.x;
       y = position.y + 1;
+      break;
 
-    case Direction4::TOP:
+    case Direction4::UP:
       x = position.x;
       y = position.y - 1;
+      break;
 
     case Direction4::LEFT:
       x = position.x - 1;
       y = position.y;
+      break;
 
     case Direction4::RIGHT:
       x = position.x + 1;
       y = position.y;
+      break;
   }
 
   return { .x = x, .y = y };

@@ -14,7 +14,7 @@ namespace yumeami {
    */
   FloatTilePosition calculate_facing_float_position(
     const comp::Facing& facing,
-    const comp::TrueTilePosition& position);
+    const comp::DrawTilePosition& position);
 
   /**
    * @brief Calculate position targeted by Facing component

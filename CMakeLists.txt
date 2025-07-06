@@ -39,16 +39,17 @@ FetchContent_MakeAvailable(EnTT)
 
 # main
 add_executable(${PROJECT_NAME}
-  src/main.cc
-
-  src/game/world.hh
-  src/game/world.cc
   src/game/component/movement_state.hh
   src/game/component/simple_components.hh
+  src/game/event/base.hh
+  src/game/event/input.hh
+  src/game/event/input.cc
   src/game/system/draw.hh
   src/game/system/draw.cc
   src/game/system/movement.hh
   src/game/system/movement.cc
+  src/game/world.hh
+  src/game/world.cc
 
   src/util/display_manager.hh
   src/util/display_manager.cc
@@ -56,6 +57,8 @@ add_executable(${PROJECT_NAME}
   src/util/simple_functions.cc
   src/util/simple_types.hh
   src/util/units.hh
+
+  src/main.cc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

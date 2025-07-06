@@ -2,6 +2,7 @@
 #include "entt/entt.hpp"
 #include "game/component/movement_state.hh"
 #include "game/component/simple_components.hh"
+#include "game/event/input.hh"
 
 namespace yumeami {
 
@@ -14,17 +15,16 @@ namespace yumeami {
                               comp::TrueTilePosition& true_tile_position,
                               comp::DrawTilePosition& draw_tile_position,
                               comp::Facing& facing,
-                              comp::Velocity& velocity);
+                              comp::Velocity& velocity,
+                              comp::KeyboardKeyQueue& keyboard_key_queue);
 
   namespace sys {
-
     /**
      * @brief Updates movement of all moving entities.
      *
      * @param reg
      */
     void update_movement(entt::registry& registry);
-
   } // namespace sys
 
 } // namespace yumeami

@@ -1,4 +1,7 @@
+#include "entt/signal/fwd.hpp"
+#include "game/event/input.hh"
 #include "game/system/draw.hh"
+#include "game/system/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
 #include "util/display_manager.hh"
@@ -30,8 +33,18 @@ main(int argc, char* argv[])
   // create world
   yumeami::World world = yumeami::create_dummy_world();
 
+  // initialize input
+  entt::dispatcher dispatcher{};
+  yumeami::sys::initialize_input_event_dispatcher(dispatcher, world.registry);
+
   // game loop
   while (!WindowShouldClose()) {
+    // input
+    yumeami::dispatch_input_events(dispatcher);
+
+    // update
+    yumeami::sys::update_movement(world.registry);
+
     ClearBackground(BLACK);
 
     // render world on virtual target
