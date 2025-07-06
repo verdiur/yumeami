@@ -3,8 +3,8 @@
 #include "util/simple_types.hh"
 
 yumeami::FloatTilePosition
-yumeami::calculate_facing_float_position(const comp::Facing& facing,
-                                         const comp::DrawTilePosition& position)
+yumeami::calculate_float_position_from_facing(const comp::Facing& facing,
+                                              const FloatTilePosition& position)
 {
   float x, y;
 
@@ -35,8 +35,8 @@ yumeami::calculate_facing_float_position(const comp::Facing& facing,
 }
 
 yumeami::IntTilePosition
-yumeami::calculate_facing_int_position(const comp::Facing& facing,
-                                       const comp::TrueTilePosition& position)
+yumeami::calculate_int_position_from_facing(const comp::Facing& facing,
+                                            const IntTilePosition& position)
 {
   int x, y;
 

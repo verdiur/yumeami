@@ -12,9 +12,9 @@ namespace yumeami {
    * @param position position component
    * @return targeted position
    */
-  FloatTilePosition calculate_facing_float_position(
+  FloatTilePosition calculate_float_position_from_facing(
     const comp::Facing& facing,
-    const comp::DrawTilePosition& position);
+    const FloatTilePosition& position);
 
   /**
    * @brief Calculate position targeted by Facing component
@@ -23,7 +23,7 @@ namespace yumeami {
    * @param position position component
    * @return targeted position
    */
-  IntTilePosition calculate_facing_int_position(const comp::Facing& facing,
-                                                const comp::TrueTilePosition& position);
+  IntTilePosition calculate_int_position_from_facing(const comp::Facing& facing,
+                                                     const IntTilePosition& position);
 
 } // namespace yumeami

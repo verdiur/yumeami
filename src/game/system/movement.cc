@@ -6,7 +6,7 @@
 #include "util/simple_functions.hh"
 #include "util/simple_types.hh"
 
-// BEGIN STATE MACHINE IMPLEMENTATION
+/* BEGIN STATE MACHINE IMPLEMENTATION ***************************************************/
 
 void
 yumeami::movement_state_machine(comp::MovementState& movement_state,
@@ -25,19 +25,19 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
   while (movement_state.state != END) {
     switch (movement_state.state) {
 
-      case BEGIN:
+      case BEGIN: {
         movement_state.state = IS_MOVING;
+      }
 
-      case IS_MOVING:
+      case IS_MOVING: {
         if (movement_state.is_moving) {
           movement_state.state = MOVE;
         } else {
           movement_state.state = READ_EVENT_QUEUE;
         }
+      }
 
       case READ_EVENT_QUEUE: {
-
-        // consume key in queue
         KeyboardKey key = keyboard_key_queue.consume();
 
         // end state machine if no keys pressed
@@ -59,56 +59,61 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
         movement_state.state = CHECK_COLLISION;
       }
 
-      case CHECK_COLLISION: // TODO:
+      case CHECK_COLLISION: { // TODO:
         movement_state.state = CHECK_OOB;
+      }
 
-      case CHECK_OOB: // TODO:
+      case CHECK_OOB: { // TODO:
         movement_state.state = CHECK_WRAP;
+      }
 
-      case CHECK_WRAP: // TODO:
+      case CHECK_WRAP: { // TODO:
         movement_state.state = UPDATE_TILE_POSITIONS;
+      }
 
       case UPDATE_TILE_POSITIONS: {
         // calculate targeted position
-        // TODO: fix the typing of those functions its so fucking weird rn
         IntTilePosition target_int =
-          calculate_facing_int_position(facing, true_tile_position);
+          calculate_int_position_from_facing(facing, true_tile_position);
         FloatTilePosition target_float =
-          calculate_facing_float_position(facing, draw_tile_position);
+          calculate_float_position_from_facing(facing, draw_tile_position);
 
         // update positions
-        // NOTE: static cast might be bad?
         true_tile_position = static_cast<comp::TrueTilePosition>(target_int);
-        movement_state.from = target_float;
+        movement_state.from = draw_tile_position;
         movement_state.to = target_float;
         movement_state.state = BEGIN_MOVING;
       }
 
-      case BEGIN_MOVING:
+      case BEGIN_MOVING: {
         movement_state.is_moving = true;
         movement_state.state = MOVE;
+      }
 
-      case MOVE:
+      case MOVE: {
         // TODO: interpolate instead
         draw_tile_position = static_cast<comp::DrawTilePosition>(movement_state.to);
         movement_state.progress = 1;
         movement_state.state = STOP_MOVING_IF_FINISHED;
+      }
 
-      case STOP_MOVING_IF_FINISHED:
+      case STOP_MOVING_IF_FINISHED: {
         if (movement_state.progress >= 1) {
           // snap draw position
           draw_tile_position = static_cast<comp::DrawTilePosition>(movement_state.to);
           bool is_moving = false;
         }
         movement_state.state = END;
+      }
 
-      case END:
+      case END: {
         break;
+      }
     }
   }
 }
 
-// END STATE MACHINE IMPLEMENTATION
+/* END STATE MACHINE IMPLEMENTATION *****************************************************/
 
 void
 yumeami::sys::update_movement(entt::registry& registry)

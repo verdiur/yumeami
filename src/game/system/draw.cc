@@ -20,7 +20,7 @@ yumeami::sys::draw_world(World& world, RenderTexture& target)
   ClearBackground(BLACK);
 
   for (auto [entity, sort_key, draw_pos] : view.each()) {
-    DrawRectangleGradientV(draw_pos.x * world.tile_size * world.sprite_pixel_multiplier,
+    DrawRectangleGradientH(draw_pos.x * world.tile_size * world.sprite_pixel_multiplier,
                            draw_pos.y * world.tile_size * world.sprite_pixel_multiplier,
                            world.tile_size * world.sprite_pixel_multiplier + 5,
                            world.tile_size * world.sprite_pixel_multiplier + 5,
