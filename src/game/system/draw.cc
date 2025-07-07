@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 void
-yumeami::sys::draw_world(World& world, RenderTexture& target)
+yumeami::sys::draw_world(World& world)
 {
   // sort entities by draw order
   world.registry.sort<comp::DrawSortKey>(
@@ -15,8 +15,6 @@ yumeami::sys::draw_world(World& world, RenderTexture& target)
   auto view =
     world.registry.view<const comp::DrawSortKey, const comp::DrawTilePosition>();
 
-  // begin drawing on target
-  BeginTextureMode(target);
   ClearBackground(BLACK);
 
   for (auto [entity, sort_key, draw_pos] : view.each()) {
@@ -27,7 +25,4 @@ yumeami::sys::draw_world(World& world, RenderTexture& target)
                            BLUE,
                            GREEN);
   }
-
-  // end drawing on target
-  EndTextureMode();
 }

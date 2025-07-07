@@ -39,17 +39,29 @@ main(int argc, char* argv[])
 
   // game loop
   while (!WindowShouldClose()) {
+
+    /* BEGIN INPUT **********************************************************************/
+
     // input
     yumeami::dispatch_input_events(dispatcher);
+
+    /* END INPUT ************************************************************************/
+    /* BEGIN UPDATE *********************************************************************/
 
     // update
     yumeami::sys::update_movement(world.registry);
 
-    BeginDrawing();
-    ClearBackground(BLACK);
+    /* END UPDATE ***********************************************************************/
+    /* BEGIN DRAWING ********************************************************************/
 
     // render world on virtual target
-    yumeami::sys::draw_world(world, virtual_target);
+    BeginTextureMode(virtual_target);
+    yumeami::sys::draw_world(world);
+    EndTextureMode();
+
+    // draw on window
+    BeginDrawing();
+    ClearBackground(BLACK);
 
     // render game on window
     yumeami::draw_virtual_target_on_window(virtual_target, display_manager);
@@ -57,6 +69,8 @@ main(int argc, char* argv[])
     // debug info
     DrawFPS(10, 10);
     EndDrawing();
+
+    /* END DRAWING **********************************************************************/
   }
 
   // de-initialization

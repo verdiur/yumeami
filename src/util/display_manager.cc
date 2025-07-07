@@ -30,12 +30,10 @@ void
 yumeami::draw_virtual_target_on_window(const RenderTexture& virtual_target,
                                        const DisplayManager& display_manager)
 {
-  BeginDrawing();
   DrawTexturePro(virtual_target.texture,
                  display_manager.src_rect,
                  display_manager.dst_rect,
                  { 0, 0 },
                  0,
                  WHITE);
-  EndDrawing();
 }
