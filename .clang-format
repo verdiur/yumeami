@@ -1,6 +1,7 @@
 BasedOnStyle: Mozilla
 ColumnLimit: 90
 AllowShortFunctionsOnASingleLine: false
+BreakBeforeBinaryOperators: None
 
 NamespaceIndentation: All
 FixNamespaceComments: true

@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "util/simple_functions.hh"
 #include "util/simple_types.hh"
+#include <cmath>
 
 /* BEGIN STATE MACHINE IMPLEMENTATION ***************************************************/
 
@@ -27,6 +28,7 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
 
       case BEGIN: {
         movement_state.state = IS_MOVING;
+        break;
       }
 
       case IS_MOVING: {
@@ -35,6 +37,7 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
         } else {
           movement_state.state = READ_EVENT_QUEUE;
         }
+        break;
       }
 
       case READ_EVENT_QUEUE: {
@@ -57,18 +60,22 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
           facing.direction = Direction4::RIGHT;
         }
         movement_state.state = CHECK_COLLISION;
+        break;
       }
 
       case CHECK_COLLISION: { // TODO:
         movement_state.state = CHECK_OOB;
+        break;
       }
 
       case CHECK_OOB: { // TODO:
         movement_state.state = CHECK_WRAP;
+        break;
       }
 
       case CHECK_WRAP: { // TODO:
         movement_state.state = UPDATE_TILE_POSITIONS;
+        break;
       }
 
       case UPDATE_TILE_POSITIONS: {
@@ -83,34 +90,45 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
         movement_state.from = draw_tile_position;
         movement_state.to = target_float;
         movement_state.state = BEGIN_MOVING;
+        break;
       }
 
       case BEGIN_MOVING: {
         movement_state.is_moving = true;
         movement_state.state = MOVE;
+        break;
       }
 
       case MOVE: {
-        // TODO: interpolate instead
-        draw_tile_position = static_cast<comp::DrawTilePosition>(movement_state.to);
-        movement_state.progress = 1;
+        // TODO: parameterize progress, and make it not frame-dependent
+        movement_state.progress += 0.05;
+        draw_tile_position.x =
+          std::lerp(movement_state.from.x, movement_state.to.x, movement_state.progress);
+        draw_tile_position.y =
+          std::lerp(movement_state.from.y, movement_state.to.y, movement_state.progress);
+
         movement_state.state = STOP_MOVING_IF_FINISHED;
+        break;
       }
 
       case STOP_MOVING_IF_FINISHED: {
         if (movement_state.progress >= 1) {
           // snap draw position
           draw_tile_position = static_cast<comp::DrawTilePosition>(movement_state.to);
-          bool is_moving = false;
+          movement_state.progress = 0;
+          movement_state.is_moving = false;
         }
         movement_state.state = END;
+        break;
       }
 
       case END: {
+        // if everything goes well the contents of this state should never be executed
         break;
       }
     }
   }
+  keyboard_key_queue.clear();
 }
 
 /* END STATE MACHINE IMPLEMENTATION *****************************************************/

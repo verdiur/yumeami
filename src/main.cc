@@ -10,8 +10,8 @@ int
 main(int argc, char* argv[])
 {
   // real window dimensions
-  const int window_width = 640 * 2;
-  const int window_height = 480 * 2;
+  const int window_width = 640;
+  const int window_height = 480;
 
   // virtual window dimensions
   const int virtual_width = 640;
