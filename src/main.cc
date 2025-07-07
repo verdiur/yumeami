@@ -19,7 +19,7 @@ main(int argc, char* argv[])
 
   // create raylib window
   InitWindow(window_width, window_height, "yumenet");
-  SetWindowState(FLAG_VSYNC_HINT);
+  // SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
   // create virtual render target
@@ -45,17 +45,16 @@ main(int argc, char* argv[])
     // update
     yumeami::sys::update_movement(world.registry);
 
+    BeginDrawing();
     ClearBackground(BLACK);
 
     // render world on virtual target
-    // TODO: placeholder
     yumeami::sys::draw_world(world, virtual_target);
 
     // render game on window
     yumeami::draw_virtual_target_on_window(virtual_target, display_manager);
 
     // debug info
-    BeginDrawing();
     DrawFPS(10, 10);
     EndDrawing();
   }
