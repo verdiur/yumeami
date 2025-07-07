@@ -22,7 +22,7 @@ yumeami::dispatch_input_events(entt::dispatcher& dispatcher)
   }
 }
 
-// BEGIN KeyboardKeyQueue IMPLEMENTATION
+/* BEGIN KeyboardKeyQueue IMPLEMENTATION ************************************************/
 
 const std::queue<KeyboardKey>&
 yumeami::comp::KeyboardKeyQueue::get_queue() const
@@ -53,7 +53,7 @@ yumeami::comp::KeyboardKeyQueue::clear()
   std::queue<KeyboardKey>().swap(queue);
 }
 
-// END KeyboardKeyQueue IMPLEMENTATION
+/* END KeyboardKeyQueue IMPLEMENTATION **************************************************/
 
 void
 yumeami::sys::initialize_input_event_dispatcher(entt::dispatcher& dispatcher,
