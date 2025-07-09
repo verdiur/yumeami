@@ -25,7 +25,7 @@ yumeami::create_dummy_world()
   auto& sort_key = world.registry.emplace<comp::DrawSortKey>(player, &draw_pos);
   world.registry.emplace<comp::MovementState>(player);
   world.registry.emplace<comp::Facing>(player);
-  world.registry.emplace<comp::Velocity>(player, (float)10);
+  world.registry.emplace<comp::Velocity>(player, (float)0.25);
   world.registry.emplace<comp::KeyboardKeyQueue>(player);
 
   return world;

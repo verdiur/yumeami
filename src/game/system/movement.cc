@@ -101,7 +101,7 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
 
       case MOVE: {
         // TODO: parameterize progress, and make it not frame-dependent
-        movement_state.progress += velocity.velocity * GetFrameTime();
+        movement_state.progress += (1 / velocity.velocity) * GetFrameTime();
         draw_tile_position.x =
           std::lerp(movement_state.from.x, movement_state.to.x, movement_state.progress);
         draw_tile_position.y =

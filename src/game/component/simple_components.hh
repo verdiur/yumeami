@@ -50,7 +50,8 @@ namespace yumeami::comp {
 
   /**
    * @class Velocity
-   * @brief Will specify unit later TODO:
+   * @brief In seconds, how much time it takes to move a distance of 1 tile at
+   * normal speed.
    *
    */
   struct Velocity

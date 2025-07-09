@@ -19,7 +19,7 @@ main(int argc, char* argv[])
 
   // create raylib window
   InitWindow(window_width, window_height, "yumenet");
-  // SetWindowState(FLAG_VSYNC_HINT);
+  SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
   // create virtual render target
@@ -59,8 +59,8 @@ main(int argc, char* argv[])
     yumeami::sys::draw_world(world);
     EndTextureMode();
 
-    // draw on window
     BeginDrawing();
+
     ClearBackground(BLACK);
 
     // render game on window
@@ -68,6 +68,7 @@ main(int argc, char* argv[])
 
     // debug info
     DrawFPS(10, 10);
+
     EndDrawing();
 
     /* END DRAWING **********************************************************************/
