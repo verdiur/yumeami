@@ -1,5 +1,5 @@
 #include "util/simple_functions.hh"
-#include "game/component/simple_components.hh"
+#include "game/simple_components.hh"
 #include "util/simple_types.hh"
 
 yumeami::FloatTilePosition

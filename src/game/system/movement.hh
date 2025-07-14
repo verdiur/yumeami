@@ -1,10 +1,42 @@
 #pragma once
 #include "entt/entt.hpp"
-#include "game/component/movement_state.hh"
-#include "game/component/simple_components.hh"
-#include "game/event/input.hh"
+#include "game/event/simple_queues.hh"
+#include "game/simple_components.hh"
 
 namespace yumeami {
+
+  enum class MovementStateEnum
+  {
+    BEGIN = 0,
+    END,
+    IS_MOVING,
+    READ_EVENT_QUEUE,
+    CHECK_COLLISION,
+    CHECK_OOB,
+    CHECK_WRAP, // not implemented yet
+    UPDATE_TILE_POSITIONS,
+    BEGIN_MOVING,
+    MOVE,
+    STOP_MOVING_IF_FINISHED
+  };
+
+  namespace comp {
+    /**
+     * @class MovementState
+     * @brief Component storing movement state.
+     *
+     */
+    struct MovementState
+    {
+      MovementStateEnum state =
+        MovementStateEnum::BEGIN;  // current state of the state machine
+      bool is_moving = 0;          // true if entity is occupied moving
+      float progress = 0;          // progression through movement (value from 0 to 1)
+      FloatTilePosition from = {}; // position the movement starts from
+      FloatTilePosition to = {};   // position the movement goes to
+    };
+
+  } // namespace comp
 
   /**
    * @brief Run a movement state machine
@@ -16,13 +48,13 @@ namespace yumeami {
                               comp::DrawTilePosition& draw_tile_position,
                               comp::Facing& facing,
                               comp::Velocity& velocity,
-                              comp::KeyboardKeyQueue& keyboard_key_queue);
+                              comp::MoveEventQueue& move_event_queue);
 
   namespace sys {
     /**
      * @brief Updates movement of all moving entities.
      *
-     * @param reg
+     * @param registry
      */
     void update_movement(entt::registry& registry);
   } // namespace sys

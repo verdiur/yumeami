@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/component/simple_components.hh"
+#include "game/simple_components.hh"
 #include "util/simple_types.hh"
 
 namespace yumeami {

@@ -1,11 +1,13 @@
 #include "game/system/movement.hh"
-#include "game/component/movement_state.hh"
-#include "game/component/simple_components.hh"
-#include "game/event/input.hh"
+#include "game/event/simple_events.hh"
+#include "game/event/simple_queues.hh"
+#include "game/simple_components.hh"
+#include "game/system/movement.hh"
 #include "raylib.h"
 #include "util/simple_functions.hh"
 #include "util/simple_types.hh"
 #include <cmath>
+#include <optional>
 
 /* BEGIN STATE MACHINE IMPLEMENTATION ***************************************************/
 
@@ -15,7 +17,7 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
                                 comp::DrawTilePosition& draw_tile_position,
                                 comp::Facing& facing,
                                 comp::Velocity& velocity,
-                                comp::KeyboardKeyQueue& keyboard_key_queue)
+                                comp::MoveEventQueue& move_event_queue)
 {
   using enum MovementStateEnum;
 
@@ -41,24 +43,16 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
       }
 
       case READ_EVENT_QUEUE: {
-        KeyboardKey key = keyboard_key_queue.consume();
+        std::optional<event::MoveEvent> event = move_event_queue.consume();
 
-        // end state machine if no keys pressed
-        if (key == KEY_NULL) {
+        // end state machine if queue is empty
+        if (!event.has_value()) {
           movement_state.state = END;
           break;
         }
 
-        // update facing
-        if (key == KEY_DOWN) {
-          facing.direction = Direction4::DOWN;
-        } else if (key == KEY_UP) {
-          facing.direction = Direction4::UP;
-        } else if (key == KEY_LEFT) {
-          facing.direction = Direction4::LEFT;
-        } else if (key == KEY_RIGHT) {
-          facing.direction = Direction4::RIGHT;
-        }
+        // update facing and state
+        facing.direction = event.value().direction;
         movement_state.state = CHECK_COLLISION;
         break;
       }
@@ -127,7 +121,7 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
       }
     }
   }
-  keyboard_key_queue.clear();
+  move_event_queue.clear();
 }
 
 /* END STATE MACHINE IMPLEMENTATION *****************************************************/
@@ -140,19 +134,19 @@ yumeami::sys::update_movement(entt::registry& registry)
                             comp::DrawTilePosition,
                             comp::Facing,
                             comp::Velocity,
-                            comp::KeyboardKeyQueue>();
+                            comp::MoveEventQueue>();
   for (auto [entity,
              movement_state,
              true_tile_position,
              draw_tile_position,
              facing,
              velocity,
-             keyboard_key_queue] : view.each()) {
+             move_event_queue] : view.each()) {
     movement_state_machine(movement_state,
                            true_tile_position,
                            draw_tile_position,
                            facing,
                            velocity,
-                           keyboard_key_queue);
+                           move_event_queue);
   }
 }

@@ -1,8 +1,8 @@
 #include "game/world.hh"
 #include "entt/entity/fwd.hpp"
-#include "game/component/movement_state.hh"
-#include "game/component/simple_components.hh"
-#include "game/event/input.hh"
+#include "game/event/simple_queues.hh"
+#include "game/simple_components.hh"
+#include "game/system/movement.hh"
 
 yumeami::World
 yumeami::create_dummy_world()
@@ -26,7 +26,7 @@ yumeami::create_dummy_world()
   world.registry.emplace<comp::MovementState>(player);
   world.registry.emplace<comp::Facing>(player);
   world.registry.emplace<comp::Velocity>(player, (float)0.25);
-  world.registry.emplace<comp::KeyboardKeyQueue>(player);
+  world.registry.emplace<comp::MoveEventQueue>(player);
 
   return world;
 }

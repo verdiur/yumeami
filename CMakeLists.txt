@@ -39,15 +39,16 @@ FetchContent_MakeAvailable(EnTT)
 
 # main
 add_executable(${PROJECT_NAME}
-  src/game/component/movement_state.hh
-  src/game/component/simple_components.hh
   src/game/event/base.hh
   src/game/event/input.hh
   src/game/event/input.cc
+  src/game/event/simple_events.hh
+  src/game/event/simple_queues.hh
   src/game/system/draw.hh
   src/game/system/draw.cc
   src/game/system/movement.hh
   src/game/system/movement.cc
+  src/game/simple_components.hh
   src/game/world.hh
   src/game/world.cc
 
