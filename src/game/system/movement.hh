@@ -11,9 +11,9 @@ namespace yumeami {
     END,
     IS_MOVING,
     READ_EVENT_QUEUE,
-    CHECK_COLLISION,
-    CHECK_OOB,
-    CHECK_WRAP, // not implemented yet
+    CHECK_COLLISION, // not implemented yet
+    CHECK_OOB,       // not implemented yet
+    CHECK_WRAP,      // not implemented yet
     UPDATE_TILE_POSITIONS,
     BEGIN_MOVING,
     MOVE,
@@ -22,8 +22,8 @@ namespace yumeami {
 
   namespace comp {
     /**
-     * @class MovementState
-     * @brief Component storing movement state.
+     * @class Movement
+     * @brief Component storing movement data.
      *
      */
     struct Movement
