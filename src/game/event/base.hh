@@ -1,4 +1,5 @@
 #pragma once
+#include "entt/entt.hpp"
 #include <concepts>
 #include <optional>
 #include <queue>
@@ -11,7 +12,9 @@ namespace yumeami::event {
    *
    */
   struct Event
-  {};
+  {
+    entt::entity target_entity;
+  };
 
   /**
    * @brief EventType must be a derived class of Event
@@ -22,7 +25,9 @@ namespace yumeami::event {
   concept EventDerived = std::derived_from<EventType, Event>;
 
   /**
-   * @brief Base Queue class
+   * @brief Base Queue class. Each entity has its own queue.
+   * This class is not to be used by itself; technically you could use it as a component
+   * but it's preferrable to derive it in another specialized class instead.
    *
    * @tparam EventType
    */
@@ -51,19 +56,26 @@ namespace yumeami::event {
     }
 
     /**
-     * @brief Consume an event from the queue.
-     * The event will be popped out, and then copy-returned.
+     * @brief Consume events from the queue, until it finds an event that targets the
+     * specified entity.
+     * The consumed events will be popped out. If a suitable event is found, it is
+     * copy-returned.
      *
+     * @param entity Entity that consumes the event
      * @return Consumed event
      */
-    std::optional<EventType> consume()
+    std::optional<EventType> consume(entt::entity entity)
     {
-      if (queue.empty()) {
-        return std::nullopt;
+      while (!queue.empty()) {
+        EventType event = queue.front();
+        queue.pop();
+
+        if (event.target_entity == entity) {
+          return std::optional<EventType>{ event };
+        }
       }
-      EventType event = queue.front();
-      queue.pop();
-      return std::optional<EventType>{ event };
+      // entire queue has been consumed
+      return std::nullopt;
     }
 
   private:

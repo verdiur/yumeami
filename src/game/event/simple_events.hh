@@ -5,9 +5,8 @@
 
 namespace yumeami::event {
 
-  struct MoveEvent : Event
+  struct MoveEvent : public Event
   {
-    entt::entity target_entity;
     Direction4 direction;
   };
 

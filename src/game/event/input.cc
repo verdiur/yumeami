@@ -13,19 +13,16 @@ yumeami::sys::dispatch_input_events(entt::registry& registry,
   auto view = registry.view<comp::ControllableFlag>();
   for (auto [entity] : view.each()) {
     if (IsKeyDown(KEY_DOWN)) {
-      dispatcher.trigger(
-        event::MoveEvent{ .target_entity = entity, .direction = Direction4::DOWN });
+      dispatcher.trigger(event::MoveEvent{ entity, Direction4::DOWN });
+
     } else if (IsKeyDown(KEY_UP)) {
-      dispatcher.trigger(
-        event::MoveEvent{ .target_entity = entity, .direction = Direction4::UP });
+      dispatcher.trigger(event::MoveEvent{ entity, Direction4::UP });
 
     } else if (IsKeyDown(KEY_LEFT)) {
-      dispatcher.trigger(
-        event::MoveEvent{ .target_entity = entity, .direction = Direction4::LEFT });
+      dispatcher.trigger(event::MoveEvent{ entity, Direction4::LEFT });
 
     } else if (IsKeyDown(KEY_RIGHT)) {
-      dispatcher.trigger(
-        event::MoveEvent{ .target_entity = entity, .direction = Direction4::RIGHT });
+      dispatcher.trigger(event::MoveEvent{ entity, Direction4::RIGHT });
     }
   }
 }

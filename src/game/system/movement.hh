@@ -41,7 +41,8 @@ namespace yumeami {
    *
    * @param state current state
    */
-  void movement_state_machine(comp::Movement& movement,
+  void movement_state_machine(entt::entity entity,
+                              comp::Movement& movement,
                               comp::TrueTilePosition& true_tile_position,
                               comp::DrawTilePosition& draw_tile_position,
                               comp::Facing& facing,

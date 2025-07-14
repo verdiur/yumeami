@@ -12,7 +12,8 @@
 /* BEGIN STATE MACHINE IMPLEMENTATION ***************************************************/
 
 void
-yumeami::movement_state_machine(comp::Movement& movement,
+yumeami::movement_state_machine(entt::entity entity,
+                                comp::Movement& movement,
                                 comp::TrueTilePosition& true_tile_position,
                                 comp::DrawTilePosition& draw_tile_position,
                                 comp::Facing& facing,
@@ -43,16 +44,17 @@ yumeami::movement_state_machine(comp::Movement& movement,
       }
 
       case READ_EVENT_QUEUE: {
-        std::optional<event::MoveEvent> event = move_event_queue.consume();
+        // consume events
+        std::optional<event::MoveEvent> event = move_event_queue.consume(entity);
 
-        // end state machine if queue is empty
+        // end state machine if no events are found
         if (!event.has_value()) {
           movement.state = END;
           break;
         }
 
         // update facing and state
-        facing.direction = event.value().direction;
+        facing.direction = event->direction;
         movement.state = CHECK_COLLISION;
         break;
       }
@@ -127,6 +129,17 @@ yumeami::movement_state_machine(comp::Movement& movement,
 /* END STATE MACHINE IMPLEMENTATION *****************************************************/
 
 void
+yumeami::sys::setup_connect_move_events(entt::dispatcher& dispatcher,
+                                        entt::registry& registry)
+{
+  auto view = registry.view<comp::MoveEventQueue>();
+  for (auto [entity, move_event_queue] : view.each()) {
+    dispatcher.sink<event::MoveEvent>().connect<&comp::MoveEventQueue::receive>(
+      move_event_queue);
+  }
+}
+
+void
 yumeami::sys::update_movement(entt::registry& registry)
 {
   auto view = registry.view<comp::Movement,
@@ -142,22 +155,12 @@ yumeami::sys::update_movement(entt::registry& registry)
              facing,
              velocity,
              move_event_queue] : view.each()) {
-    movement_state_machine(movement,
+    movement_state_machine(entity,
+                           movement,
                            true_tile_position,
                            draw_tile_position,
                            facing,
                            velocity,
                            move_event_queue);
-  }
-}
-
-void
-yumeami::sys::setup_connect_move_events(entt::dispatcher& dispatcher,
-                                        entt::registry& registry)
-{
-  auto view = registry.view<comp::MoveEventQueue>();
-  for (auto [entity, move_event_queue] : view.each()) {
-    dispatcher.sink<event::MoveEvent>().connect<&comp::MoveEventQueue::receive>(
-      move_event_queue);
   }
 }
