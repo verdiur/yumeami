@@ -5,6 +5,11 @@
 
 namespace yumeami::event {
 
+  /**
+   * @class MoveEvent
+   * @brief Signals that the targeted entity should move.
+   *
+   */
   struct MoveEvent : public Event
   {
     Direction4 direction;

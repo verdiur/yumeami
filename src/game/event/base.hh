@@ -4,7 +4,7 @@
 #include <optional>
 #include <queue>
 
-namespace yumeami::event {
+namespace yumeami {
 
   /**
    * @class Event
@@ -82,4 +82,4 @@ namespace yumeami::event {
     std::queue<EventType> queue;
   };
 
-} // namespace yumeami::event
+} // namespace yumeami

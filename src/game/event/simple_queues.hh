@@ -5,7 +5,7 @@
 
 namespace yumeami::comp {
 
-  struct MoveEventQueue : event::EventQueue<event::MoveEvent>
+  struct MoveEventQueue : EventQueue<event::MoveEvent>
   {};
 
 } // namespace yumeami::comp

@@ -24,6 +24,8 @@ Additionally :
 - Everything should be contained in the `yumeami` namespace.
 - All functions that involve manipulation of an `entt::registry` are under the `yumeami::sys` namespace.
 - All classes/structs that are attached to entities as components are under the `yumeami::comp` namespace.
+- All specialized event are under the `yumeami::event` namespace. Since event queues are attached to entities, they are under the `yumeami::comp` namespace.
+- All base classes should be in the `yumeami` namespace.
 
 ## Miscellaneous
 
