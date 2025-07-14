@@ -59,6 +59,13 @@ namespace yumeami::comp {
     float velocity;
   };
 
+  /* FLAGS ******************************************************************************/
+
+  /**
+   * @class ControllableFlag
+   * @brief Marks an entity as controllable by the player.
+   *
+   */
   struct ControllableFlag
   {};
 
