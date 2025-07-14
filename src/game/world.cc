@@ -27,6 +27,7 @@ yumeami::create_dummy_world()
   world.registry.emplace<comp::Facing>(player);
   world.registry.emplace<comp::Velocity>(player, (float)0.25);
   world.registry.emplace<comp::MoveEventQueue>(player);
+  world.registry.emplace<comp::ControllableFlag>(player);
 
   return world;
 }

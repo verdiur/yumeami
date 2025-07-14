@@ -150,3 +150,14 @@ yumeami::sys::update_movement(entt::registry& registry)
                            move_event_queue);
   }
 }
+
+void
+yumeami::sys::setup_connect_move_events(entt::dispatcher& dispatcher,
+                                        entt::registry& registry)
+{
+  auto view = registry.view<comp::MoveEventQueue>();
+  for (auto [entity, move_event_queue] : view.each()) {
+    dispatcher.sink<event::MoveEvent>().connect<&comp::MoveEventQueue::receive>(
+      move_event_queue);
+  }
+}

@@ -8,24 +8,14 @@ namespace yumeami {
   struct KeyboardKeyMappings
   {};
 
-  /**
-   * @brief Look for input and send events accordingly
-   *
-   * @param dispatcher
-   */
-  void dispatch_input_events(entt::dispatcher& dispatcher);
-
   namespace sys {
-
     /**
-     * @brief Set up an event dispatcher for input events.
-     * To be used when loading a world.
+     * @brief Look for input and send events accordingly
      *
      * @param dispatcher
-     * @param registry
      */
-    void initialize_input_event_dispatcher(entt::dispatcher& dispatcher,
-                                           entt::registry& registry);
+    void dispatch_input_events(entt::registry& registry, entt::dispatcher& dispatcher);
+
   } // namespace sys
 
 } // namespace yumeami

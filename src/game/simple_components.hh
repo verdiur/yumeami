@@ -59,4 +59,7 @@ namespace yumeami::comp {
     float velocity;
   };
 
+  struct ControllableFlag
+  {};
+
 } // namespace yumeami::comp

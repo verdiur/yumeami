@@ -10,8 +10,8 @@ int
 main(int argc, char* argv[])
 {
   // real window dimensions
-  const int window_width = 640;
-  const int window_height = 480;
+  const int window_width = 640 * 2;
+  const int window_height = 480 * 2;
 
   // virtual window dimensions
   const int virtual_width = 640;
@@ -35,7 +35,7 @@ main(int argc, char* argv[])
 
   // initialize input
   entt::dispatcher dispatcher{};
-  yumeami::sys::initialize_input_event_dispatcher(dispatcher, world.registry);
+  yumeami::sys::setup_connect_move_events(dispatcher, world.registry);
 
   // game loop
   while (!WindowShouldClose()) {
@@ -43,7 +43,7 @@ main(int argc, char* argv[])
     /* BEGIN INPUT **********************************************************************/
 
     // input
-    yumeami::dispatch_input_events(dispatcher);
+    yumeami::sys::dispatch_input_events(world.registry, dispatcher);
 
     /* END INPUT ************************************************************************/
     /* BEGIN UPDATE *********************************************************************/

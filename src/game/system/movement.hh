@@ -34,7 +34,6 @@ namespace yumeami {
       FloatTilePosition from = {}; // position the movement starts from
       FloatTilePosition to = {};   // position the movement goes to
     };
-
   } // namespace comp
 
   /**
@@ -50,6 +49,17 @@ namespace yumeami {
                               comp::MoveEventQueue& move_event_queue);
 
   namespace sys {
+
+    /**
+     * @brief Setup: connect MoveEvent events to a dispatcher.
+     * To be used when loading a world.
+     *
+     * @param dispatcher
+     * @param registry
+     */
+    void setup_connect_move_events(entt::dispatcher& dispatcher,
+                                   entt::registry& registry);
+
     /**
      * @brief Updates movement of all moving entities.
      *
