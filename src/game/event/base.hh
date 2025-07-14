@@ -25,7 +25,7 @@ namespace yumeami {
   concept EventDerived = std::derived_from<EventType, Event>;
 
   /**
-   * @brief Base Queue class. Each entity has its own queue.
+   * @brief Base Queue class. Each entity has its own queues.
    * This class is not to be used by itself; technically you could use it as a component
    * but it's preferrable to derive it in another specialized class instead.
    *
