@@ -8,6 +8,11 @@ namespace yumeami {
   struct KeyboardKeyMappings
   {};
 
+  /**
+   * @brief Look for input and send events accordingly
+   *
+   * @param dispatcher
+   */
   void dispatch_input_events(entt::dispatcher& dispatcher);
 
   namespace sys {

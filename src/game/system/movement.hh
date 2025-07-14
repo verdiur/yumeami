@@ -5,7 +5,7 @@
 
 namespace yumeami {
 
-  enum class MovementStateEnum
+  enum class MovementState
   {
     BEGIN = 0,
     END,
@@ -26,11 +26,10 @@ namespace yumeami {
      * @brief Component storing movement state.
      *
      */
-    struct MovementState
+    struct Movement
     {
-      MovementStateEnum state =
-        MovementStateEnum::BEGIN;  // current state of the state machine
-      bool is_moving = 0;          // true if entity is occupied moving
+      MovementState state = MovementState::BEGIN; // current state of the state machine
+      bool is_moving = 0;                         // true if entity is occupied moving
       float progress = 0;          // progression through movement (value from 0 to 1)
       FloatTilePosition from = {}; // position the movement starts from
       FloatTilePosition to = {};   // position the movement goes to
@@ -43,7 +42,7 @@ namespace yumeami {
    *
    * @param state current state
    */
-  void movement_state_machine(comp::MovementState& movement_state,
+  void movement_state_machine(comp::Movement& movement,
                               comp::TrueTilePosition& true_tile_position,
                               comp::DrawTilePosition& draw_tile_position,
                               comp::Facing& facing,

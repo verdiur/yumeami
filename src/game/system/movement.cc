@@ -12,32 +12,32 @@
 /* BEGIN STATE MACHINE IMPLEMENTATION ***************************************************/
 
 void
-yumeami::movement_state_machine(comp::MovementState& movement_state,
+yumeami::movement_state_machine(comp::Movement& movement,
                                 comp::TrueTilePosition& true_tile_position,
                                 comp::DrawTilePosition& draw_tile_position,
                                 comp::Facing& facing,
                                 comp::Velocity& velocity,
                                 comp::MoveEventQueue& move_event_queue)
 {
-  using enum MovementStateEnum;
+  using enum MovementState;
 
   // initialize state
-  movement_state.state = BEGIN;
+  movement.state = BEGIN;
 
   // run state machine
-  while (movement_state.state != END) {
-    switch (movement_state.state) {
+  while (movement.state != END) {
+    switch (movement.state) {
 
       case BEGIN: {
-        movement_state.state = IS_MOVING;
+        movement.state = IS_MOVING;
         break;
       }
 
       case IS_MOVING: {
-        if (movement_state.is_moving) {
-          movement_state.state = MOVE;
+        if (movement.is_moving) {
+          movement.state = MOVE;
         } else {
-          movement_state.state = READ_EVENT_QUEUE;
+          movement.state = READ_EVENT_QUEUE;
         }
         break;
       }
@@ -47,28 +47,28 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
 
         // end state machine if queue is empty
         if (!event.has_value()) {
-          movement_state.state = END;
+          movement.state = END;
           break;
         }
 
         // update facing and state
         facing.direction = event.value().direction;
-        movement_state.state = CHECK_COLLISION;
+        movement.state = CHECK_COLLISION;
         break;
       }
 
       case CHECK_COLLISION: { // TODO:
-        movement_state.state = CHECK_OOB;
+        movement.state = CHECK_OOB;
         break;
       }
 
       case CHECK_OOB: { // TODO:
-        movement_state.state = CHECK_WRAP;
+        movement.state = CHECK_WRAP;
         break;
       }
 
       case CHECK_WRAP: { // TODO:
-        movement_state.state = UPDATE_TILE_POSITIONS;
+        movement.state = UPDATE_TILE_POSITIONS;
         break;
       }
 
@@ -81,37 +81,37 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
 
         // update positions
         true_tile_position = static_cast<comp::TrueTilePosition>(target_int);
-        movement_state.from = draw_tile_position;
-        movement_state.to = target_float;
-        movement_state.state = BEGIN_MOVING;
+        movement.from = draw_tile_position;
+        movement.to = target_float;
+        movement.state = BEGIN_MOVING;
         break;
       }
 
       case BEGIN_MOVING: {
-        movement_state.is_moving = true;
-        movement_state.state = MOVE;
+        movement.is_moving = true;
+        movement.state = MOVE;
         break;
       }
 
       case MOVE: {
-        movement_state.progress += (1 / velocity.velocity) * GetFrameTime();
+        movement.progress += (1 / velocity.velocity) * GetFrameTime();
         draw_tile_position.x =
-          std::lerp(movement_state.from.x, movement_state.to.x, movement_state.progress);
+          std::lerp(movement.from.x, movement.to.x, movement.progress);
         draw_tile_position.y =
-          std::lerp(movement_state.from.y, movement_state.to.y, movement_state.progress);
+          std::lerp(movement.from.y, movement.to.y, movement.progress);
 
-        movement_state.state = STOP_MOVING_IF_FINISHED;
+        movement.state = STOP_MOVING_IF_FINISHED;
         break;
       }
 
       case STOP_MOVING_IF_FINISHED: {
-        if (movement_state.progress >= 1) {
+        if (movement.progress >= 1) {
           // snap draw position
-          draw_tile_position = static_cast<comp::DrawTilePosition>(movement_state.to);
-          movement_state.progress = 0;
-          movement_state.is_moving = false;
+          draw_tile_position = static_cast<comp::DrawTilePosition>(movement.to);
+          movement.progress = 0;
+          movement.is_moving = false;
         }
-        movement_state.state = END;
+        movement.state = END;
         break;
       }
 
@@ -129,20 +129,20 @@ yumeami::movement_state_machine(comp::MovementState& movement_state,
 void
 yumeami::sys::update_movement(entt::registry& registry)
 {
-  auto view = registry.view<comp::MovementState,
+  auto view = registry.view<comp::Movement,
                             comp::TrueTilePosition,
                             comp::DrawTilePosition,
                             comp::Facing,
                             comp::Velocity,
                             comp::MoveEventQueue>();
   for (auto [entity,
-             movement_state,
+             movement,
              true_tile_position,
              draw_tile_position,
              facing,
              velocity,
              move_event_queue] : view.each()) {
-    movement_state_machine(movement_state,
+    movement_state_machine(movement,
                            true_tile_position,
                            draw_tile_position,
                            facing,
