@@ -6,17 +6,14 @@
 #pragma once
 #include "entt/fwd.hpp"
 #include "game/world.hh"
-#include "raylib.h"
 
 namespace yumeami {
 
   /**
-   * @brief Render world. Utility function that groups multiple draw functions for
-   * convenience.
-   *
+   * @brief Render world
    * @param world
    * @param viewport
    */
-  void draw_world(World &world, RenderTexture &viewport);
+  void draw_world(World &world);
 
 } // namespace yumeami
