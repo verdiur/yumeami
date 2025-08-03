@@ -39,9 +39,17 @@ FetchContent_MakeAvailable(EnTT)
 
 # main
 add_executable(${PROJECT_NAME}
-  src/main.cc
+  src/game/components.hh
+  src/game/draw.cc 
+  src/game/draw.hh
+  src/game/world.cc 
+  src/game/world.hh
+  
+  src/util/units.hh
   src/util/viewport_transform.cc
   src/util/viewport_transform.hh
+
+  src/main.cc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

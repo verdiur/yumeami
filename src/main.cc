@@ -3,6 +3,8 @@
  * @brief Entry point
  */
 
+#include "game/draw.hh"
+#include "game/world.hh"
 #include "raylib.h"
 #include "util/viewport_transform.hh"
 
@@ -24,13 +26,19 @@ int main(int argc, char *argv[]) {
   yumeami::ViewportTransform viewport_transform = {};
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
+  // dummy world
+  yumeami::World world = {};
+
   // game loop
   while (!WindowShouldClose()) {
 
     /* DRAW: BEGIN VIEWPORT MODE ********************************************************/
 
     BeginTextureMode(viewport);
+
     ClearBackground(BLACK);
+    yumeami::draw_world(world, viewport);
+
     EndTextureMode();
 
     /* DRAW: END VIEWPORT MODE **********************************************************/
