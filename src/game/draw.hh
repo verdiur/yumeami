@@ -11,7 +11,14 @@
 namespace yumeami {
 
   /**
-   * @brief Render world. Utility function that groups multiple draw functions for
+   * @brief Draw contents of registry.
+   * @param world
+   * @param viewport
+   */
+  void draw_registry(entt::registry &registry, RenderTexture &viewport);
+
+  /**
+   * @brief Draw world. Utility function that groups multiple draw functions for
    * convenience.
    *
    * @param world
