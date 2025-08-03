@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[]) {
 
+  /* SETUP ******************************************************************************/
+
   // window dimensions
   const int window_width = 640 * 2;
   const int window_height = 480 * 2;
@@ -29,7 +31,8 @@ int main(int argc, char *argv[]) {
   // dummy world
   yumeami::World world = {};
 
-  // game loop
+  /* GAME LOOP **************************************************************************/
+
   while (!WindowShouldClose()) {
 
     /* DRAW: BEGIN VIEWPORT MODE ********************************************************/
@@ -54,6 +57,8 @@ int main(int argc, char *argv[]) {
 
     /* DRAW: END WINDOW MODE ************************************************************/
   }
+
+  /* DE-INIT ****************************************************************************/
 
   CloseWindow();
 }

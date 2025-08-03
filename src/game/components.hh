@@ -1,6 +1,6 @@
 /**
  * @file components.hh
- * @brief Component structs
+ * @brief Common component structs
  */
 
 #pragma once
