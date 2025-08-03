@@ -19,6 +19,7 @@ namespace yumeami {
     tile_int width = 20;          // world width
     tile_int height = 15;         // world height
     spritepx_int tile_size = 16;  // size of tile
+    int spritepx_multiplier = 2;  // sprite pixel multiplier
     entt::registry registry = {}; // entity registry
     Camera2D camera = {0};        // world camera
 

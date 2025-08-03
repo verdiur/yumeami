@@ -18,8 +18,8 @@ void yumeami::impl::update_camera_target(World &world) {
 
 void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) {
   // calc bounds
-  const float bound_x = world.width * world.tile_size * 2;
-  const float bound_y = world.height * world.tile_size * 2;
+  const float bound_x = world.width * world.tile_size * world.spritepx_multiplier;
+  const float bound_y = world.height * world.tile_size * world.spritepx_multiplier;
   // calc half camera screen width
   float half_screen_width = viewport.texture.width / (2.0f * world.camera.zoom);
   float half_screen_height = viewport.texture.height / (2.0f * world.camera.zoom);
