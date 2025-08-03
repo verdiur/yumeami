@@ -20,7 +20,7 @@ namespace yumeami {
    *
    * @param event
    */
-  void handle_move_event(MoveEvent &event);
+  void handle_move_event(const MoveEvent &event);
 
   /**
    * @brief Connect move events to dispatcher

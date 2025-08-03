@@ -42,9 +42,12 @@ add_executable(${PROJECT_NAME}
   src/game/components.hh
   src/game/draw.cc 
   src/game/draw.hh
+  src/game/movement.cc
+  src/game/movement.hh
   src/game/world.cc 
   src/game/world.hh
-  
+
+  src/utils/direction.hh
   src/util/units.hh
   src/util/viewport_transform.cc
   src/util/viewport_transform.hh
