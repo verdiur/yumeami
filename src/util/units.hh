@@ -5,10 +5,12 @@
  * 1 tile (size of a tile in spritepx) = usually 16 spritepx
  */
 
+#pragma once
+
 namespace yumeami {
 
-using tile_int = int;
-using tile_float = float;
-using spritepx_int = int;
+  using tile_int = int;
+  using tile_float = float;
+  using spritepx_int = int;
 
 } // namespace yumeami
