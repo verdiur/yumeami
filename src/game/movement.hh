@@ -6,6 +6,7 @@
 #pragma once
 #include "entt/fwd.hpp"
 #include "game/world.hh"
+#include "util/direction.hh"
 
 namespace yumeami {
 
@@ -24,8 +25,9 @@ namespace yumeami {
   };
 
   struct MoveEvent {
-    entt::entity target; // targeted entity
-    World *world;        // world ctx
+    entt::entity target;  // targeted entity
+    World *world;         // world ctx
+    Direction4 direction; // direction of movement
   };
 
   /**
@@ -41,5 +43,11 @@ namespace yumeami {
    * @param dispatcher
    */
   void setup_dispatcher_movement(entt::dispatcher &dispatcher);
+
+  /**
+   * @brief Update movement for concerned entities. Runs a state machine internally.
+   * @param world
+   */
+  void update_movement(World &world);
 
 } // namespace yumeami

@@ -3,7 +3,9 @@
  * @brief Entry point
  */
 
+#include "entt/signal/fwd.hpp"
 #include "game/draw.hh"
+#include "game/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
 #include "util/viewport_transform.hh"
@@ -31,11 +33,24 @@ int main(int argc, char *argv[]) {
   // dummy world
   yumeami::World world = {};
 
+  // events
+  entt::dispatcher dispatcher = {};
+  yumeami::setup_dispatcher_movement(dispatcher);
+
   /* GAME LOOP **************************************************************************/
 
   while (!WindowShouldClose()) {
 
-    /* DRAW: BEGIN VIEWPORT MODE ********************************************************/
+    /* INPUT ****************************************************************************/
+
+    /* AI *******************************************************************************/
+
+    /* UPDATE ***************************************************************************/
+
+    yumeami::update_movement(world);
+    yumeami::update_camera(world, viewport);
+
+    /* DRAW: VIEWPORT MODE **************************************************************/
 
     BeginTextureMode(viewport);
 
@@ -44,8 +59,7 @@ int main(int argc, char *argv[]) {
 
     EndTextureMode();
 
-    /* DRAW: END VIEWPORT MODE **********************************************************/
-    /* DRAW: BEGIN WINDOW MODE **********************************************************/
+    /* DRAW: WINDOW MODE ****************************************************************/
 
     BeginDrawing();
 
@@ -54,8 +68,6 @@ int main(int argc, char *argv[]) {
     DrawFPS(10, 10);
 
     EndDrawing();
-
-    /* DRAW: END WINDOW MODE ************************************************************/
   }
 
   /* DE-INIT ****************************************************************************/
