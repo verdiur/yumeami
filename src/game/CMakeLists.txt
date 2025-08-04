@@ -1,7 +1,11 @@
 add_library(game STATIC
   components.hh
+  conversions.cc 
+  conversions.hh
   draw.cc
   draw.hh
+  input.cc 
+  input.hh
   movement.cc 
   movement.hh
   world.cc 

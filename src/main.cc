@@ -5,6 +5,7 @@
 
 #include "entt/signal/fwd.hpp"
 #include "game/draw.hh"
+#include "game/input.hh"
 #include "game/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
@@ -42,6 +43,8 @@ int main(int argc, char *argv[]) {
   while (!WindowShouldClose()) {
 
     /* INPUT ****************************************************************************/
+
+    yumeami::input(world, dispatcher);
 
     /* AI *******************************************************************************/
 
