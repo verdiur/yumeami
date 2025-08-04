@@ -34,6 +34,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(EnTT)
 
+# spdlog
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.15.3
+)
+FetchContent_MakeAvailable(spdlog)
+
 ##########################################################################################
 # targets
 
@@ -47,7 +55,7 @@ add_executable(${PROJECT_NAME}
   src/game/world.cc 
   src/game/world.hh
 
-  src/utils/direction.hh
+  src/util/direction.hh
   src/util/units.hh
   src/util/viewport_transform.cc
   src/util/viewport_transform.hh
@@ -66,6 +74,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
   raylib
   EnTT::EnTT
+  spdlog::spdlog
 )
 
 ##########################################################################################

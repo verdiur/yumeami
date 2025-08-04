@@ -37,7 +37,6 @@ void yumeami::setup_camera(World &world, RenderTexture &viewport) {
   // camera offset
   world.camera.offset =
       Vector2{viewport.texture.width / 2.0f, viewport.texture.height / 2.0f};
-  // also set other fields
   world.camera.zoom = 1.0f;
   world.camera.rotation = 0;
 }
