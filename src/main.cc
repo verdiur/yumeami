@@ -4,6 +4,7 @@
  */
 
 #include "entt/signal/fwd.hpp"
+#include "game/debug.hh"
 #include "game/draw.hh"
 #include "game/input.hh"
 #include "game/movement.hh"
@@ -31,8 +32,8 @@ int main(int argc, char *argv[]) {
   yumeami::ViewportTransform viewport_transform = {};
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
-  // dummy world
-  yumeami::World world = yumeami::debug::create_dummy_world();
+  // INFO: debug world
+  yumeami::World world = yumeami::debug::create_player_test_world();
   yumeami::setup_camera(world, viewport);
 
   // events
