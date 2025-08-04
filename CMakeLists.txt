@@ -45,36 +45,20 @@ FetchContent_MakeAvailable(spdlog)
 ##########################################################################################
 # targets
 
-# main
+add_subdirectory(src/game)
+add_subdirectory(src/util)
+
 add_executable(${PROJECT_NAME}
-  src/game/components.hh
-  src/game/draw.cc 
-  src/game/draw.hh
-  src/game/movement.cc
-  src/game/movement.hh
-  src/game/world.cc 
-  src/game/world.hh
-
-  src/util/direction.hh
-  src/util/units.hh
-  src/util/viewport_transform.cc
-  src/util/viewport_transform.hh
-
-  src/main.cc
+  src/main.cc 
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-  src/
+  ${CMAKE_SOURCE_DIR}/src/
 )
 
-##########################################################################################
-# link
-
-# main
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  raylib
-  EnTT::EnTT
-  spdlog::spdlog
+  game 
+  util 
 )
 
 ##########################################################################################
