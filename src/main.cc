@@ -16,8 +16,8 @@ int main(int argc, char *argv[]) {
   /* SETUP ******************************************************************************/
 
   // window dimensions
-  const int window_width = 640 * 2;
-  const int window_height = 480 * 2;
+  const int window_width = 640;
+  const int window_height = 480;
 
   // setup window
   InitWindow(window_width, window_height, "yumeami");
@@ -32,7 +32,8 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
   // dummy world
-  yumeami::World world = {};
+  yumeami::World world = yumeami::debug::create_dummy_world();
+  yumeami::setup_camera(world, viewport);
 
   // events
   entt::dispatcher dispatcher = {};
@@ -51,7 +52,6 @@ int main(int argc, char *argv[]) {
     /* UPDATE ***************************************************************************/
 
     yumeami::update_movement(world);
-    yumeami::update_camera(world, viewport);
 
     /* DRAW: VIEWPORT MODE **************************************************************/
 

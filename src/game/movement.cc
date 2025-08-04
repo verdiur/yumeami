@@ -40,6 +40,7 @@ void yumeami::handle_move_event(const MoveEvent &event) {
   movement.progress = 0;
   movement.from = true_tile_pos;
   movement.to = calc_true_tile_pos_from_direction4(true_tile_pos, event.direction);
+  true_tile_pos = movement.to;
   movement.is_moving = true;
 }
 

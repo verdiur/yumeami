@@ -1,5 +1,5 @@
 #include "game/input.hh"
-#include "entt/signal/fwd.hpp"
+#include "entt/fwd.hpp"
 #include "game/components.hh"
 #include "game/movement.hh"
 #include "raylib.h"

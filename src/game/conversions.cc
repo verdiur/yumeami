@@ -18,9 +18,9 @@ yumeami::TrueTilePos yumeami::calc_true_tile_pos_from_direction4(TrueTilePos tru
   case Direction4::RIGHT:
     return TrueTilePos{true_pos.x + 1, true_pos.y};
   case Direction4::TOP:
-    return TrueTilePos{true_pos.x, true_pos.y - 1};
+    return TrueTilePos{true_pos.x, true_pos.y + 1};
   case Direction4::BOTTOM:
-    return TrueTilePos{true_pos.x, true_pos.y + 2};
+    return TrueTilePos{true_pos.x, true_pos.y - 1};
   case Direction4::NONE:
     return true_pos;
   }

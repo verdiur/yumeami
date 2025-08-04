@@ -60,3 +60,6 @@ namespace yumeami::impl {
   void update_camera_bounds(World &world, RenderTexture &viewport);
 
 } // namespace yumeami::impl
+namespace yumeami::debug {
+  World create_dummy_world();
+}
