@@ -9,13 +9,14 @@ void yumeami::handle_move_event(const MoveEvent &event) {
 
   // does the target exist?
   if (!world->registry.valid(target)) {
-    spdlog::warn("handle_move_event: target does not exist");
+    spdlog::warn("handle_move_event: target does not exist. This event will be ignored.");
     return;
   }
 
   // does the target have the necessary components?
   if (!world->registry.all_of<TrueTilePos, DrawTilePos>(target)) {
-    spdlog::warn("handle_move_event: target does not have necessary components");
+    spdlog::warn("handle_move_event: target does not have necessary components. This "
+                 "event will be ignored.");
     return;
   }
 
