@@ -11,10 +11,10 @@ void yumeami::calc_viewport_scaling(const RenderTexture &viewport,
       std::min(GetScreenWidth() / vp_width, GetScreenHeight() / vp_height);
 
   viewport_transform.src_rect = {0, 0, static_cast<float>(vp_width),
-                                 static_cast<float>(vp_height)};
+                                 -static_cast<float>(vp_height)};
   viewport_transform.dst_rect = {
       static_cast<float>(GetScreenWidth() - vp_width * scale_factor) / 2,
-      -static_cast<float>(GetScreenHeight() - vp_height * scale_factor) / 2,
+      static_cast<float>(GetScreenHeight() - vp_height * scale_factor) / 2,
       static_cast<float>(vp_width * scale_factor),
       static_cast<float>(vp_height * scale_factor)};
 }
