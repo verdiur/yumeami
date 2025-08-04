@@ -16,6 +16,6 @@ void yumeami::handle_move_event(const MoveEvent &event) {
   // TODO: more checks and trigger movement...
 }
 
-void yumeami::setup_dispatcher_move(entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
   dispatcher.sink<MoveEvent>().connect<&handle_move_event>();
 }

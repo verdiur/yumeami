@@ -9,6 +9,20 @@
 
 namespace yumeami {
 
+  // State of movement state machine
+  enum struct MovementState { IDLE = 0 };
+
+  /**
+   * @class Movement
+   * @brief Movement component. Encapsulates all information about the entity's movement.
+   * An entity cannot move it doesn't have this component.
+   *
+   */
+  struct Movement {
+    MovementState state; // current state
+    bool is_moving;      // true if entity is performing a movement
+  };
+
   struct MoveEvent {
     entt::entity target; // targeted entity
     World *world;        // world ctx
@@ -26,6 +40,6 @@ namespace yumeami {
    * @brief Connect move events to dispatcher
    * @param dispatcher
    */
-  void setup_dispatcher_move(entt::dispatcher &dispatcher);
+  void setup_dispatcher_movement(entt::dispatcher &dispatcher);
 
 } // namespace yumeami
