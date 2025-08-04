@@ -29,6 +29,13 @@ namespace yumeami {
   };
 
   /**
+   * @brief Calculate size of a tile in pixels.
+   * @param world
+   * @return tile size in px
+   */
+  int calc_px_tile_size(const World &world);
+
+  /**
    * @brief Define camera target & origin
    * @param world World
    * @param viewport Viewport

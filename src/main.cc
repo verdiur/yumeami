@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
   /* SETUP ******************************************************************************/
 
   // window dimensions
-  const int window_width = 640;
-  const int window_height = 480;
+  const int window_width = 640 * 2;
+  const int window_height = 480 * 2;
 
   // setup window
   InitWindow(window_width, window_height, "yumeami");

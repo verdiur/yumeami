@@ -2,15 +2,21 @@
 #include "game/components.hh"
 #include "raylib.h"
 #include <algorithm>
+#include <cmath>
+
+int yumeami::calc_px_tile_size(const World &world) {
+  return world.tile_size * world.spritepx_multiplier;
+}
 
 /* IMPL *********************************************************************************/
 
 void yumeami::impl::update_camera_target(World &world) {
   // camera should target player
-  auto view = world.registry.view<PlayerFlag, TrueTilePos>();
-  for (auto [entity, true_pos] : view.each()) {
+  auto view = world.registry.view<PlayerFlag, DrawTilePos>();
+  for (auto [entity, draw_pos] : view.each()) {
     world.camera.target =
-        Vector2{static_cast<float>(true_pos.x), static_cast<float>(true_pos.y)};
+        Vector2{floorf(static_cast<float>((draw_pos.x + 1) * calc_px_tile_size(world))),
+                floorf(static_cast<float>((draw_pos.y + 1) * calc_px_tile_size(world)))};
   }
 
   world.desired_camera_target = world.camera.target;
@@ -18,8 +24,8 @@ void yumeami::impl::update_camera_target(World &world) {
 
 
 void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) {
-  const float bound_x = world.width * world.tile_size * world.spritepx_multiplier;
-  const float bound_y = world.height * world.tile_size * world.spritepx_multiplier;
+  const float bound_x = world.width * calc_px_tile_size(world);
+  const float bound_y = world.height * calc_px_tile_size(world);
 
   float half_screen_width = viewport.texture.width / (2.0f * world.camera.zoom);
   float half_screen_height = viewport.texture.height / (2.0f * world.camera.zoom);

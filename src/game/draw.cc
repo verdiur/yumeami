@@ -8,10 +8,9 @@ void yumeami::draw_registry(World &world, RenderTexture &viewport) {
   auto view = world.registry.view<DrawTilePos>();
   for (auto [entity, draw_pos] : view.each()) {
     // TODO: this implementation is placeholder
-    DrawRectangle(draw_pos.x * world.tile_size * world.spritepx_multiplier,
-                  draw_pos.y * world.tile_size * world.spritepx_multiplier,
-                  world.tile_size * world.spritepx_multiplier,
-                  world.tile_size * world.spritepx_multiplier, WHITE);
+    DrawRectangle(draw_pos.x * calc_px_tile_size(world),
+                  draw_pos.y * calc_px_tile_size(world), calc_px_tile_size(world),
+                  calc_px_tile_size(world), WHITE);
   }
 }
 
