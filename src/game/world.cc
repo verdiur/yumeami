@@ -16,6 +16,7 @@ void yumeami::impl::update_camera_target(World &world) {
   world.desired_camera_target = world.camera.target;
 }
 
+
 void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) {
   const float bound_x = world.width * world.tile_size * world.spritepx_multiplier;
   const float bound_y = world.height * world.tile_size * world.spritepx_multiplier;
@@ -40,6 +41,7 @@ void yumeami::setup_camera(World &world, RenderTexture &viewport) {
   world.camera.zoom = 1.0f;
   world.camera.rotation = 0;
 }
+
 
 void yumeami::update_camera(World &world, RenderTexture &viewport) {
   impl::update_camera_target(world);

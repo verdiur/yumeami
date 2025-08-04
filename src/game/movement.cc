@@ -6,9 +6,11 @@
 #include "spdlog/spdlog.h"
 #include <cmath>
 
+
 void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
   dispatcher.sink<MoveEvent>().connect<&handle_move_event>();
 }
+
 
 void yumeami::handle_move_event(const MoveEvent &event) {
   entt::registry &registry = event.world->registry;
@@ -19,30 +21,33 @@ void yumeami::handle_move_event(const MoveEvent &event) {
     return;
   }
 
-  if (!registry.all_of<TrueTilePos, DrawTilePos, Velocity, Facing, Movement>(target)) {
+  if (!registry.all_of<TrueTilePos, DrawTilePos, Velocity, Movement>(target)) {
     spdlog::warn("handle_move_event: target does not have necessary components. This "
                  "event will be ignored.");
     return;
   }
 
-  // extract components
   auto &true_tile_pos = registry.get<TrueTilePos>(target);
   auto &draw_tile_pos = registry.get<DrawTilePos>(target);
   auto &movement = registry.get<Movement>(target);
-  auto &facing = registry.get<Facing>(target);
 
   if (movement.is_moving) {
     return;
   }
 
-  // TODO: check collision, wrap, OOB
+  // if entity has facing, update it
+  if (registry.all_of<Facing>(target)) {
+    auto &facing = registry.get<Facing>(target);
+    facing.fac = event.direction;
+  }
 
-  movement.progress = 0;
   movement.from = true_tile_pos;
   movement.to = calc_true_tile_pos_from_direction4(true_tile_pos, event.direction);
   true_tile_pos = movement.to;
+  movement.progress = 0;
   movement.is_moving = true;
 }
+
 
 void yumeami::update_movement(World &world) {
   auto view = world.registry.view<TrueTilePos, DrawTilePos, Velocity, Movement>();

@@ -3,6 +3,7 @@
 #include "game/world.hh"
 #include "raylib.h"
 
+
 void yumeami::draw_registry(World &world, RenderTexture &viewport) {
   auto view = world.registry.view<DrawTilePos>();
   for (auto [entity, draw_pos] : view.each()) {
@@ -13,6 +14,7 @@ void yumeami::draw_registry(World &world, RenderTexture &viewport) {
                   world.tile_size * world.spritepx_multiplier, WHITE);
   }
 }
+
 
 void yumeami::draw_world(World &world, RenderTexture &viewport) {
   update_camera(world, viewport);
