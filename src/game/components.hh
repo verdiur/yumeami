@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "util/direction.hh"
 #include "util/units.hh"
 
 namespace yumeami {
@@ -24,6 +25,24 @@ namespace yumeami {
    */
   struct DrawTilePos {
     tile_float x, y;
+  };
+
+  /**
+   * @class Velocity
+   * @brief Corresponds to the time it takes to move a distance of 1 tile, in seconds.
+   *
+   */
+  struct Velocity {
+    float vel;
+  };
+
+  /**
+   * @class Facing
+   * @brief Facing direction of entity.
+   *
+   */
+  struct Facing {
+    Direction4 fac;
   };
 
   /* FLAGS ******************************************************************************/

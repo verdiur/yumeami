@@ -15,4 +15,4 @@ namespace yumeami {
     BOTTOM = 4,
   };
 
-}
+} // namespace yumeami

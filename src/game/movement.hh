@@ -5,13 +5,11 @@
 
 #pragma once
 #include "entt/fwd.hpp"
+#include "game/components.hh"
 #include "game/world.hh"
 #include "util/direction.hh"
 
 namespace yumeami {
-
-  // State of movement state machine
-  enum struct MovementState { IDLE = 0 };
 
   /**
    * @class Movement
@@ -20,8 +18,10 @@ namespace yumeami {
    *
    */
   struct Movement {
-    MovementState state; // current state
-    bool is_moving;      // true if entity is performing a movement
+    bool is_moving = false; // true if entity is performing a movement
+    float progress = 0;     // movement progress through lerp
+    TrueTilePos from = {};
+    TrueTilePos to = {};
   };
 
   struct MoveEvent {
@@ -32,7 +32,7 @@ namespace yumeami {
 
   /**
    * @brief Handle a move event. Does collision, OOB, wrap and movement checks, and
-   * triggers movement if checks pass.
+   * sets up + triggers movement if checks pass.
    *
    * @param event
    */
@@ -45,7 +45,8 @@ namespace yumeami {
   void setup_dispatcher_movement(entt::dispatcher &dispatcher);
 
   /**
-   * @brief Update movement for concerned entities. Runs a state machine internally.
+   * @brief Update position of applicable entities
+   * (DrawTilePos, TrueTilePos, Velocity, Movement)
    * @param world
    */
   void update_movement(World &world);

@@ -1,43 +1,62 @@
 #include "game/movement.hh"
 #include "entt/fwd.hpp"
 #include "game/components.hh"
+#include "game/conversions.hh"
+#include "raylib.h"
 #include "spdlog/spdlog.h"
+#include <cmath>
+
+void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
+  dispatcher.sink<MoveEvent>().connect<&handle_move_event>();
+}
 
 void yumeami::handle_move_event(const MoveEvent &event) {
-  World *world = event.world;
-  entt::entity target = event.target;
+  entt::registry &registry = event.world->registry;
+  const entt::entity target = event.target;
 
-  // does the target exist?
-  if (!world->registry.valid(target)) {
+  if (!registry.valid(target)) {
     spdlog::warn("handle_move_event: target does not exist. This event will be ignored.");
     return;
   }
 
-  // does the target have the necessary components?
-  if (!world->registry.all_of<TrueTilePos, DrawTilePos, Movement>(target)) {
+  if (!registry.all_of<TrueTilePos, DrawTilePos, Velocity, Facing, Movement>(target)) {
     spdlog::warn("handle_move_event: target does not have necessary components. This "
                  "event will be ignored.");
     return;
   }
 
   // extract components
-  auto &true_tile_pos = world->registry.get<TrueTilePos>(target);
-  auto &draw_tile_pos = world->registry.get<DrawTilePos>(target);
-  auto &movement = world->registry.get<Movement>(target);
+  auto &true_tile_pos = registry.get<TrueTilePos>(target);
+  auto &draw_tile_pos = registry.get<DrawTilePos>(target);
+  auto &movement = registry.get<Movement>(target);
+  auto &facing = registry.get<Facing>(target);
 
-  // is the target already in movement?
   if (movement.is_moving) {
     return;
   }
 
   // TODO: check collision, wrap, OOB
-  // TODO: trigger movement
-}
 
-void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
-  dispatcher.sink<MoveEvent>().connect<&handle_move_event>();
+  movement.progress = 0;
+  movement.from = true_tile_pos;
+  movement.to = calc_true_tile_pos_from_direction4(true_tile_pos, event.direction);
+  movement.is_moving = true;
 }
 
 void yumeami::update_movement(World &world) {
-  // TODO:
+  auto view = world.registry.view<TrueTilePos, DrawTilePos, Velocity, Movement>();
+  for (auto [entity, true_pos, draw_pos, velocity, movement] : view.each()) {
+
+    if (movement.is_moving) {
+      movement.progress += (1 / velocity.vel) * GetFrameTime();
+      draw_pos.x = std::lerp(movement.from.x, movement.to.x, movement.progress);
+      draw_pos.y = std::lerp(movement.from.y, movement.to.y, movement.progress);
+
+      if (movement.progress >= 1) {
+        draw_pos = to_draw_tile_pos(movement.to);
+        movement.progress = 0;
+        movement.is_moving = false;
+      }
+    }
+  }
 }
