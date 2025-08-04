@@ -24,4 +24,5 @@ yumeami::TrueTilePos yumeami::calc_true_tile_pos_from_direction4(TrueTilePos tru
   case Direction4::NONE:
     return true_pos;
   }
+  return true_pos;
 }
