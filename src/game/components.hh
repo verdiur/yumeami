@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "raylib.h"
 #include "util/direction.hh"
 #include "util/units.hh"
 
@@ -45,8 +46,18 @@ namespace yumeami {
     Direction4 fac;
   };
 
-  /* FLAGS ******************************************************************************/
+  /**
+   * @class Sprite
+   * @brief Simple sprite component. Might abstract this further later
+   * TODO: yes please do abstract it further it will be needed
+   *
+   */
+  struct Sprite {
+    Texture tex;
+  };
 
-  struct PlayerFlag {};
+  /* TAGS *******************************************************************************/
+
+  struct PlayerTag {};
 
 } // namespace yumeami

@@ -10,7 +10,7 @@ yumeami::World yumeami::debug::create_player_test_world() {
   world.registry.emplace<Velocity>(player, 0.4);
   world.registry.emplace<Movement>(player);
   world.registry.emplace<Facing>(player, Direction4::LEFT);
-  world.registry.emplace<PlayerFlag>(player);
+  world.registry.emplace<PlayerTag>(player);
 
   return world;
 }

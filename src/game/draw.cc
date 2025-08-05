@@ -7,10 +7,22 @@
 void yumeami::draw_registry(World &world, RenderTexture &viewport) {
   auto view = world.registry.view<DrawTilePos>();
   for (auto [entity, draw_pos] : view.each()) {
-    // TODO: this implementation is placeholder
-    DrawRectangle(draw_pos.x * calc_px_tile_size(world),
-                  draw_pos.y * calc_px_tile_size(world), calc_px_tile_size(world),
-                  calc_px_tile_size(world), WHITE);
+
+    // fetch sprite
+    auto *sprite = world.registry.try_get<Sprite>(entity);
+
+    // fallback
+    if (sprite == nullptr) {
+      DrawRectangle(draw_pos.x * calc_px_tile_size(world),
+                    draw_pos.y * calc_px_tile_size(world), calc_px_tile_size(world),
+                    calc_px_tile_size(world), MAGENTA);
+      continue;
+    }
+
+    DrawTextureEx(sprite->tex,
+                  Vector2{draw_pos.x * calc_px_tile_size(world),
+                          draw_pos.y * calc_px_tile_size(world)},
+                  0, world.spritepx_multiplier, WHITE);
   }
 }
 

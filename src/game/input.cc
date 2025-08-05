@@ -6,7 +6,7 @@
 #include "util/direction.hh"
 
 void yumeami::input(World &world, entt::dispatcher &dispatcher) {
-  auto view = world.registry.view<PlayerFlag, Velocity>();
+  auto view = world.registry.view<PlayerTag, Velocity>();
   if (IsKeyDown(KEY_LEFT)) {
     for (auto [entity, velocity] : view.each()) {
       dispatcher.trigger(MoveEvent{entity, &world, Direction4::LEFT});

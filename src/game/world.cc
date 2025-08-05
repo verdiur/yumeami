@@ -12,7 +12,7 @@ int yumeami::calc_px_tile_size(const World &world) {
 
 void yumeami::impl::update_camera_target(World &world) {
   // camera should target player
-  auto view = world.registry.view<PlayerFlag, DrawTilePos>();
+  auto view = world.registry.view<PlayerTag, DrawTilePos>();
   for (auto [entity, draw_pos] : view.each()) {
     world.camera.target =
         Vector2{floorf(static_cast<float>((draw_pos.x + 1) * calc_px_tile_size(world))),
