@@ -4,7 +4,6 @@
  */
 
 #pragma once
-#include "raylib.h"
 #include "util/direction.hh"
 #include "util/units.hh"
 
