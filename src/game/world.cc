@@ -5,7 +5,7 @@
 #include <cmath>
 
 int yumeami::calc_px_tile_size(const World &world) {
-  return world.tile_size * world.spritepx_multiplier;
+  return world.tile_size * world.spx_multiplier;
 }
 
 /* IMPL *********************************************************************************/

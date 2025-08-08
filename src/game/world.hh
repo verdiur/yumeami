@@ -5,6 +5,7 @@
 
 #pragma once
 #include "entt/entt.hpp"
+#include "game/texture.hh"
 #include "raylib.h"
 #include "util/units.hh"
 
@@ -18,14 +19,17 @@ namespace yumeami {
   struct World {
     tile_int width = 20;          // world width
     tile_int height = 15;         // world height
-    spritepx_int tile_size = 16;  // size of tile
-    int spritepx_multiplier = 2;  // sprite pixel multiplier
+    spx_int tile_size = 16;       // size of tile
+    int spx_multiplier = 2;       // sprite pixel multiplier
     entt::registry registry = {}; // entity registry
     Camera2D camera = {0};        // world camera
 
     // desired target. actual camera target might be
     // different if camera is at the border of a world.
     Vector2 desired_camera_target = {};
+
+    // spritesheets
+    std::vector<Spritesheet> spritesheets = {};
   };
 
   /**

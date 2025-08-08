@@ -1,8 +1,35 @@
 #include "game/draw.hh"
 #include "game/components.hh"
+#include "game/texture.hh"
 #include "game/world.hh"
 #include "raylib.h"
 
+/* IMPL *********************************************************************************/
+
+void yumeami::impl::draw_error_tile(const DrawTilePos &draw_pos, const World &world,
+                                    Color tint) {
+  int px_tile_size = calc_px_tile_size(world);
+  Rectangle rec = {draw_pos.x * px_tile_size, draw_pos.y * px_tile_size,
+                   static_cast<float>(px_tile_size), static_cast<float>(px_tile_size)};
+
+  DrawRectangleRec(rec, tint);
+}
+
+
+void yumeami::impl::draw_sprite(const Sprite &sprite, const DrawTilePos &draw_pos,
+                                const World &world) {
+  Rectangle dest = Rectangle{
+      draw_pos.x * calc_px_tile_size(world),
+      draw_pos.y * calc_px_tile_size(world),
+      static_cast<float>(calc_px_tile_size(world)),
+      static_cast<float>(calc_px_tile_size(world)),
+  };
+
+  DrawTexturePro(sprite.spritesheet->texture, calc_spritesheet_rec(sprite), dest,
+                 Vector2{0, 0}, 0, WHITE);
+}
+
+/* PUBLIC *******************************************************************************/
 
 void yumeami::draw_registry(World &world, RenderTexture &viewport) {
   auto view = world.registry.view<DrawTilePos>();
@@ -13,16 +40,11 @@ void yumeami::draw_registry(World &world, RenderTexture &viewport) {
 
     // fallback
     if (sprite == nullptr) {
-      DrawRectangle(draw_pos.x * calc_px_tile_size(world),
-                    draw_pos.y * calc_px_tile_size(world), calc_px_tile_size(world),
-                    calc_px_tile_size(world), MAGENTA);
+      impl::draw_error_tile(draw_pos, world);
       continue;
     }
 
-    DrawTextureEx(sprite->tex,
-                  Vector2{draw_pos.x * calc_px_tile_size(world),
-                          draw_pos.y * calc_px_tile_size(world)},
-                  0, world.spritepx_multiplier, WHITE);
+    impl::draw_sprite(*sprite, draw_pos, world);
   }
 }
 

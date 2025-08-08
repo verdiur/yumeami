@@ -27,3 +27,6 @@ bin/
 
 # Personal notes
 spec/
+
+# Asset project files
+assets_dev/

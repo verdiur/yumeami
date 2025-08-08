@@ -45,8 +45,9 @@ namespace yumeami {
   void setup_dispatcher_movement(entt::dispatcher &dispatcher);
 
   /**
-   * @brief Update position of applicable entities
-   * (DrawTilePos, TrueTilePos, Velocity, Movement)
+   * @brief Update position of applicable entities. This function is not concerned with
+   * movement logic; this is implemented in handler functions. (DrawTilePos, TrueTilePos,
+   * Velocity, Movement)
    * @param world
    */
   void update_movement(World &world);
