@@ -15,8 +15,8 @@ void yumeami::impl::update_camera_target(World &world) {
   auto view = world.registry.view<PlayerTag, DrawTilePos>();
   for (auto [entity, draw_pos] : view.each()) {
     world.camera.target =
-        Vector2{floorf(static_cast<float>((draw_pos.x + 1) * calc_px_tile_size(world))),
-                floorf(static_cast<float>((draw_pos.y + 1) * calc_px_tile_size(world)))};
+        Vector2{roundf(static_cast<float>((draw_pos.x + 1) * calc_px_tile_size(world))),
+                roundf(static_cast<float>((draw_pos.y + 1) * calc_px_tile_size(world)))};
   }
 
   world.desired_camera_target = world.camera.target;

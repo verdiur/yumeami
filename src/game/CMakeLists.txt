@@ -1,16 +1,18 @@
 add_library(game STATIC
   components.hh
-  conversions.cc 
+  conversions.cc
   conversions.hh
   debug.hh
   debug.cc
   draw.cc
   draw.hh
-  input.cc 
+  input.cc
   input.hh
-  movement.cc 
+  movement.cc
   movement.hh
-  world.cc 
+  texture.cc
+  texture.hh
+  world.cc
   world.hh
 )
 

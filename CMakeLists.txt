@@ -49,7 +49,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/src/game)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/util)
 
 add_executable(${PROJECT_NAME}
-  src/main.cc 
+  src/main.cc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -57,8 +57,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  game 
-  util 
+  game
+  util
 )
 
 ##########################################################################################
