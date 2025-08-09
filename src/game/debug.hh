@@ -8,4 +8,5 @@
 
 namespace yumeami::debug {
   World create_player_test_world();
-}
+  World create_spritesheet_test_world();
+} // namespace yumeami::debug

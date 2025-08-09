@@ -6,15 +6,23 @@
 #include "entt/signal/fwd.hpp"
 #include "game/debug.hh"
 #include "game/draw.hh"
+#include "game/filesystem.hh"
 #include "game/input.hh"
 #include "game/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
 #include "util/viewport_transform.hh"
+#include <filesystem>
+#include <optional>
 
 int main(int argc, char *argv[]) {
 
   /* SETUP ******************************************************************************/
+
+  const std::optional<std::filesystem::path> exe_dir = yumeami::get_exe_dir();
+  if (exe_dir == std::nullopt) {
+    return 1;
+  }
 
   // window dimensions
   const int window_width = 640 * 2;
