@@ -6,23 +6,15 @@
 #include "entt/signal/fwd.hpp"
 #include "game/debug.hh"
 #include "game/draw.hh"
-#include "game/filesystem.hh"
 #include "game/input.hh"
 #include "game/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
 #include "util/viewport_transform.hh"
-#include <filesystem>
-#include <optional>
 
 int main(int argc, char *argv[]) {
 
   /* SETUP ******************************************************************************/
-
-  const std::optional<std::filesystem::path> exe_dir = yumeami::get_exe_dir();
-  if (exe_dir == std::nullopt) {
-    return 1;
-  }
 
   // window dimensions
   const int window_width = 640 * 2;
@@ -33,6 +25,9 @@ int main(int argc, char *argv[]) {
   SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
+  // application directory
+  ChangeDirectory(GetApplicationDirectory());
+
   // setup viewport
   const int viewport_width = 640;
   const int viewport_height = 480;
@@ -41,7 +36,8 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
   // INFO: debug world
-  yumeami::World world = yumeami::debug::create_player_test_world();
+  // yumeami::World world = yumeami::debug::create_player_test_world();
+  yumeami::World world = yumeami::debug::create_spritesheet_test_world();
   yumeami::setup_camera(world, viewport);
 
   // events

@@ -13,8 +13,8 @@ Rectangle yumeami::calc_spritesheet_rec(int row_index, int column_index,
 
 Rectangle yumeami::calc_spritesheet_rec(const Sprite &sprite) {
   return Rectangle{
-      static_cast<float>(sprite.column_index * sprite.spritesheet->sprite_size.x),
-      static_cast<float>(sprite.row_index * sprite.spritesheet->sprite_size.y),
-      static_cast<float>(sprite.spritesheet->sprite_size.x),
-      static_cast<float>(sprite.spritesheet->sprite_size.y)};
+      .x = static_cast<float>(sprite.column_index * sprite.spritesheet->sprite_size.x),
+      .y = static_cast<float>(sprite.row_index * sprite.spritesheet->sprite_size.y),
+      .width = static_cast<float>(sprite.spritesheet->sprite_size.x),
+      .height = static_cast<float>(sprite.spritesheet->sprite_size.y)};
 }

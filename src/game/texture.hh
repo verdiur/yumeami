@@ -26,10 +26,10 @@ namespace yumeami {
    *
    */
   struct Spritesheet {
-    Texture texture;       // spritesheet texture
-    int rows;              // height in sprites
-    int columns;           // width in sprites
-    SpxVector sprite_size; // size of a sprite
+    Texture texture;                  // spritesheet texture
+    int rows;                         // height in sprites
+    int columns;                      // width in sprites
+    SpxVector sprite_size = {16, 16}; // size of a sprite
   };
 
   /**
