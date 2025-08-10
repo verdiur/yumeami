@@ -3,7 +3,6 @@
 #include "game/texture.hh"
 #include "game/world.hh"
 #include "raylib.h"
-#include "spdlog/spdlog.h"
 
 /* IMPL *********************************************************************************/
 
@@ -27,9 +26,8 @@ void yumeami::impl::draw_sprite(const Sprite &sprite, const DrawTilePos &draw_po
   };
 
   Rectangle rec = calc_spritesheet_rec(sprite);
-  spdlog::info("{} {} {} {}", rec.x, rec.y, rec.width, rec.height);
 
-  DrawTexturePro(sprite.spritesheet->texture, calc_spritesheet_rec(sprite), dest,
+  DrawTexturePro(sprite.spritesheet_ptr->texture, calc_spritesheet_rec(sprite), dest,
                  Vector2{0, 0}, 0, WHITE);
 }
 

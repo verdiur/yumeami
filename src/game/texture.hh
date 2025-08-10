@@ -7,6 +7,7 @@
 #pragma once
 #include "raylib.h"
 #include "util/units.hh"
+#include <memory>
 
 namespace yumeami {
 
@@ -39,7 +40,7 @@ namespace yumeami {
    *
    */
   struct Sprite {
-    Spritesheet *spritesheet;
+    std::shared_ptr<Spritesheet> spritesheet_ptr;
     int row_index;
     int column_index;
   };

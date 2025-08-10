@@ -8,6 +8,7 @@
 #include "game/texture.hh"
 #include "raylib.h"
 #include "util/units.hh"
+#include <memory>
 
 namespace yumeami {
 
@@ -29,7 +30,7 @@ namespace yumeami {
     Vector2 desired_camera_target = {};
 
     // spritesheets
-    std::vector<Spritesheet> spritesheets = {};
+    std::vector<std::shared_ptr<Spritesheet>> spritesheets = {};
   };
 
   /**
