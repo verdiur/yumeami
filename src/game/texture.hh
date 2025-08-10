@@ -27,10 +27,10 @@ namespace yumeami {
    *
    */
   struct Spritesheet {
-    Texture texture;                  // spritesheet texture
-    int rows;                         // height in sprites
-    int columns;                      // width in sprites
-    SpxVector sprite_size = {16, 16}; // size of a sprite
+    Texture texture;       // spritesheet texture
+    int rows;              // height in sprites
+    int columns;           // width in sprites
+    SpxVector sprite_size; // size of a sprite
   };
 
   /**
@@ -44,6 +44,24 @@ namespace yumeami {
     int row_index;
     int column_index;
   };
+
+  /**
+   * @brief Create a spritesheet. Automatically detects the maximum amount of rows and
+   * columns possible.
+   *
+   * @param texture
+   * @param sprite_size
+   * @return spritesheet
+   */
+  Spritesheet create_spritesheet(Texture &texture, SpxVector sprite_size);
+
+  /**
+   * @brief Create a shared pointer containing a new spritesheet.
+   * @param texture
+   * @param sprite_size
+   */
+  std::shared_ptr<Spritesheet> create_spritesheet_ptr(Texture &texture,
+                                                      SpxVector sprite_size);
 
   /**
    * @brief Calculate rectangle that corresponds to the specified sprite.

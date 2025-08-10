@@ -19,6 +19,7 @@ yumeami::World yumeami::debug::create_player_test_world() {
   return world;
 }
 
+
 yumeami::World yumeami::debug::create_spritesheet_test_world() {
   // TODO:
   World world = {.width = 40, .height = 30};
@@ -30,11 +31,9 @@ yumeami::World yumeami::debug::create_spritesheet_test_world() {
   world.registry.emplace<Facing>(player, Direction4::LEFT);
   world.registry.emplace<PlayerTag>(player);
 
-  auto spritesheet = std::make_shared<Spritesheet>(
-      Spritesheet{.texture = LoadTexture("assets/testsprite.png"),
-                  .rows = 2,
-                  .columns = 2,
-                  .sprite_size = {16, 16}});
+  Texture spritesheet_texture = LoadTexture("assets/testsprite.png");
+  auto spritesheet = create_spritesheet_ptr(spritesheet_texture, {16, 16});
+
   world.spritesheets.push_back(spritesheet);
 
   for (int r = 0; r < spritesheet->rows; r++) {

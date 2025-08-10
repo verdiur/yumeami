@@ -1,5 +1,20 @@
 #include "texture.hh"
 #include "raylib.h"
+#include <memory>
+
+
+yumeami::Spritesheet yumeami::create_spritesheet(Texture &texture,
+                                                 SpxVector sprite_size) {
+  int rows = texture.height / sprite_size.y;
+  int columns = texture.width / sprite_size.x;
+  return Spritesheet{texture, rows, columns, sprite_size};
+}
+
+
+std::shared_ptr<yumeami::Spritesheet>
+yumeami::create_spritesheet_ptr(Texture &texture, SpxVector sprite_size) {
+  return std::make_shared<Spritesheet>(create_spritesheet(texture, sprite_size));
+}
 
 
 Rectangle yumeami::calc_spritesheet_rec(int row_index, int column_index,
