@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "util/direction.hh"
 
+
 void yumeami::input(World &world, entt::dispatcher &dispatcher) {
   auto view = world.registry.view<PlayerTag, Velocity>();
   if (IsKeyDown(KEY_LEFT)) {

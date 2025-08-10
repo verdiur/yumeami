@@ -19,10 +19,25 @@ be specified below.
 | enum | TitleCase | |
 
 - File names can be plural; directory names should never be plural.
+- File extensions for implementation and header files are respectively `.cc` and `.hh`.
 - Most of the time a directory should correspond to a library, and should contain a `CMakeLists.txt` file.
+
+## Paradigms
+
+- `structs` should never be any more than data containers. That means all members should be public, default constructors only, and no member functions. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function instead.
 
 ## Namespaces
 
 - Exposed interfaces should be in the `yumeami` namespace.
 - Implementation details and non-exposed functions/structs should be in the `yumeami::impl` namespace.
 - Debug functions/structs should be in the `yumeami::debug` namespace.
+
+## More formatting
+
+- In implementation files, function blocks should be separated by 2 blank lines.
+- In implementation files, header comments should separate `yumeami::impl` and `yumeami` functions.
+
+```cpp
+/* IMPL *********************************************************************************/
+/* PUBLIC *******************************************************************************/
+```
