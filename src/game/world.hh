@@ -41,6 +41,12 @@ namespace yumeami {
   int calc_px_tile_size(const World &world);
 
   /**
+   * @brief Unload all textures loaded by the world.
+   * @param world
+   */
+  void unload_world_textures(World &world);
+
+  /**
    * @brief Define camera target & origin
    * @param world World
    * @param viewport Viewport

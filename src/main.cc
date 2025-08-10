@@ -80,8 +80,7 @@ int main(int argc, char *argv[]) {
 
   /* DE-INIT ****************************************************************************/
 
-  for (auto spr : world.spritesheets) {
-    UnloadTexture(spr->texture);
-  }
+  yumeami::unload_world_textures(world);
+  UnloadRenderTexture(viewport);
   CloseWindow();
 }

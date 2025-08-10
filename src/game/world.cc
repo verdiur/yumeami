@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include <algorithm>
 #include <cmath>
+#include <memory>
 
 
 int yumeami::calc_px_tile_size(const World &world) {
@@ -39,6 +40,13 @@ void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) 
 }
 
 /* PUBLIC *******************************************************************************/
+
+void yumeami::unload_world_textures(World &world) {
+  for (std::shared_ptr<Spritesheet> sheet : world.spritesheets) {
+    UnloadTexture(sheet->texture);
+  }
+}
+
 
 void yumeami::setup_camera(World &world, RenderTexture &viewport) {
   impl::update_camera_target(world);
