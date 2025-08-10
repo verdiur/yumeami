@@ -22,7 +22,7 @@ be specified below.
 - File extensions for implementation and header files are respectively `.cc` and `.hh`.
 - Most of the time a directory should correspond to a library, and should contain a `CMakeLists.txt` file.
 
-## Paradigms
+## Coding style
 
 - `structs` should never be any more than data containers. That means all members should be public, default constructors only, and no member functions. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function instead.
 
