@@ -64,10 +64,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 ##########################################################################################
 # copy assets
 
-# copy assets folder into build directory after building
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+# copy assets folder into build directory
+add_custom_target(copy_assets ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory  # copy
     ${CMAKE_SOURCE_DIR}/assets                # from
     $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets # to
     COMMENT "Copying assets to build directory for ${PROJECT_NAME}..."
 )
+add_dependencies(${PROJECT_NAME} copy_assets)

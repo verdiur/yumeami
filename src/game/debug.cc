@@ -3,8 +3,6 @@
 #include "game/movement.hh"
 #include "game/texture.hh"
 #include "raylib.h"
-#include "spdlog/spdlog.h"
-#include <memory>
 
 yumeami::World yumeami::debug::create_player_test_world() {
   World world = {.width = 40, .height = 30};
@@ -31,7 +29,7 @@ yumeami::World yumeami::debug::create_spritesheet_test_world() {
   world.registry.emplace<Facing>(player, Direction4::LEFT);
   world.registry.emplace<PlayerTag>(player);
 
-  Texture spritesheet_texture = LoadTexture("assets/testsprite.png");
+  Texture spritesheet_texture = LoadTexture("assets/test_spritesheet.png");
   auto spritesheet = create_spritesheet_ptr(spritesheet_texture, {16, 16});
 
   world.spritesheets.push_back(spritesheet);
@@ -39,8 +37,7 @@ yumeami::World yumeami::debug::create_spritesheet_test_world() {
   for (int r = 0; r < spritesheet->rows; r++) {
     for (int c = 0; c < spritesheet->columns; c++) {
       entt::entity sprite = world.registry.create();
-      spdlog::info("{}, {}", r, c);
-      world.registry.emplace<DrawTilePos>(sprite, (float)r, (float)c);
+      world.registry.emplace<DrawTilePos>(sprite, (float)c, (float)r);
       world.registry.emplace<Sprite>(sprite, world.spritesheets.back(), r, c);
     }
   }
