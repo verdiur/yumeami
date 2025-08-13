@@ -1,11 +1,13 @@
 #include "game/debug.hh"
+#include "entt/entity/fwd.hpp"
 #include "game/components.hh"
 #include "game/movement.hh"
 #include "game/texture.hh"
+#include "game/world.hh"
 #include "raylib.h"
 
 yumeami::World yumeami::debug::create_player_test_world() {
-  World world = {.width = 40, .height = 30};
+  World world = create_world();
   entt::entity player = world.registry.create();
   world.registry.emplace<TrueTilePos>(player, 0, 0);
   world.registry.emplace<DrawTilePos>(player, 0.0f, 0.0f);
@@ -19,8 +21,7 @@ yumeami::World yumeami::debug::create_player_test_world() {
 
 
 yumeami::World yumeami::debug::create_spritesheet_test_world() {
-  // TODO:
-  World world = {.width = 40, .height = 30};
+  World world = create_world(30, 40);
   entt::entity player = world.registry.create();
   world.registry.emplace<TrueTilePos>(player, 0, 0);
   world.registry.emplace<DrawTilePos>(player, 0.0f, 0.0f);
@@ -41,6 +42,25 @@ yumeami::World yumeami::debug::create_spritesheet_test_world() {
       world.registry.emplace<Sprite>(sprite, world.spritesheets.back(), r, c);
     }
   }
+
+  return world;
+}
+
+
+yumeami::World yumeami::debug::create_collision_test_world() {
+  World world = create_world();
+  entt::entity player = world.registry.create();
+  world.registry.emplace<TrueTilePos>(player, 0, 0);
+  world.registry.emplace<DrawTilePos>(player, 0.0f, 0.0f);
+  world.registry.emplace<Velocity>(player, 0.4);
+  world.registry.emplace<Movement>(player);
+  world.registry.emplace<Facing>(player, Direction4::LEFT);
+  world.registry.emplace<PlayerTag>(player);
+
+  entt::entity coll = world.registry.create();
+  world.registry.emplace<TrueTilePos>(coll, 3, 4);
+  world.registry.emplace<DrawTilePos>(coll, 3.0f, 4.0f);
+  world.collision.get_static_cell(3, 4) = 1;
 
   return world;
 }

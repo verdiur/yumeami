@@ -16,6 +16,7 @@ be specified below.
 | function | snake_case | |
 | struct | TitleCase | |
 | struct member | snake_case | |
+| type alias | snake_case | |
 | enum | TitleCase | |
 
 - File names can be plural; directory names should never be plural.

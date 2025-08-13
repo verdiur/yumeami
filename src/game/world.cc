@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <vector>
 
 
 int yumeami::calc_px_tile_size(const World &world) {
@@ -40,6 +41,19 @@ void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) 
 }
 
 /* PUBLIC *******************************************************************************/
+
+yumeami::World yumeami::create_world(tile_int width, tile_int height, spx_int tile_size,
+                                     int spx_multiplier) {
+  return World{
+      .width = width,
+      .height = height,
+      .tile_size = tile_size,
+      .spx_multiplier = spx_multiplier,
+      .collision = Collision{.static_grid = std::vector<std::vector<int>>(
+                                 width, std::vector<int>(height, 0)),
+                             .dynamic_grid{}},
+  };
+}
 
 void yumeami::unload_world_textures(World &world) {
   for (std::shared_ptr<Spritesheet> sheet : world.spritesheets) {

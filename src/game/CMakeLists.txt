@@ -1,4 +1,6 @@
 add_library(game STATIC
+  collision.cc
+  collision.hh
   components.hh
   conversions.cc
   conversions.hh
@@ -6,8 +8,6 @@ add_library(game STATIC
   debug.cc
   draw.cc
   draw.hh
-  filesystem.cc
-  filesystem.hh
   input.cc
   input.hh
   movement.cc

@@ -5,10 +5,12 @@
 
 #pragma once
 #include "entt/entt.hpp"
+#include "game/collision.hh"
 #include "game/texture.hh"
 #include "raylib.h"
 #include "util/units.hh"
 #include <memory>
+#include <vector>
 
 namespace yumeami {
 
@@ -18,12 +20,15 @@ namespace yumeami {
    *
    */
   struct World {
-    tile_int width = 20;          // world width
-    tile_int height = 15;         // world height
-    spx_int tile_size = 16;       // size of tile
-    int spx_multiplier = 2;       // sprite pixel multiplier
+    tile_int width;     // world width
+    tile_int height;    // world height
+    spx_int tile_size;  // size of tile
+    int spx_multiplier; // sprite pixel multiplier
+
     entt::registry registry = {}; // entity registry
-    Camera2D camera = {0};        // world camera
+    Collision collision;
+
+    Camera2D camera = {0}; // world camera
 
     // desired target. actual camera target might be
     // different if camera is at the border of a world.
@@ -32,6 +37,17 @@ namespace yumeami {
     // spritesheets
     std::vector<std::shared_ptr<Spritesheet>> spritesheets = {};
   };
+
+  /**
+   * @brief World factory. Generates an empty world.
+   * @param width
+   * @param height
+   * @param tile_size
+   * @param spx_multiplier
+   * @return World
+   */
+  World create_world(tile_int width = 20, tile_int height = 15, spx_int tile_size = 16,
+                     int spx_multiplier = 2);
 
   /**
    * @brief Calculate size of a tile in pixels.

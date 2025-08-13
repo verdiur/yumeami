@@ -29,4 +29,5 @@ bin/
 spec/
 
 # Asset project files
-assets_dev/
+*.aseprite
+*.ase

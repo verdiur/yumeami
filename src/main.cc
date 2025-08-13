@@ -36,8 +36,7 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
   // INFO: debug world
-  // yumeami::World world = yumeami::debug::create_player_test_world();
-  yumeami::World world = yumeami::debug::create_spritesheet_test_world();
+  yumeami::World world = yumeami::debug::create_collision_test_world();
   yumeami::setup_camera(world, viewport);
 
   // events

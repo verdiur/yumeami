@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "entt/entity/fwd.hpp"
 #include "entt/fwd.hpp"
 #include "game/components.hh"
 #include "game/world.hh"
@@ -53,3 +54,6 @@ namespace yumeami {
   void update_movement(World &world);
 
 } // namespace yumeami
+namespace yumeami::impl {
+  bool move_event_destination_is_oob(const World &world, const TrueTilePos &destination);
+}
