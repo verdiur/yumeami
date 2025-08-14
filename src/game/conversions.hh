@@ -5,8 +5,8 @@
 
 #pragma once
 
+#include "common/direction.hh"
 #include "game/components.hh"
-#include "util/direction.hh"
 
 namespace yumeami {
 

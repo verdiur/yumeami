@@ -1,6 +1,6 @@
 #include "game/conversions.hh"
+#include "common/direction.hh"
 #include "game/components.hh"
-#include "util/direction.hh"
 
 
 yumeami::DrawTilePos yumeami::to_draw_tile_pos(TrueTilePos true_pos) {

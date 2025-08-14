@@ -3,6 +3,7 @@
  * @brief Entry point
  */
 
+#include "common/viewport_transform.hh"
 #include "entt/signal/fwd.hpp"
 #include "game/debug.hh"
 #include "game/draw.hh"
@@ -10,7 +11,6 @@
 #include "game/movement.hh"
 #include "game/world.hh"
 #include "raylib.h"
-#include "util/viewport_transform.hh"
 
 int main(int argc, char *argv[]) {
 

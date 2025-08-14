@@ -1,9 +1,9 @@
 #include "game/input.hh"
+#include "common/direction.hh"
 #include "entt/fwd.hpp"
 #include "game/components.hh"
 #include "game/movement.hh"
 #include "raylib.h"
-#include "util/direction.hh"
 
 
 void yumeami::input(World &world, entt::dispatcher &dispatcher) {

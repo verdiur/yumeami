@@ -45,8 +45,9 @@ FetchContent_MakeAvailable(spdlog)
 ##########################################################################################
 # targets
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/game)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/util)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/io)
 
 add_executable(${PROJECT_NAME}
   src/main.cc

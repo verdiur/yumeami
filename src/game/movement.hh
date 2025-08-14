@@ -4,11 +4,11 @@
  */
 
 #pragma once
+#include "common/direction.hh"
 #include "entt/entity/fwd.hpp"
 #include "entt/fwd.hpp"
 #include "game/components.hh"
 #include "game/world.hh"
-#include "util/direction.hh"
 
 namespace yumeami {
 

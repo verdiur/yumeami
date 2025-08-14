@@ -4,10 +4,10 @@
  */
 
 #pragma once
+#include "common/units.hh"
 #include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 #include "game/components.hh"
-#include "util/units.hh"
 #include <vector>
 
 namespace yumeami {

@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include "util/direction.hh"
-#include "util/units.hh"
+#include "common/direction.hh"
+#include "common/units.hh"
 
 namespace yumeami {
 
