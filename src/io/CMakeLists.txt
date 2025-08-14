@@ -1,5 +1,6 @@
 add_library(io STATIC
   io.cc
+  io.hh
 )
 
 target_include_directories(io PUBLIC
@@ -8,4 +9,6 @@ target_include_directories(io PUBLIC
 
 target_link_libraries(io PUBLIC
   game
+  raylib
+  glaze::glaze
 )

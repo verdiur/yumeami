@@ -32,6 +32,15 @@ namespace yumeami {
     int &get_static_cell(tile_int x, tile_int y);
   };
 
+  struct CollisionFlag {};
+
+
+  /**
+   * @brief Update collision grid with movement origin and destination
+   * @param collision
+   * @param from
+   * @param to
+   */
   void update_static_collision(Collision &collision, const TrueTilePos &from,
                                const TrueTilePos &to);
 
