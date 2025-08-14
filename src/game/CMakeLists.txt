@@ -24,7 +24,8 @@ target_include_directories(game PUBLIC
 
 target_link_libraries(game PUBLIC
   common
+PRIVATE
   raylib
-  EnTT::EnTT 
+  EnTT::EnTT
   spdlog::spdlog 
 )

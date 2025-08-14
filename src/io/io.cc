@@ -12,8 +12,7 @@
 
 /* IMPL *********************************************************************************/
 
-void yumeami::impl::add_collision_flag_to_entity(World &world,
-                                                 const entt::entity entity) {
+void yumeami::impl::add_collision_tag_to_entity(World &world, const entt::entity entity) {
   // try to get true position
   auto true_pos = world.registry.try_get<TrueTilePos>(entity);
   if (!true_pos) {
@@ -25,7 +24,7 @@ void yumeami::impl::add_collision_flag_to_entity(World &world,
   int &collision_cell = world.collision.get_static_cell(true_pos->x, true_pos->y);
 
   // check if collision state is valid
-  if (world.registry.all_of<CollisionFlag>(entity)) {
+  if (world.registry.all_of<CollisionTag>(entity)) {
     spdlog::info("entity already has a collision flag");
     // if collision cell is invalid, repair
     if (collision_cell == 0) {
@@ -36,7 +35,7 @@ void yumeami::impl::add_collision_flag_to_entity(World &world,
   }
 
   // emplace and update grid
-  world.registry.emplace<CollisionFlag>(entity);
+  world.registry.emplace<CollisionTag>(entity);
   collision_cell++;
 }
 
@@ -51,8 +50,27 @@ void yumeami::impl::add_tile_to_world_from_tilespec(World &world,
                                  tile_spec.sprite_row_index,
                                  tile_spec.sprite_column_index);
   if (tile_spec.solid) {
-    add_collision_flag_to_entity(world, tile);
+    add_collision_tag_to_entity(world, tile);
   }
+}
+
+
+std::expected<entt::entity, yumeami::ParseError>
+yumeami::impl::add_player_to_world(World &world, tile_int x, tile_int y) {
+
+  if (world.registry.view<PlayerTag>()->size() > 0) {
+    spdlog::error("player already exists");
+    return std::unexpected(ParseError::EXISTS);
+  }
+
+  entt::entity player = world.registry.create();
+  world.registry.emplace<TrueTilePos>(player, (int)x, (int)y);
+  world.registry.emplace<DrawTilePos>(player, (float)x, (float)y);
+  // TODO: add player sprite
+  add_collision_tag_to_entity(world, player);
+  world.registry.emplace<PlayerTag>(player);
+
+  return player;
 }
 
 /* PUBLIC *******************************************************************************/

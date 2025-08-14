@@ -32,8 +32,7 @@ namespace yumeami {
     int &get_static_cell(tile_int x, tile_int y);
   };
 
-  struct CollisionFlag {};
-
+  struct CollisionTag {};
 
   /**
    * @brief Update collision grid with movement origin and destination

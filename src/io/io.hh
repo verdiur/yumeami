@@ -7,7 +7,7 @@
 
 namespace yumeami {
 
-  enum struct ParseError { JSON_ERR, TEXTURE_ERR };
+  enum struct ParseError { JSON_ERR, TEXTURE_ERR, EXISTS };
 
   struct SpritesheetSpec {
     std::string path;  // path to texture file
@@ -24,6 +24,7 @@ namespace yumeami {
     bool solid;                 // true if tile is solid
   };
 
+  // TODO: add map data, npc definitions, metadata, etc.
   struct WorldSpec {
     int width;                                 // world width in tiles
     int height;                                // world height in tiles
@@ -31,6 +32,7 @@ namespace yumeami {
     int spx_multiplier = 2;                    // by how much to scale sprites
     std::vector<SpritesheetSpec> spritesheets; // spritesheets
     std::vector<TileSpec> tiles;               // tile definitions
+    std::vector<int> map_data;                 // actual map data
   };
 
   /**
@@ -49,9 +51,25 @@ namespace yumeami::impl {
    * @param collision
    * @param entity
    */
-  void add_collision_flag_to_entity(World &world, const entt::entity entity);
+  void add_collision_tag_to_entity(World &world, const entt::entity entity);
 
-  void add_tile_to_world_from_tilespec(World &world, const TileSpec &tile_spec, int x,
-                                       int y);
+  /**
+   * @brief Add a tile entity, based on a tilespec
+   * @param world
+   * @param tile_spec
+   * @param x x coordinate
+   * @param y y coordinate
+   */
+  void add_tile_to_world_from_tilespec(World &world, const TileSpec &tile_spec,
+                                       tile_int x, tile_int y);
+
+  /**
+   * @brief Add a player to the world. Returns ParseError if player already exists.
+   * @param world
+   * @param x x coordinate
+   * @param y y coordinate
+   */
+  std::expected<entt::entity, yumeami::ParseError>
+  add_player_to_world(World &world, tile_int x, tile_int y);
 
 } // namespace yumeami::impl
