@@ -78,7 +78,7 @@ std::optional<yumeami::World> yumeami::parse_world(std::string buffer) {
   const auto read_result = rfl::json::read<WorldSpec>(buffer);
 
   if (!read_result) {
-    spdlog::error("failed to parse world: JSON_ERR");
+    spdlog::error("failed to parse world");
     return std::nullopt;
   }
 
@@ -95,7 +95,7 @@ std::optional<yumeami::World> yumeami::parse_world(std::string buffer) {
     Texture texture = LoadTexture(sheet_spec.path.c_str());
     if (IsTextureValid(texture)) {
       unload_world_textures(world);
-      spdlog::error("failed to parse world: TEXTURE_ERR for path {}", sheet_spec.path);
+      spdlog::error("failed to parse world: failed to load texture {}", sheet_spec.path);
       return std::nullopt;
     }
 
