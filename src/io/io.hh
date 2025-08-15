@@ -1,13 +1,10 @@
 #pragma once
 
 #include "game/world.hh"
-#include <expected>
 #include <string>
 #include <vector>
 
 namespace yumeami {
-
-  enum struct ParseError { JSON_ERR, TEXTURE_ERR, EXISTS };
 
   struct SpritesheetSpec {
     std::string path;  // path to texture file
@@ -40,7 +37,7 @@ namespace yumeami {
    * @param buffer
    * @return World instance
    */
-  std::expected<World, ParseError> parse_world(std::string buffer);
+  std::optional<World> parse_world(std::string buffer);
 
 } // namespace yumeami
 namespace yumeami::impl {
@@ -69,7 +66,6 @@ namespace yumeami::impl {
    * @param x x coordinate
    * @param y y coordinate
    */
-  std::expected<entt::entity, yumeami::ParseError>
-  add_player_to_world(World &world, tile_int x, tile_int y);
+  std::optional<entt::entity> add_player_to_world(World &world, tile_int x, tile_int y);
 
 } // namespace yumeami::impl

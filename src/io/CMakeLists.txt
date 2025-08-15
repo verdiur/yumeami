@@ -10,8 +10,6 @@ target_include_directories(io PUBLIC
 target_link_libraries(io PUBLIC
   game
 PRIVATE
-  raylib
-  EnTT::EnTT
-  spdlog
-  glaze::glaze
+  ${CORE_EXTERNAL_LIBS}
+  ${IO_EXTERNAL_LIBS}
 )

@@ -42,17 +42,26 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdlog)
 
-# glaze
+# reflect-cpp
 FetchContent_Declare(
-  glaze
-  GIT_REPOSITORY https://github.com/stephenberry/glaze.git
-  GIT_TAG v5.5.5
+  reflectcpp
+  GIT_REPOSITORY https://github.com/getml/reflect-cpp.git
+  GIT_TAG v0.20.0
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(glaze)
+FetchContent_MakeAvailable(reflectcpp)
 
 ##########################################################################################
 # targets
+
+set(CORE_EXTERNAL_LIBS
+  raylib
+  EnTT::EnTT
+  spdlog
+)
+set(IO_EXTERNAL_LIBS
+  reflectcpp
+)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/game)
@@ -71,10 +80,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   game
   io
 
-  raylib
-  EnTT::EnTT
-  spdlog
-  glaze::glaze
+  ${CORE_EXTERNAL_LIBS}
+  ${IO_EXTERNAL_LIBS}
 )
 
 ##########################################################################################

@@ -10,5 +10,6 @@ target_include_directories(common PUBLIC
 )
 
 target_link_libraries(common PUBLIC
-  raylib
+PRIVATE
+  ${CORE_EXTERNAL_LIBS}
 )

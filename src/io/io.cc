@@ -5,10 +5,9 @@
 #include "game/components.hh"
 #include "game/texture.hh"
 #include "game/world.hh"
-#include "raylib.h"
+#include "rfl/json/read.hpp"
 #include "spdlog/spdlog.h"
-#include <expected>
-#include <glaze/json/read.hpp>
+#include <optional>
 
 /* IMPL *********************************************************************************/
 
@@ -55,12 +54,11 @@ void yumeami::impl::add_tile_to_world_from_tilespec(World &world,
 }
 
 
-std::expected<entt::entity, yumeami::ParseError>
-yumeami::impl::add_player_to_world(World &world, tile_int x, tile_int y) {
-
+std::optional<entt::entity> yumeami::impl::add_player_to_world(World &world, tile_int x,
+                                                               tile_int y) {
   if (world.registry.view<PlayerTag>()->size() > 0) {
     spdlog::error("player already exists");
-    return std::unexpected(ParseError::EXISTS);
+    return std::nullopt;
   }
 
   entt::entity player = world.registry.create();
@@ -75,13 +73,13 @@ yumeami::impl::add_player_to_world(World &world, tile_int x, tile_int y) {
 
 /* PUBLIC *******************************************************************************/
 
-std::expected<yumeami::World, yumeami::ParseError>
-yumeami::parse_world(std::string buffer) {
+std::optional<yumeami::World> yumeami::parse_world(std::string buffer) {
 
-  auto read_result = glz::read_json<WorldSpec>(buffer);
+  const auto read_result = rfl::json::read<WorldSpec>(buffer);
+
   if (!read_result) {
     spdlog::error("failed to parse world: JSON_ERR");
-    return std::unexpected(ParseError::JSON_ERR);
+    return std::nullopt;
   }
 
   // create world
@@ -98,7 +96,7 @@ yumeami::parse_world(std::string buffer) {
     if (IsTextureValid(texture)) {
       unload_world_textures(world);
       spdlog::error("failed to parse world: TEXTURE_ERR for path {}", sheet_spec.path);
-      return std::unexpected(ParseError::TEXTURE_ERR);
+      return std::nullopt;
     }
 
     auto sheet = create_spritesheet_ptr(
