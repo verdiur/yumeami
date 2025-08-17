@@ -18,21 +18,28 @@ int main(int argc, char *argv[]) {
 
   /* SETUP ******************************************************************************/
 
-  auto cfg = yumeami::parse_config(LoadFileText("assets/config.json"));
+  // window must be initialized first
+  InitWindow(640, 480, "yumeami");
+  ChangeDirectory(GetApplicationDirectory()); // app directory
+
+  // load and parse config
+  char *cfg_buf = LoadFileText("assets/config.json");
+  if (!cfg_buf) {
+    spdlog::critical("could not load configuration file");
+    return 1;
+  }
+  auto cfg = yumeami::parse_config(cfg_buf);
   if (!cfg) {
-    spdlog::critical("configuration file not found");
+    spdlog::critical("could not parse configuration file");
     return 1;
   }
 
   // setup window
-  InitWindow(cfg->window_width, cfg->window_height, "yumeami");
+  SetWindowSize(cfg->window_width, cfg->window_height);
   SetExitKey(KEY_ESCAPE);
   if (cfg->vsync) {
     SetWindowState(FLAG_VSYNC_HINT);
   }
-
-  // application directory
-  ChangeDirectory(GetApplicationDirectory());
 
   // setup viewport
   RenderTexture viewport = LoadRenderTexture(cfg->viewport_width, cfg->viewport_height);
@@ -84,6 +91,8 @@ int main(int argc, char *argv[]) {
   /* DE-INIT ****************************************************************************/
 
   yumeami::unload_world_textures(world);
+
   UnloadRenderTexture(viewport);
   CloseWindow();
+  UnloadFileText(cfg_buf);
 }
