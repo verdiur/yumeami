@@ -1,6 +1,8 @@
 add_library(io STATIC
-  io.cc
-  io.hh
+  config_io.cc
+  config_io.hh
+  # game_io.cc
+  # game_io.hh
 )
 
 target_include_directories(io PUBLIC

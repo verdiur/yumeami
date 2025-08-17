@@ -10,28 +10,32 @@
 #include "game/input.hh"
 #include "game/movement.hh"
 #include "game/world.hh"
+#include "io/config_io.hh"
 #include "raylib.h"
+#include "spdlog/spdlog.h"
 
 int main(int argc, char *argv[]) {
 
   /* SETUP ******************************************************************************/
 
-  // window dimensions
-  const int window_width = 640 * 2;
-  const int window_height = 480 * 2;
+  auto cfg = yumeami::parse_config(LoadFileText("assets/config.json"));
+  if (!cfg) {
+    spdlog::critical("configuration file not found");
+    return 1;
+  }
 
   // setup window
-  InitWindow(window_width, window_height, "yumeami");
-  SetWindowState(FLAG_VSYNC_HINT);
+  InitWindow(cfg->window_width, cfg->window_height, "yumeami");
   SetExitKey(KEY_ESCAPE);
+  if (cfg->vsync) {
+    SetWindowState(FLAG_VSYNC_HINT);
+  }
 
   // application directory
   ChangeDirectory(GetApplicationDirectory());
 
   // setup viewport
-  const int viewport_width = 640;
-  const int viewport_height = 480;
-  RenderTexture viewport = LoadRenderTexture(viewport_width, viewport_height);
+  RenderTexture viewport = LoadRenderTexture(cfg->viewport_width, cfg->viewport_height);
   yumeami::ViewportTransform viewport_transform = {};
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
