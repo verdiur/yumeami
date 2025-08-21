@@ -14,12 +14,14 @@
 #include "raylib.h"
 #include "spdlog/spdlog.h"
 
+
 int main(int argc, char *argv[]) {
 
   /* SETUP ******************************************************************************/
 
-  // window must be initialized first
+  // init context
   InitWindow(640, 480, "yumeami");
+  InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory()); // app directory
 
   // load and parse config
@@ -28,7 +30,7 @@ int main(int argc, char *argv[]) {
     spdlog::critical("could not load configuration file");
     return 1;
   }
-  auto cfg = yumeami::parse_config(cfg_buf);
+  auto cfg = yumeami::load_config(cfg_buf);
   if (!cfg) {
     spdlog::critical("could not parse configuration file");
     return 1;
@@ -92,7 +94,9 @@ int main(int argc, char *argv[]) {
 
   yumeami::unload_world_textures(world);
 
+  // unload raylib context
   UnloadRenderTexture(viewport);
+  CloseAudioDevice();
   CloseWindow();
   UnloadFileText(cfg_buf);
 }

@@ -11,7 +11,9 @@ int yumeami::calc_px_tile_size(const World &world) {
   return world.tile_size * world.spx_multiplier;
 }
 
+
 /* IMPL *********************************************************************************/
+
 
 void yumeami::impl::update_camera_target(World &world) {
   // camera should target player
@@ -40,7 +42,9 @@ void yumeami::impl::update_camera_bounds(World &world, RenderTexture &viewport) 
                                      bound_y - half_screen_height);
 }
 
+
 /* PUBLIC *******************************************************************************/
+
 
 yumeami::World yumeami::create_world(tile_int width, tile_int height, spx_int tile_size,
                                      int spx_multiplier) {

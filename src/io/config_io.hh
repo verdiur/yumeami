@@ -1,3 +1,8 @@
+/**
+ * @file config_io.hh
+ * @brief Configuration I/O
+ */
+
 #pragma once
 
 #include <optional>
@@ -17,7 +22,7 @@ namespace yumeami {
    * @brief Parse config from JSON string buffer
    * @param buffer
    */
-  std::optional<ConfigSpec> parse_config(std::string buffer);
+  std::optional<ConfigSpec> load_config(std::string buffer);
 
   /**
    * @brief Generate JSON string from config spec

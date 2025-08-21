@@ -6,7 +6,8 @@
 #include <optional>
 #include <string>
 
-std::optional<yumeami::ConfigSpec> yumeami::parse_config(std::string buffer) {
+
+std::optional<yumeami::ConfigSpec> yumeami::load_config(std::string buffer) {
   auto read_result = rfl::json::read<ConfigSpec>(buffer);
   if (!read_result) {
     spdlog::error("could not load configuration");

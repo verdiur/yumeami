@@ -4,7 +4,9 @@
 #include "game/world.hh"
 #include "raylib.h"
 
+
 /* IMPL *********************************************************************************/
+
 
 void yumeami::impl::draw_error_tile(const DrawTilePos &draw_pos, const World &world,
                                     Color tint) {
@@ -31,7 +33,9 @@ void yumeami::impl::draw_sprite(const Sprite &sprite, const DrawTilePos &draw_po
                  Vector2{0, 0}, 0, WHITE);
 }
 
+
 /* PUBLIC *******************************************************************************/
+
 
 void yumeami::draw_registry(World &world, RenderTexture &viewport) {
   auto view = world.registry.view<DrawTilePos>();

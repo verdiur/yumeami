@@ -8,7 +8,9 @@
 #include "spdlog/spdlog.h"
 #include <cmath>
 
+
 /* IMPL *********************************************************************************/
+
 
 bool yumeami::impl::move_event_destination_is_oob(const World &world,
                                                   const TrueTilePos &destination) {
@@ -17,7 +19,9 @@ bool yumeami::impl::move_event_destination_is_oob(const World &world,
   return oob_horizontal || oob_vertical;
 }
 
+
 /* PUBLIC *******************************************************************************/
+
 
 void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
   dispatcher.sink<MoveEvent>().connect<&handle_move_event>();
