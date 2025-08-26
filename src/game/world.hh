@@ -10,7 +10,6 @@
 #include "game/texture.hh"
 #include "raylib.h"
 #include <memory>
-#include <vector>
 
 namespace yumeami {
 
@@ -35,7 +34,7 @@ namespace yumeami {
     Vector2 desired_camera_target = {};
 
     // spritesheets
-    std::vector<std::shared_ptr<Spritesheet>> spritesheets = {};
+    std::map<std::string, std::shared_ptr<Spritesheet>> spritesheets = {};
   };
 
   /**

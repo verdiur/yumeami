@@ -4,8 +4,6 @@ add_library(game STATIC
   components.hh
   conversions.cc
   conversions.hh
-  debug.hh
-  debug.cc
   draw.cc
   draw.hh
   input.cc

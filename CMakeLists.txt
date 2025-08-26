@@ -66,6 +66,7 @@ set(IO_EXTERNAL_LIBS
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/game)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/io)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/dbg)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -79,7 +80,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   common
   game
   io
-
+  dbg
   ${CORE_EXTERNAL_LIBS}
   ${IO_EXTERNAL_LIBS}
 )
@@ -87,11 +88,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 ##########################################################################################
 # copy assets
 
-# copy assets folder into build directory
-add_custom_target(copy_assets ALL
+# copy resource folder into build directory
+add_custom_target(copy_res ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory  # copy
-    ${CMAKE_SOURCE_DIR}/assets                # from
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets # to
-    COMMENT "Copying assets to build directory for ${PROJECT_NAME}..."
+    ${CMAKE_SOURCE_DIR}/res                   # from
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/res    # to
+    COMMENT "Copying resources to build directory for ${PROJECT_NAME}..."
 )
-add_dependencies(${PROJECT_NAME} copy_assets)
+add_dependencies(${PROJECT_NAME} copy_res)

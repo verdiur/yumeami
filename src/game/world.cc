@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include <algorithm>
 #include <cmath>
-#include <memory>
 #include <vector>
 
 
@@ -60,7 +59,7 @@ yumeami::World yumeami::create_world(tile_int width, tile_int height, spx_int ti
 }
 
 void yumeami::unload_world_textures(World &world) {
-  for (std::shared_ptr<Spritesheet> sheet : world.spritesheets) {
+  for (auto const &[_, sheet] : world.spritesheets) {
     UnloadTexture(sheet->texture);
   }
 }

@@ -4,15 +4,13 @@
  */
 
 #include "common/viewport_transform.hh"
-#include "entt/signal/fwd.hpp"
-#include "game/debug.hh"
+#include "dbg/debug.hh"
 #include "game/draw.hh"
 #include "game/input.hh"
 #include "game/movement.hh"
 #include "game/world.hh"
 #include "io/config_io.hh"
 #include "raylib.h"
-#include "spdlog/spdlog.h"
 
 
 int main(int argc, char *argv[]) {
@@ -20,36 +18,31 @@ int main(int argc, char *argv[]) {
   /* SETUP ******************************************************************************/
 
   // init context
+  SetTraceLogLevel(LOG_WARNING);
   InitWindow(640, 480, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory()); // app directory
-
-  // load and parse config
-  char *cfg_buf = LoadFileText("assets/config.json");
-  if (!cfg_buf) {
-    spdlog::critical("could not load configuration file");
-    return 1;
-  }
-  auto cfg = yumeami::load_config(cfg_buf);
-  if (!cfg) {
-    spdlog::critical("could not parse configuration file");
-    return 1;
-  }
-
-  // setup window
-  SetWindowSize(cfg->window_width, cfg->window_height);
   SetExitKey(KEY_ESCAPE);
-  if (cfg->vsync) {
-    SetWindowState(FLAG_VSYNC_HINT);
+
+  // load config
+  std::optional<yumeami::ConfigSpec> cfg = yumeami::parse_config("res/config.json");
+  if (!cfg) {
+    return 1;
   }
+  yumeami::load_config(cfg.value());
 
   // setup viewport
-  RenderTexture viewport = LoadRenderTexture(cfg->viewport_width, cfg->viewport_height);
+  RenderTexture viewport =
+      LoadRenderTexture(cfg->viewport_width.get(), cfg->viewport_height.get());
   yumeami::ViewportTransform viewport_transform = {};
   yumeami::calc_viewport_scaling(viewport, viewport_transform);
 
   // INFO: debug world
-  yumeami::World world = yumeami::debug::create_collision_test_world();
+  std::optional<yumeami::World> world_opt = yumeami::debug::load_test_world();
+  if (!world_opt) {
+    return 1;
+  }
+  yumeami::World &world = world_opt.value();
   yumeami::setup_camera(world, viewport);
 
   // events
@@ -98,5 +91,4 @@ int main(int argc, char *argv[]) {
   UnloadRenderTexture(viewport);
   CloseAudioDevice();
   CloseWindow();
-  UnloadFileText(cfg_buf);
 }

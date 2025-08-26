@@ -5,36 +5,48 @@
 
 #pragma once
 
+#include "rfl/Description.hpp"
+#include <filesystem>
 #include <optional>
-#include <string>
+
 namespace yumeami {
 
-  struct ConfigSpec {
-    const int window_width = 640 * 2;  // width of application window
-    const int window_height = 480 * 2; // height of application window
-    const int viewport_width = 640;    // width of game viewport
-    const int viewport_height = 480;   // height of game_viewport
-
-    bool vsync = true; // vsync flag
-  };
+  struct ConfigSpec { // clang-format off
+    rfl::Description<
+      "Width of application window",
+      int> window_width = 640 * 2;
+    rfl::Description<
+      "Height of application window",
+      int> window_height = 480 * 2;
+    const rfl::Description<
+      "Width of viewport. Changing this option will mess up the graphics.",
+      int> viewport_width = 640;
+    const rfl::Description<
+      "Height of viewport. Changing this option will mess up the graphics.",
+      int> viewport_height = 480;
+    rfl::Description<
+      "VSync flag",
+      bool> vsync = true;
+  }; // clang-format on
 
   /**
    * @brief Parse config from JSON string buffer
    * @param buffer
    */
-  std::optional<ConfigSpec> load_config(std::string buffer);
+  std::optional<ConfigSpec> parse_config(std::filesystem::path cfg_path);
 
   /**
-   * @brief Generate JSON string from config spec
+   * @brief Write config spec to file
    *
    * @param spec
+   * @param cfg_path
    */
-  std::string write_config(const ConfigSpec &spec);
+  void write_config(const ConfigSpec &spec, std::filesystem::path cfg_path);
 
   /**
    * @brief Apply configuration flags from config spec instance
    * @param spec
    */
-  void apply_config_flags(const ConfigSpec &spec);
+  void load_config(const ConfigSpec &spec);
 
 } // namespace yumeami
