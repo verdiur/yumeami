@@ -46,7 +46,9 @@ FetchContent_MakeAvailable(reflectcpp)
 # targets --------------------------------------------------------------------#
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/game/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/graphics/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/renderer/)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -57,7 +59,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
-  game
+  graphics
+  logic
+  renderer
 
   raylib
   EnTT::EnTT
