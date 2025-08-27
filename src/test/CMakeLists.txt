@@ -9,10 +9,10 @@ target_include_directories(test PRIVATE
 )
 
 target_link_libraries(test PUBLIC
+  assetmgt
   common
-  graphics
   logic
-  renderer
+  render
 
   raylib
   EnTT::EnTT

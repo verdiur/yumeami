@@ -45,10 +45,10 @@ FetchContent_MakeAvailable(reflectcpp)
 
 # targets --------------------------------------------------------------------#
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/assetmgt/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/graphics/)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/renderer/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/render/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/test/)
 
 add_executable(${PROJECT_NAME}
@@ -60,9 +60,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
-  graphics
+  assetmgt
   logic
-  renderer
+  render
   test
 
   raylib
@@ -71,10 +71,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 # resources ------------------------------------------------------------------#
 
-add_custom_target(resources ALL
+add_custom_target(assets ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory
-  ${CMAKE_SOURCE_DIR}/resources/
-  $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/
-  COMMENT "Copying resources/ to build/ for ${PROJECT_NAME}..."
+  ${CMAKE_SOURCE_DIR}/assets/
+  $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets/
+  COMMENT "Copying assets/ to build/ for ${PROJECT_NAME}..."
 )
-add_dependencies(${PROJECT_NAME} resources)
+add_dependencies(${PROJECT_NAME} assets)

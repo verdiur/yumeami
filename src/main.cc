@@ -1,8 +1,8 @@
+#include "assetmgt/texture.hh"
 #include "common/viewport_transform.hh"
-#include "graphics/texture.hh"
 #include "logic/world.hh"
 #include "raylib.h"
-#include "renderer/draw.hh"
+#include "render/draw.hh"
 #include "test/test_worlds.hh"
 
 int main(int argc, char *argv[]) {
