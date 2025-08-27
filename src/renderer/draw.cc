@@ -4,16 +4,25 @@
 
 
 void yumeami::draw_sprites(World &world, SheetPool &pool) {
-  auto view = world.reg.view<DrawPos, Sprite>();
-  for (auto [entity, draw_pos, sprite] : view.each()) {
+  auto view = world.reg.view<DrawPos>();
+  for (auto [entity, draw_pos] : view.each()) {
 
     float dst_x = draw_pos.x * world.tile_size * world.scale;
     float dst_y = draw_pos.y * world.tile_size * world.scale;
 
-    auto sheet_opt = pool.get_sheet(sprite.sheet_id);
+    auto sprite = world.reg.try_get<Sprite>(entity);
+    if (!sprite) {
+      DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
+                    world.tile_size * world.scale, BLUE);
+      DrawText("no\nsprite", dst_x, dst_y, 1, WHITE);
+      continue;
+    }
+
+    auto sheet_opt = pool.get_sheet(sprite->sheet_id);
     if (!sheet_opt) {
       DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
                     world.tile_size * world.scale, MAGENTA);
+      DrawText("no\nsheet", dst_x, dst_y, 1, WHITE);
       continue;
     }
 
@@ -21,8 +30,8 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
     spx spr_height = sheet_opt.value()->spr_height;
 
     Rectangle src = {
-        .x = sprite.col * spr_width,
-        .y = sprite.col * spr_height,
+        .x = sprite->col * spr_width,
+        .y = sprite->col * spr_height,
         .width = spr_width,
         .height = spr_height,
     };

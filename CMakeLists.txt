@@ -6,7 +6,7 @@ project(yumeami
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_BUILD_TYPE Release)
+# set(CMAKE_BUILD_TYPE Debug)
 
 # packages -------------------------------------------------------------------#
 
@@ -49,6 +49,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/graphics/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/renderer/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/test/)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -62,6 +63,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   graphics
   logic
   renderer
+  test
 
   raylib
   EnTT::EnTT

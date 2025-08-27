@@ -6,6 +6,8 @@
 #pragma once
 #include "common/units.hh"
 #include <entt/entt.hpp>
+#include <string>
+#include <vector>
 namespace yumeami {
 
   /**
@@ -17,8 +19,8 @@ namespace yumeami {
     tile width;
     tile height;
     spx tile_size;
-    int scale;
     bool wrap;
+    int scale;
 
     entt::registry reg;
     std::vector<std::string> sheet_ids;

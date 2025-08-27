@@ -54,7 +54,7 @@ std::optional<std::shared_ptr<yumeami::Sheet>>
 yumeami::SheetPool::get_sheet(std::string key) {
 
   if (!pool.contains(key)) {
-    spdlog::error("SheetPool - could not get sheet with key {}", key);
+    spdlog::debug("SheetPool - could not get sheet with key {}", key);
     return std::nullopt;
   }
 

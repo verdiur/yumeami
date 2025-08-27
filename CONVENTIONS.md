@@ -16,7 +16,7 @@ be specified below.
 | function | snake_case | |
 | struct | TitleCase | |
 | struct member | snake_case | |
-| primitive type alias | snake_case | |
+| primitive type alias or extension of primitive type | snake_case | |
 | enum | TitleCase | |
 
 - File names can be plural; directory names should never be plural.
@@ -26,17 +26,18 @@ be specified below.
     - `draw` for drawing functions
     - `calc` for pure functions
     - `update` for `void`-returning functions with side-effects (except drawing functions)
-    - `get` for getters
+    - `create` for object creation, `load` if creation involves allocation
+    - `unload` for deallocation
 
 ## Coding style
 
-- `structs` should never be any more than data containers. That means all members should be public, default constructors only, and no member functions. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function instead.
+- `structs` should almost never be any more than data containers. That means all members should be public, default constructors only, and member functions must only be defined if they provide functionalities that are intrinsic to the struct. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function or in a `load_...()` function instead.
 
 ## Namespaces
 
 - Exposed interfaces should be in the `yumeami` namespace.
 - Implementation details and non-exposed functions/structs should be in the `yumeami::impl` namespace.
-- Debug functions/structs should be in the `yumeami::debug` namespace.
+- Test/debug functions/structs should be in the `yumeami::test` namespace.
 
 ## More formatting
 

@@ -3,6 +3,7 @@
 #include "logic/world.hh"
 #include "raylib.h"
 #include "renderer/draw.hh"
+#include "test/test_worlds.hh"
 
 int main(int argc, char *argv[]) {
 
@@ -17,17 +18,18 @@ int main(int argc, char *argv[]) {
   yumeami::ViewportTransform vp_transform{};
   yumeami::calc_viewport_transform(vp, vp_transform);
 
-  yumeami::World world{
-      .width = 20, .height = 15, .tile_size = 16, .scale = 2, .wrap = false};
+  yumeami::World world = yumeami::test::test_create_world();
   yumeami::SheetPool sheet_pool{};
 
   while (!WindowShouldClose()) {
 
     BeginTextureMode(vp);
+    ClearBackground(BLACK);
     yumeami::draw_world(world, sheet_pool);
     EndTextureMode();
 
     BeginDrawing();
+    ClearBackground(BLACK);
     yumeami::draw_viewport(vp, vp_transform);
     EndDrawing();
   }
