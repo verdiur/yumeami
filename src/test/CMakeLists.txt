@@ -9,7 +9,7 @@ target_include_directories(test PRIVATE
 )
 
 target_link_libraries(test PUBLIC
-  assetmgt
+  assetmgr
   common
   logic
   render
