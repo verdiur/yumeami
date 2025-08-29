@@ -4,11 +4,17 @@
 #include "spdlog/spdlog.h"
 #include <memory>
 #include <optional>
+#include <string>
+
+
+bool yumeami::SheetPool::contains(std::string key) {
+  return pool.contains(key);
+}
 
 
 bool yumeami::SheetPool::load_sheet(std::filesystem::path path, spx spr_width,
                                     spx spr_height, std::string key) {
-  if (pool.contains(key)) {
+  if (contains(key)) {
     spdlog::error("SheetPool - key already exists");
     return false;
   }
@@ -32,7 +38,7 @@ bool yumeami::SheetPool::load_sheet(std::filesystem::path path, spx spr_width,
 
 bool yumeami::SheetPool::unload_sheet(std::string key) {
 
-  if (!pool.contains(key)) {
+  if (!contains(key)) {
     spdlog::error("SheetPool - key {} not found", key);
     return false;
   }
@@ -50,14 +56,45 @@ bool yumeami::SheetPool::unload_sheet(std::string key) {
 }
 
 
+void yumeami::SheetPool::clear() { pool.clear(); }
+
+
 std::optional<std::shared_ptr<yumeami::Sheet>>
 yumeami::SheetPool::get_sheet(std::string key) {
 
-  if (!pool.contains(key)) {
+  if (!contains(key)) {
     spdlog::debug("SheetPool - could not get sheet with key {}", key);
     return std::nullopt;
   }
 
   auto ptr = pool.at(key);
   return ptr;
+}
+
+
+bool yumeami::unload_sheets_from_pool(SheetPool &pool,
+                                      const std::vector<std::string> &keys,
+                                      bool force) {
+  // TODO: this implementation is horrible
+  if (!force) {
+    for (std::string k : keys) {
+      if (!pool.contains(k)) {
+        spdlog::warn("SheetPool - could not get sheet with key {}. No "
+                     "spritesheets will be unloaded.",
+                     k);
+        return false;
+      }
+    }
+  }
+  bool retval = true;
+  for (std::string k : keys) {
+    if (!pool.contains(k)) {
+      spdlog::warn("SheetPool - could not get sheet with key {}", k);
+      retval = false;
+      continue;
+    }
+    pool.unload_sheet(k);
+  }
+
+  return true;
 }

@@ -10,6 +10,7 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
     float dst_x = draw_pos.x * world.tile_size * world.scale;
     float dst_y = draw_pos.y * world.tile_size * world.scale;
 
+    // try to get sprite
     auto sprite = world.reg.try_get<Sprite>(entity);
     if (!sprite) {
       DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
@@ -18,6 +19,7 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
       continue;
     }
 
+    // try to get spritesheet
     auto sheet_opt = pool.get_sheet(sprite->sheet_id);
     if (!sheet_opt) {
       DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
@@ -35,14 +37,12 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
         .width = spr_width,
         .height = spr_height,
     };
-
     Rectangle dst = {
         .x = dst_x,
         .y = dst_y,
         .width = spr_width * world.scale,
         .height = spr_height * world.scale,
     };
-
     DrawTexturePro(sheet_opt.value()->tex, src, dst, {}, 0.0, WHITE);
   }
 }
