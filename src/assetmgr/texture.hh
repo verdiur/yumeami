@@ -51,7 +51,7 @@ namespace yumeami {
      * @param key
      * @return shared_ptr to sheet, nullptr if sheet not found
      */
-    std::optional<std::shared_ptr<Sheet>> get_sheet(std::string key);
+    std::optional<std::shared_ptr<Sheet>> get_sheet(std::string key) const;
   };
 
   /**
