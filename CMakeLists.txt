@@ -47,6 +47,7 @@ FetchContent_MakeAvailable(reflectcpp)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/assetmgr/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/input/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/render/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/test/)
@@ -59,8 +60,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_SOURCE_DIR}/src/
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  common
   assetmgr
+  common
+  input
   logic
   render
   test

@@ -1,5 +1,9 @@
 add_library(logic
   components.hh
+  components_op.cc
+  components_op.hh
+  movement.cc
+  movement.hh
   world.cc
   world.hh
 )
@@ -11,4 +15,5 @@ target_include_directories(logic PRIVATE
 target_link_libraries(logic PUBLIC
   raylib
   EnTT::EnTT
+  spdlog
 )

@@ -1,5 +1,8 @@
 #include "assetmgr/texture.hh"
 #include "common/viewport_transform.hh"
+#include "entt/entt.hpp"
+#include "input/input.hh"
+#include "logic/movement.hh"
 #include "logic/world.hh"
 #include "raylib.h"
 #include "render/draw.hh"
@@ -20,8 +23,13 @@ int main(int argc, char *argv[]) {
 
   yumeami::World world = yumeami::test::test_create_world();
   yumeami::SheetPool sheet_pool{};
+  entt::dispatcher dispatcher{};
+  yumeami::setup_movement_event_dispatcher(dispatcher);
 
   while (!WindowShouldClose()) {
+
+    yumeami::update_input(world, dispatcher);
+    yumeami::update_movement_state(world);
 
     BeginTextureMode(vp);
     ClearBackground(BLACK);

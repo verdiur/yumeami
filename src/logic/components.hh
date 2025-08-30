@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "common/direction.hh"
 #include "common/units.hh"
 #include <string>
 namespace yumeami {
@@ -21,6 +22,16 @@ namespace yumeami {
   struct PixelPos {
     float x;
     float y;
+  };
+
+  struct Velocity {
+    float vel; // time in seconds that it takes to move 1 tile.
+    operator float() const { return vel; }
+  };
+
+  struct Facing {
+    Direction dir;
+    operator Direction() const { return dir; }
   };
 
   struct Sprite {

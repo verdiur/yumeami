@@ -26,6 +26,7 @@ be specified below.
     - `draw` for drawing functions
     - `calc` for pure functions
     - `update` for `void`-returning functions with side-effects (except drawing functions)
+    - `handle` for event handling
     - `create` for object creation, `load` if creation involves allocation
     - `unload` for deallocation
 
