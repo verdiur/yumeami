@@ -45,12 +45,11 @@ FetchContent_MakeAvailable(reflectcpp)
 
 # targets --------------------------------------------------------------------#
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/assman/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/resman/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/input/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/render/)
-# add_subdirectory(${CMAKE_SOURCE_DIR}/src/test/)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -60,12 +59,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_SOURCE_DIR}/src/
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  assman
+  resman
   common
   input
   logic
   render
-  # test
 
   raylib
   EnTT::EnTT
@@ -73,10 +71,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 # resources ------------------------------------------------------------------#
 
-add_custom_target(assets ALL
+add_custom_target(resources ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory
-  ${CMAKE_SOURCE_DIR}/assets/
-  $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets/
-  COMMENT "Copying assets/ to build/ for ${PROJECT_NAME}..."
+  ${CMAKE_SOURCE_DIR}/resources/
+  $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/
+  COMMENT "Copying resources/ to build/ for ${PROJECT_NAME}..."
 )
-add_dependencies(${PROJECT_NAME} assets)
+add_dependencies(${PROJECT_NAME} resources)

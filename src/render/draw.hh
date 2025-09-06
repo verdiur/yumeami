@@ -1,6 +1,6 @@
-#include "assman/texture.hh"
 #include "logic/components.hh"
 #include "logic/world.hh"
+#include "resman/texture.hh"
 namespace yumeami {
 
   void draw_sprites(World &world, SheetPool &pool);
