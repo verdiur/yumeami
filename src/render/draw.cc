@@ -1,7 +1,7 @@
 #include "render/draw.hh"
-#include "assman/texture.hh"
 #include "logic/components.hh"
 #include "raylib.h"
+#include "resman/texture.hh"
 
 
 /* IMPL ***********************************************************************/

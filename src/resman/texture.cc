@@ -1,4 +1,4 @@
-#include "assman/texture.hh"
+#include "resman/texture.hh"
 #include "common/raii.hh"
 #include "spdlog/spdlog.h"
 #include <cassert>

@@ -10,7 +10,7 @@ target_include_directories(render PRIVATE
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(render PUBLIC
-  assman
+  resman
   logic
 
   raylib
