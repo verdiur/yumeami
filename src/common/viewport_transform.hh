@@ -1,3 +1,4 @@
+#include "common/raii.hh"
 #include "raylib.h"
 namespace yumeami {
 
@@ -14,7 +15,7 @@ namespace yumeami {
    * @param vp
    * @param transform
    */
-  void calc_viewport_transform(const RenderTexture &vp,
+  void calc_viewport_transform(const SafeRenderTexture &vp,
                                ViewportTransform &transform);
 
   /**
@@ -22,7 +23,7 @@ namespace yumeami {
    * @param vp
    * @param transform
    */
-  void draw_viewport(const RenderTexture &vp,
+  void draw_viewport(const SafeRenderTexture &vp,
                      const ViewportTransform &transform);
 
 } // namespace yumeami

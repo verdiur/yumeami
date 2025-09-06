@@ -1,4 +1,5 @@
-#include "assetmgr/texture.hh"
+#include "assman/texture.hh"
+#include "common/raii.hh"
 #include "common/viewport_transform.hh"
 #include "entt/entt.hpp"
 #include "input/input.hh"
@@ -6,7 +7,6 @@
 #include "logic/world.hh"
 #include "raylib.h"
 #include "render/draw.hh"
-#include "test/test_worlds.hh"
 
 int main(int argc, char *argv[]) {
 
@@ -17,12 +17,20 @@ int main(int argc, char *argv[]) {
   SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
-  RenderTexture vp = LoadRenderTexture(640, 480);
+  yumeami::SafeRenderTex vp(640, 480);
   yumeami::ViewportTransform vp_transform{};
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SheetPool sheet_pool{};
-  yumeami::World world = yumeami::test::test_spritesheet_world(sheet_pool);
+  yumeami::World world = {
+      .width = 20,
+      .height = 15,
+      .tile_size = 16,
+      .wrap = false,
+      .scale = 2,
+      .reg = {},
+      .sheet_ids = {},
+  };
   entt::dispatcher dispatcher{};
   yumeami::setup_movement_event_dispatcher(dispatcher);
 
@@ -34,8 +42,6 @@ int main(int argc, char *argv[]) {
     BeginTextureMode(vp);
     ClearBackground(BLACK);
     yumeami::draw_world(world, sheet_pool);
-    DrawRectangle(0, 0, 4, 4, GREEN);
-    DrawTexture(sheet_pool.get_sheet("test_spritesheet")->tex, 0, 0, WHITE);
     EndTextureMode();
 
     BeginDrawing();
@@ -44,7 +50,6 @@ int main(int argc, char *argv[]) {
     EndDrawing();
   }
 
-  UnloadRenderTexture(vp);
   CloseAudioDevice();
   CloseWindow();
   return 0;

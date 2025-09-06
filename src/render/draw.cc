@@ -1,5 +1,5 @@
 #include "render/draw.hh"
-#include "assetmgr/texture.hh"
+#include "assman/texture.hh"
 #include "logic/components.hh"
 #include "raylib.h"
 
@@ -25,7 +25,7 @@ yumeami::Sheet *yumeami::impl::get_sheet_or_fallback(World &world,
                                                      SheetPool &pool,
                                                      const Sprite &sprite,
                                                      float dst_x, float dst_y) {
-  Sheet *sheet = pool.get_sheet(sprite.sheet_id);
+  Sheet *sheet = pool.get(sprite.sheet_id);
   if (!sheet) {
     DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
                   world.tile_size * world.scale, MAGENTA);

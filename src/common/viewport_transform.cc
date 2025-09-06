@@ -2,10 +2,10 @@
 #include "raylib.h"
 #include <algorithm>
 
-void yumeami::calc_viewport_transform(const RenderTexture &vp,
+void yumeami::calc_viewport_transform(const SafeRenderTexture &vp,
                                       ViewportTransform &transform) {
-  int vp_width = vp.texture.width;
-  int vp_height = vp.texture.height;
+  int vp_width = vp->texture.width;
+  int vp_height = vp->texture.height;
   int scale =
       std::min(GetScreenWidth() / vp_width, GetScreenHeight() / vp_height);
 
@@ -23,7 +23,7 @@ void yumeami::calc_viewport_transform(const RenderTexture &vp,
   };
 }
 
-void yumeami::draw_viewport(const RenderTexture &vp,
+void yumeami::draw_viewport(const SafeRenderTexture &vp,
                             const ViewportTransform &transform) {
-  DrawTexturePro(vp.texture, transform.src, transform.dst, {}, 0, WHITE);
+  DrawTexturePro(vp->texture, transform.src, transform.dst, {}, 0, WHITE);
 }

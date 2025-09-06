@@ -1,4 +1,4 @@
-#include "assetmgr/texture.hh"
+#include "assman/texture.hh"
 #include "logic/components.hh"
 #include "logic/world.hh"
 namespace yumeami {
