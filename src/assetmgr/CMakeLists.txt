@@ -9,6 +9,8 @@ target_include_directories(assetmgr PRIVATE
 )
 
 target_link_libraries(assetmgr PUBLIC
+  common
+
   spdlog
   raylib
 )

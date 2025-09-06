@@ -21,8 +21,8 @@ int main(int argc, char *argv[]) {
   yumeami::ViewportTransform vp_transform{};
   yumeami::calc_viewport_transform(vp, vp_transform);
 
-  yumeami::World world = yumeami::test::test_create_world();
   yumeami::SheetPool sheet_pool{};
+  yumeami::World world = yumeami::test::test_spritesheet_world(sheet_pool);
   entt::dispatcher dispatcher{};
   yumeami::setup_movement_event_dispatcher(dispatcher);
 
@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
     BeginTextureMode(vp);
     ClearBackground(BLACK);
     yumeami::draw_world(world, sheet_pool);
+    DrawRectangle(0, 0, 4, 4, GREEN);
+    DrawTexture(sheet_pool.get_sheet("test_spritesheet")->tex, 0, 0, WHITE);
     EndTextureMode();
 
     BeginDrawing();

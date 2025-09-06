@@ -27,8 +27,8 @@ be specified below.
     - `calc` for pure functions
     - `update` for `void`-returning functions with side-effects (except drawing functions)
     - `handle` for event handling
-    - `create` for object creation, `load` if creation involves allocation
-    - `unload` for deallocation
+    - `create / load` if creation involves construction / addition / manual allocation
+    - `delete / unload` for deletion / removal / manual deallocation
 
 ## Coding style
 

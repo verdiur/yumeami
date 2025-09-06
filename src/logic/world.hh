@@ -26,4 +26,10 @@ namespace yumeami {
     std::vector<std::string> sheet_ids;
   };
 
+  /**
+   * @brief Clear the entirety of a world's entity registry.
+   * @param world
+   */
+  void unload_world_registry(World &world);
+
 } // namespace yumeami
