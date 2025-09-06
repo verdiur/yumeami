@@ -1,5 +1,5 @@
 /**
- * @file raii.cpp
+ * @file raii.hh
  * @brief RAII wrappers around C structs
  */
 
@@ -8,21 +8,30 @@
 #include <string>
 namespace yumeami {
 
-  /**
-   * @class RAIITex
-   * @brief RAII Wrapper around raylib's Texture
-   *
-   */
-  struct RAIITexture {
-    Texture tex;
+  struct SafeTexture {
+    Texture t;
     bool valid;
-    RAIITexture(const std::string path);
-    ~RAIITexture();
 
+    SafeTexture(std::string path);
+    ~SafeTexture();
     Texture *operator->();
     const Texture *operator->() const;
-    operator Texture() const;
+    operator Texture &();
+    operator const Texture &() const;
   };
-  typedef RAIITexture RAIITex;
+  using SafeTex = SafeTexture;
+
+  struct SafeRenderTexture {
+    RenderTexture rt;
+    bool valid;
+
+    SafeRenderTexture(int width, int height);
+    ~SafeRenderTexture();
+    RenderTexture *operator->();
+    const RenderTexture *operator->() const;
+    operator RenderTexture &();
+    operator const RenderTexture &() const;
+  };
+  using SafeRenderTex = SafeRenderTexture;
 
 } // namespace yumeami

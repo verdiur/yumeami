@@ -1,3 +1,5 @@
+# render functions
+
 add_library(render
   draw.cc
   draw.hh
@@ -8,7 +10,7 @@ target_include_directories(render PRIVATE
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(render PUBLIC
-  assetmgr
+  assman
   logic
 
   raylib
