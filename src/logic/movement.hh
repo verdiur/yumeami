@@ -11,6 +11,11 @@
 #include "logic/world.hh"
 namespace yumeami {
 
+  /**
+   * @class MovementState
+   * @brief Component representing current movement state
+   *
+   */
   struct MovementState {
     TruePos src = {0, 0};
     TruePos dst = {0, 0};
@@ -18,6 +23,11 @@ namespace yumeami {
     bool moving = false;
   };
 
+  /**
+   * @class MovementEvent
+   * @brief Event that informs a targeted entity taht it should move
+   *
+   */
   struct MovementEvent {
     World *world;
     entt::entity target;
