@@ -32,7 +32,8 @@ be specified below.
 
 ## Coding style
 
-- `structs` should almost never be any more than data containers. That means all members should be public, default constructors only, and member functions must only be defined if they provide functionalities that are intrinsic to the struct. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function or in a `load_...()` function instead.
+- `structs` holding game logic data should never be any more than data containers. That means all members should be public, default constructors only, and member functions must only be defined if they provide functionalities that are intrinsic to the struct. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function or in a `load_...()` function instead.
+- Generally speaking, in most cases plain old data is preferred than not. Only implement member functions if making them non-member doesn't make sense.
 
 ## Namespaces
 

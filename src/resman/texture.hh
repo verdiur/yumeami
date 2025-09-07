@@ -18,6 +18,12 @@ namespace yumeami {
     int cols;
   };
 
+  /**
+   * @class SpritesheetPool
+   * @brief Pool of spritesheets. Contains plain spritesheet instances, not
+   * pointers.
+   *
+   */
   struct SpritesheetPool {
   private:
     std::unordered_map<std::string, Spritesheet> pool = {};

@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <algorithm>
 
+
 void yumeami::calc_viewport_transform(const SafeRenderTexture &vp,
                                       ViewportTransform &transform) {
   int vp_width = vp->texture.width;
@@ -22,6 +23,7 @@ void yumeami::calc_viewport_transform(const SafeRenderTexture &vp,
       static_cast<float>(vp_height * scale),
   };
 }
+
 
 void yumeami::draw_viewport(const SafeRenderTexture &vp,
                             const ViewportTransform &transform) {

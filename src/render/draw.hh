@@ -3,7 +3,18 @@
 #include "resman/texture.hh"
 namespace yumeami {
 
+  /**
+   * @brief Draw all sprite-bearing entities
+   * @param world
+   * @param pool
+   */
   void draw_sprites(World &world, SheetPool &pool);
+
+  /**
+   * @brief Draw world on viewport
+   * @param world
+   * @param pool
+   */
   void draw_world(World &world, SheetPool &pool);
 
 } // namespace yumeami

@@ -8,6 +8,11 @@
 #include <string>
 namespace yumeami {
 
+  /**
+   * @class SafeTexture
+   * @brief RAII wrapper around raylib's Texture struct
+   *
+   */
   struct SafeTexture {
     Texture t;
     bool valid;
@@ -21,6 +26,11 @@ namespace yumeami {
   };
   using SafeTex = SafeTexture;
 
+  /**
+   * @class SafeRenderTexture
+   * @brief RAII wrapprt around raylib's RenderTexture struct
+   *
+   */
   struct SafeRenderTexture {
     RenderTexture rt;
     bool valid;
