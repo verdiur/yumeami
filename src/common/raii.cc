@@ -20,6 +20,41 @@ yumeami::SafeTexture::~SafeTexture() {
 }
 
 
+yumeami::SafeTexture::SafeTexture(SafeTexture &&other) noexcept
+    : t(other.t), valid(other.valid) {
+  other.valid = false;
+  other.t.id = 0;
+  other.t.width = 0;
+  other.t.height = 0;
+  other.t.mipmaps = 0;
+  other.t.format = 0;
+}
+
+
+yumeami::SafeTexture &
+yumeami::SafeTexture::operator=(SafeTexture &&other) noexcept {
+  if (this == &other) {
+    return *this;
+  }
+
+  if (IsTextureValid(t)) {
+    UnloadTexture(t);
+  }
+
+  t = other.t;
+  valid = other.valid;
+
+  other.valid = false;
+  other.t.id = 0;
+  other.t.width = 0;
+  other.t.height = 0;
+  other.t.mipmaps = 0;
+  other.t.format = 0;
+
+  return *this;
+}
+
+
 Texture *yumeami::SafeTexture::operator->() { return &t; }
 const Texture *yumeami::SafeTexture::operator->() const { return &t; }
 

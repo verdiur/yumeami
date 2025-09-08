@@ -53,9 +53,7 @@ void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
       .width = spr_width * world.scale,
       .height = spr_height * world.scale,
   };
-  // DrawRectangle(dst_x, dst_y, 2, 2, RED);
-  DrawTexturePro(sheet.tex, src, dst, {}, 0.0, WHITE);
-  // DrawTexturePro(sheet.tex, src, dst, {}, 10.0, WHITE);
+  DrawTexturePro(sheet.tex, src, dst, {}, 0, WHITE);
 }
 
 
@@ -75,8 +73,9 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
 
     Sheet *sheet =
         impl::get_sheet_or_fallback(world, pool, *sprite, dst_x, dst_y);
-    if (!sheet)
+    if (!sheet) {
       continue;
+    }
 
     impl::draw_sprite_texture(world, *sheet, *sprite, dst_x, dst_y);
   }
