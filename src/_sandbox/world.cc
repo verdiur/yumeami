@@ -1,6 +1,7 @@
 #include "_sandbox/world.hh"
 #include "entt/entity/fwd.hpp"
 #include "logic/components.hh"
+#include "logic/movement.hh"
 #include "logic/world.hh"
 #include <stdexcept>
 
@@ -14,8 +15,8 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
   }
 
   World world{
-      .width = 20,
-      .height = 15,
+      .width = 40,
+      .height = 30,
       .tile_size = 16,
       .wrap = false,
       .scale = 2,
@@ -29,6 +30,14 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
       world.reg.emplace<Sprite>(e, "test", r, c);
     }
   }
+
+  entt::entity p = world.reg.create();
+  world.reg.emplace<DrawPos>(p, 0, 0);
+  world.reg.emplace<TruePos>(p, 0, 0);
+  world.reg.emplace<MovementState>(p);
+  world.reg.emplace<Velocity>(p, 0.4f);
+  world.reg.emplace<PlayerTag>(p);
+  world.reg.emplace<CameraTargetTag>(p);
 
   return world;
 }

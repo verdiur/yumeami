@@ -25,7 +25,7 @@ namespace yumeami {
 
     std::vector<std::string> sheet_ids;
     entt::registry reg = {};
-    Camera2D cam = {};
+    Camera2D cam{};
   };
 
   /**
