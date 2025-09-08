@@ -6,7 +6,7 @@
 #include "logic/movement.hh"
 #include "logic/world.hh"
 #include "raylib.h"
-#include "render/draw.hh"
+#include "render/draw_world.hh"
 #include "resman/texture.hh"
 
 int main(int argc, char *argv[]) {

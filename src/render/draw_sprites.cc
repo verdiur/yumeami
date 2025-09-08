@@ -1,7 +1,5 @@
-#include "render/draw.hh"
+#include "render/draw_sprites.hh"
 #include "logic/components.hh"
-#include "raylib.h"
-#include "resman/texture.hh"
 
 
 /* IMPL ***********************************************************************/
@@ -57,9 +55,6 @@ void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
 }
 
 
-/* PUBL ***********************************************************************/
-
-
 void yumeami::draw_sprites(World &world, SheetPool &pool) {
   auto view = world.reg.view<DrawPos>();
   for (auto [entity, draw_pos] : view.each()) {
@@ -79,9 +74,4 @@ void yumeami::draw_sprites(World &world, SheetPool &pool) {
 
     impl::draw_sprite_texture(world, *sheet, *sprite, dst_x, dst_y);
   }
-}
-
-
-void yumeami::draw_world(World &world, SheetPool &pool) {
-  draw_sprites(world, pool);
 }

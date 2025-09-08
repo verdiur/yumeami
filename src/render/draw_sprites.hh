@@ -1,3 +1,4 @@
+#pragma once
 #include "logic/components.hh"
 #include "logic/world.hh"
 #include "resman/texture.hh"
@@ -9,13 +10,6 @@ namespace yumeami {
    * @param pool
    */
   void draw_sprites(World &world, SheetPool &pool);
-
-  /**
-   * @brief Draw world on viewport
-   * @param world
-   * @param pool
-   */
-  void draw_world(World &world, SheetPool &pool);
 
 } // namespace yumeami
 namespace yumeami::impl {
