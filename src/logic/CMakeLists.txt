@@ -1,6 +1,8 @@
 # game logic
 
 add_library(logic
+  camera.cc
+  camera.hh
   components.hh
   components_op.cc
   components_op.hh

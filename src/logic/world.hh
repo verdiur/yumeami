@@ -6,6 +6,7 @@
 #pragma once
 #include "common/units.hh"
 #include "entt/entt.hpp"
+#include "raylib.h"
 #include <string>
 #include <vector>
 namespace yumeami {
@@ -22,8 +23,9 @@ namespace yumeami {
     bool wrap;
     int scale;
 
-    entt::registry reg;
     std::vector<std::string> sheet_ids;
+    entt::registry reg = {};
+    Camera2D cam = {};
   };
 
   /**
