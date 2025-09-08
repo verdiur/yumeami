@@ -22,24 +22,33 @@ bool yumeami::SpritesheetPool::valid(std::string key) const {
 bool yumeami::SpritesheetPool::load(std::string key, std::string path,
                                     spx spr_width, spx spr_height) {
   if (contains(key)) {
-    spdlog::error("[SpritesheetPool] could not load {}: key is already in pool",
-                  path);
+    spdlog::error(
+        "[SpritesheetPool] could not load \"{}\": key is already in pool",
+        path);
     return false;
   }
   SafeTexture tex(path);
   if (!tex.valid) {
-    spdlog::error("[SpritesheetPool] could not load {}");
+    spdlog::error("[SpritesheetPool] could not load \"{}\"");
     return false;
   }
+
+  // must fetch texture width and height beforehand because std::move()
+  // zeroes out all fields
+  int tex_height = tex->height;
+  int tex_width = tex->width;
   Spritesheet sheet{
-      .tex = tex,
+      .tex = std::move(tex),
       .spr_width = spr_width,
       .spr_height = spr_height,
-      .rows = tex->height / (int)spr_height,
-      .cols = tex->width / (int)spr_width,
+      .rows = tex_height / (int)spr_height,
+      .cols = tex_width / (int)spr_width,
   };
-  pool.emplace(key, sheet);
-  spdlog::info("[SpritesheetPool] loaded {} with key {}", path, key);
+
+  int sheet_id = sheet.tex->id;
+  pool.try_emplace(key, std::move(sheet));
+  spdlog::info("[SpritesheetPool] loaded \"{}\" ({}) with key \"{}\"", path,
+               sheet_id, key);
   return true;
 }
 
@@ -50,7 +59,7 @@ bool yumeami::SpritesheetPool::unload(std::string key) {
     return false;
   }
   pool.erase(key);
-  spdlog::info("[SpritesheetPool] unloaded spritesheet with key {}", key);
+  spdlog::info("[SpritesheetPool] unloaded spritesheet with key \"{}\"", key);
   return true;
 }
 

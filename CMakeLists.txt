@@ -45,11 +45,16 @@ FetchContent_MakeAvailable(reflectcpp)
 
 # targets --------------------------------------------------------------------#
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/resman/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/input/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/render/)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/resman/)
+
+# debug subdirs
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_subdirectory(${CMAKE_SOURCE_DIR}/src/_sandbox/)
+endif()
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -59,15 +64,22 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_SOURCE_DIR}/src/
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  resman
   common
   input
   logic
   render
+  resman
 
   raylib
   EnTT::EnTT
 )
+
+# debug libs
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+    _sandbox  
+  )
+endif()
 
 # resources ------------------------------------------------------------------#
 

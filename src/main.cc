@@ -1,3 +1,4 @@
+#include "_sandbox/world.hh"
 #include "common/raii.hh"
 #include "common/viewport_transform.hh"
 #include "entt/entt.hpp"
@@ -22,15 +23,17 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SheetPool sheet_pool{};
-  yumeami::World world = {
-      .width = 20,
-      .height = 15,
-      .tile_size = 16,
-      .wrap = false,
-      .scale = 2,
-      .reg = {},
-      .sheet_ids = {},
-  };
+  yumeami::World world =
+      yumeami::_sandbox::create_spritesheet_world(sheet_pool);
+  // yumeami::World world = {
+  //     .width = 20,
+  //     .height = 15,
+  //     .tile_size = 16,
+  //     .wrap = false,
+  //     .scale = 2,
+  //     .reg = {},
+  //     .sheet_ids = {},
+  // };
   entt::dispatcher dispatcher{};
   yumeami::setup_movement_event_dispatcher(dispatcher);
 
