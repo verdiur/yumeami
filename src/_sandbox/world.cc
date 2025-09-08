@@ -19,7 +19,6 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
       .tile_size = 16,
       .wrap = false,
       .scale = 2,
-      .reg = {},
       .sheet_ids = {"test"},
   };
 

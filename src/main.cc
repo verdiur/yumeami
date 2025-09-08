@@ -3,6 +3,7 @@
 #include "common/viewport_transform.hh"
 #include "entt/entt.hpp"
 #include "input/input.hh"
+#include "logic/camera.hh"
 #include "logic/movement.hh"
 #include "logic/world.hh"
 #include "raylib.h"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[]) {
   yumeami::SheetPool sheet_pool{};
   yumeami::World world =
       yumeami::_sandbox::create_spritesheet_world(sheet_pool);
+  yumeami::setup_camera(world, vp, true);
   // yumeami::World world = {
   //     .width = 20,
   //     .height = 15,
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
 
     BeginTextureMode(vp);
     ClearBackground(BLACK);
-    yumeami::draw_world(world, sheet_pool);
+    yumeami::draw_world(world, sheet_pool, vp);
     EndTextureMode();
 
     BeginDrawing();
