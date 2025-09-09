@@ -18,6 +18,16 @@ namespace yumeami {
 
     operator float() const { return val; }
 
+    tile &operator+=(const tile &rhs) {
+      this->val += rhs.val;
+      return *this;
+    }
+
+    tile &operator-=(const tile &rhs) {
+      this->val -= rhs.val;
+      return *this;
+    }
+
     // @brief truncate float value into int
     int trunc() const { return static_cast<int>(val); }
   };
@@ -33,6 +43,16 @@ namespace yumeami {
     spx(int val) : val(static_cast<float>(val)) {}
 
     operator float() const { return val; }
+
+    spx &operator+=(const spx &rhs) {
+      this->val += rhs.val;
+      return *this;
+    }
+
+    spx &operator-=(const spx &rhs) {
+      this->val -= rhs.val;
+      return *this;
+    }
 
     // @brief truncate float value into int
     int trunc() const { return static_cast<int>(val); }

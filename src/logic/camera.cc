@@ -20,6 +20,9 @@ void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
     float intended_target_y = floorf((draw_pos.y + 1) * world.tile_size * world.scale);
     // clang-format on
 
+    // TODO: as of now, clamp_camera being activated on a world smaller than the
+    // viewport leads to the game crashing. The crash is caused by std::clamp
+    // bounds failing assertions.
     if (world.clamp_camera) {
       // clang-format off
       float bound_x = world.width * world.tile_size * world.scale;

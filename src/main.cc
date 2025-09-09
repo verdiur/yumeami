@@ -25,8 +25,7 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SheetPool sheet_pool{};
-  yumeami::World world =
-      yumeami::_sandbox::create_spritesheet_world(sheet_pool);
+  yumeami::World world = yumeami::_sandbox::create_wrap_world(sheet_pool);
   yumeami::setup_camera(world, vp);
   // yumeami::World world = {
   //     .width = 20,

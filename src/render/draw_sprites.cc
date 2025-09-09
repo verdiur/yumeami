@@ -5,6 +5,10 @@
 #include "raylib.h"
 
 
+// TODO: as of now camera wrapping is broken on worlds smaller than the
+// viewport.
+
+
 /* IMPL ***********************************************************************/
 
 
