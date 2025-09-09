@@ -61,16 +61,16 @@ void yumeami::impl::movement_wrap_src_dst(const World &world,
   if (tgt_mvt_state.dst.x < 0) {
     tgt_mvt_state.dst.x += world.width;
     tgt_mvt_state.src.x = tgt_mvt_state.dst.x + 1;
-
-  } else if (tgt_mvt_state.dst.x >= world.width) {
+  }
+  if (tgt_mvt_state.dst.x >= world.width) {
     tgt_mvt_state.dst.x -= world.width;
     tgt_mvt_state.src.x = tgt_mvt_state.dst.x - 1;
-
-  } else if (tgt_mvt_state.dst.y < 0) {
+  }
+  if (tgt_mvt_state.dst.y < 0) {
     tgt_mvt_state.dst.y += world.height;
     tgt_mvt_state.src.y = tgt_mvt_state.dst.y + 1;
-
-  } else if (tgt_mvt_state.dst.y >= world.height) {
+  }
+  if (tgt_mvt_state.dst.y >= world.height) {
     tgt_mvt_state.dst.y -= world.height;
     tgt_mvt_state.src.y = tgt_mvt_state.dst.y - 1;
   }
@@ -132,7 +132,6 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
     return;
 
   impl::movement_set_src_dst(direction, *tgt_true_pos, *tgt_mvt_state);
-
   if (impl::movement_is_oob(world, *tgt_mvt_state)) {
     if (!world.wrap)
       return;
