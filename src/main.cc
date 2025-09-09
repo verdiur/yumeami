@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   yumeami::SheetPool sheet_pool{};
   yumeami::World world =
       yumeami::_sandbox::create_spritesheet_world(sheet_pool);
-  yumeami::setup_camera(world, vp, true);
+  yumeami::setup_camera(world, vp);
   // yumeami::World world = {
   //     .width = 20,
   //     .height = 15,

@@ -12,8 +12,7 @@ namespace yumeami {
    * @param vp
    * @param clamp if true, clamp the target to the boundaries of the world
    */
-  void update_camera(World &world, const SafeRenderTex &vp, bool clamp,
-                     bool log = false);
+  void update_camera(World &world, const SafeRenderTex &vp, bool log = false);
 
   /**
    * @brief Setup world camera fields. Includes an initial update of the camera.
@@ -21,6 +20,6 @@ namespace yumeami {
    * @param vp
    * @param clamp if true, clamp the target to the boundaries of the world
    */
-  void setup_camera(World &world, const SafeRenderTex &vp, bool clamp);
+  void setup_camera(World &world, const SafeRenderTex &vp);
 
 } // namespace yumeami

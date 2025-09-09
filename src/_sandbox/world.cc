@@ -19,7 +19,7 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
       .height = 30,
       .tile_size = 16,
       .wrap = false,
-      .scale = 2,
+      .clamp_camera = true,
       .sheet_ids = {"test"},
   };
 

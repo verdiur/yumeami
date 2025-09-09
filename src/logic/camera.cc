@@ -6,8 +6,7 @@
 #include <cassert>
 
 
-void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool clamp,
-                            bool log) {
+void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
   auto view = world.reg.view<CameraTargetTag, DrawPos>();
   if (view.begin() == view.end()) {
     if (log)
@@ -21,7 +20,7 @@ void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool clamp,
     float intended_target_y = floorf((draw_pos.y + 1) * world.tile_size * world.scale);
     // clang-format on
 
-    if (clamp) {
+    if (world.clamp_camera) {
       // clang-format off
       float bound_x = world.width * world.tile_size * world.scale;
       float bound_y = world.height * world.tile_size * world.scale;
@@ -49,7 +48,7 @@ void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool clamp,
 }
 
 
-void yumeami::setup_camera(World &world, const SafeRenderTex &vp, bool clamp) {
+void yumeami::setup_camera(World &world, const SafeRenderTex &vp) {
   // Camera2D fields are not initialized on construction for some reason beyond
   // my understanding. So we initialize them before updating the cam
   world.cam.zoom = 1;
@@ -58,5 +57,5 @@ void yumeami::setup_camera(World &world, const SafeRenderTex &vp, bool clamp) {
       .x = (float)vp->texture.width / world.scale,
       .y = (float)vp->texture.height / world.scale,
   };
-  update_camera(world, vp, clamp, true);
+  update_camera(world, vp, true);
 }
