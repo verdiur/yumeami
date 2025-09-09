@@ -69,9 +69,13 @@ namespace yumeami::impl {
                                  const MovementState *tgt_mvt_state,
                                  const Velocity *tgt_velocity);
   bool movement_facing_exists(const Facing *tgt_facing);
+
   bool movement_collides(const World &world, entt::entity target);
-  bool movement_is_oob(const World &world, entt::entity target);
-  void movement_trigger(entt::entity target, const Direction &event_dir,
-                        TruePos &tgt_true_pos, MovementState &tgt_mvt_state);
+  bool movement_is_oob(const World &world, MovementState &tgt_mvt_state);
+
+  void movement_set_src_dst(const Direction &event_dir, TruePos &tgt_true_pos,
+                            MovementState &tgt_mvt_state);
+  void movement_wrap_src_dst(const World &world, MovementState &tgt_mvt_state);
+  void movement_trigger(TruePos &tgt_true_pos, MovementState &tgt_mvt_state);
 
 } // namespace yumeami::impl
