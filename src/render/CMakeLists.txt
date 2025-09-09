@@ -1,6 +1,8 @@
 # render functions
 
 add_library(render
+  draw_debug.cc
+  draw_debug.hh
   draw_sprites.cc
   draw_sprites.hh
   draw_world.cc
