@@ -5,7 +5,7 @@
 #include "raylib.h"
 
 
-// TODO: as of now camera wrapping is broken on worlds smaller than the
+// NOTE: as of now camera wrapping is broken on worlds smaller than the
 // viewport.
 
 
@@ -24,31 +24,8 @@ yumeami::Sheet *yumeami::impl::get_sheet(World &world, SheetPool &pool,
                                          float dst_y) {
   if (!sprite)
     return nullptr;
-
   Sheet *sheet = pool.get(sprite->sheet_id);
   return sheet;
-}
-
-
-bool yumeami::impl::is_sprite_off_camera(const World &world,
-                                         const SafeRenderTex &vp,
-                                         const Sheet *sheet, float dst_x,
-                                         float dst_y) {
-  CameraBounds bounds = get_camera_bounds(world, vp);
-  if (dst_x < bounds.left || dst_y < bounds.top) {
-    return true;
-  }
-
-  // fallback to tile size if sheet not found
-  spx spr_width = (sheet) ? sheet->spr_width : world.tile_size;
-  spx spr_height = (sheet) ? sheet->spr_height : world.tile_size;
-
-  if (dst_x + spr_width * world.scale > bounds.right ||
-      dst_y + spr_height * world.scale > bounds.bottom) {
-    return true;
-  }
-
-  return false;
 }
 
 
@@ -60,7 +37,6 @@ void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
                                         float dst_y) {
   spx spr_width = sheet.spr_width;
   spx spr_height = sheet.spr_height;
-
   Rectangle src = {
       .x = sprite.col * spr_width,
       .y = sprite.row * spr_height,
@@ -94,6 +70,28 @@ void yumeami::impl::draw_fallback_no_sheet(World &world, float dst_x,
 
 
 // draw management
+
+
+bool yumeami::impl::is_sprite_off_camera(const World &world,
+                                         const SafeRenderTex &vp,
+                                         const Sheet *sheet, float dst_x,
+                                         float dst_y) {
+  CameraBounds bounds = get_camera_bounds(world, vp);
+  if (dst_x < bounds.left || dst_y < bounds.top) {
+    return true;
+  }
+
+  // fallback to tile size if sheet not found
+  spx spr_width = (sheet) ? sheet->spr_width : world.tile_size;
+  spx spr_height = (sheet) ? sheet->spr_height : world.tile_size;
+
+  if (dst_x + spr_width * world.scale > bounds.right ||
+      dst_y + spr_height * world.scale > bounds.bottom) {
+    return true;
+  }
+
+  return false;
+}
 
 
 void yumeami::impl::draw_sprite(World &world, const Sheet *sheet,
