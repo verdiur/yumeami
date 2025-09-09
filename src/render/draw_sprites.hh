@@ -5,12 +5,6 @@
 #include "resman/texture.hh"
 namespace yumeami {
 
-  enum struct DrawSpriteStatus {
-    OK = 0,
-    NO_SPRITE,
-    NO_SHEET,
-  };
-
   /**
    * @brief Draw all sprite-bearing entities
    * @param world
@@ -21,11 +15,10 @@ namespace yumeami {
 } // namespace yumeami
 namespace yumeami::impl {
 
-  Sprite *get_sprite(World &world, entt::entity ent, float dst_x, float dst_y,
-                     DrawSpriteStatus &status);
+  Sprite *get_sprite(World &world, entt::entity ent, float dst_x, float dst_y);
 
   Sheet *get_sheet(World &world, SheetPool &pool, const Sprite *sprite,
-                   float dst_x, float dst_y, DrawSpriteStatus &status);
+                   float dst_x, float dst_y);
 
   /**
    * @brief Tells you if a sprite is off camera. Off camera means that at least
@@ -40,5 +33,10 @@ namespace yumeami::impl {
 
   void draw_fallback_no_sprite(World &world, float dst_x, float dst_y);
   void draw_fallback_no_sheet(World &world, float dst_x, float dst_y);
+
+  void draw_sprite(World &world, const Sheet *sheet, const Sprite *sprite,
+                   float dst_x, float dst_y);
+  void draw_sprite_wrap(World &world, const Sheet *sheet, const Sprite *sprite,
+                        float dst_x, float dst_y, bool wrap_off_camera);
 
 } // namespace yumeami::impl

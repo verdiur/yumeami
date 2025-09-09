@@ -7,8 +7,9 @@
 
 
 void yumeami::draw_world(World &world, SheetPool &pool, SafeRenderTex &vp) {
-  update_camera(world, vp, true);
+  update_camera(world, vp, world.clamp_camera);
+
   BeginMode2D(world.cam);
-  draw_sprites(world, pool);
+  draw_sprites(world, vp, pool);
   EndMode2D();
 }
