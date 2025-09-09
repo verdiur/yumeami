@@ -21,7 +21,8 @@ namespace yumeami {
     tile height;
     spx tile_size;
     bool wrap;
-    int scale;
+    bool clamp_camera;
+    int scale = 2;
 
     std::vector<std::string> sheet_ids;
     entt::registry reg = {};
