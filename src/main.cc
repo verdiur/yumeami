@@ -7,6 +7,7 @@
 #include "logic/movement.hh"
 #include "logic/world.hh"
 #include "raylib.h"
+#include "render/draw_debug.hh"
 #include "render/draw_world.hh"
 #include "resman/texture.hh"
 
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
   InitWindow(640, 480, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
-  SetWindowState(FLAG_VSYNC_HINT);
+  // SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
   yumeami::SafeRenderTex vp(640, 480);
@@ -52,6 +53,7 @@ int main(int argc, char *argv[]) {
     BeginDrawing();
     ClearBackground(BLACK);
     yumeami::draw_viewport(vp, vp_transform);
+    yumeami::draw_debug_info(10);
     EndDrawing();
   }
 
