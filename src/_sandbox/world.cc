@@ -15,11 +15,11 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
   }
 
   World world{
-      .width = 40,
-      .height = 30,
+      .width = 20,
+      .height = 15,
       .tile_size = 16,
       .wrap = false,
-      .clamp_camera = true,
+      .clamp_camera = false,
       .sheet_ids = {"test"},
   };
 

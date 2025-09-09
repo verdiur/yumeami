@@ -67,7 +67,7 @@ yumeami::CameraBounds yumeami::get_camera_bounds(const World &world,
   float left = cam.target.x - cam.offset.x / cam.zoom;
   float top = cam.target.y - cam.offset.y / cam.zoom;
   float right = left + vp->texture.width / cam.zoom;
-  float bottom = top + vp->texture.width / cam.zoom;
+  float bottom = top + vp->texture.height / cam.zoom;
 
   return CameraBounds{left, right, top, bottom};
 }
