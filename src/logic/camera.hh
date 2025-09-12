@@ -1,3 +1,8 @@
+/**
+ * @file camera.hh
+ * @brief Camera control functions
+ */
+
 #pragma once
 #include "common/raii.hh"
 #include "logic/world.hh"

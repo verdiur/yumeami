@@ -1,3 +1,8 @@
+/**
+ * @file direction.hh
+ * @brief Direction structs/enums
+ */
+
 #pragma once
 namespace yumeami {
 

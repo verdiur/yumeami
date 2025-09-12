@@ -1,3 +1,8 @@
+/**
+ * @file draw_sprites.hh
+ * @brief Draw functions for sprites of a world
+ */
+
 #pragma once
 #include "common/raii.hh"
 #include "logic/components.hh"

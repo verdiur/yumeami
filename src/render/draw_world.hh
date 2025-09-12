@@ -1,3 +1,8 @@
+/**
+ * @file draw_world.hh
+ * @brief Highest-level draw functions for World struct
+ */
+
 #include "common/raii.hh"
 #include "logic/world.hh"
 #include "resman/texture.hh"
