@@ -8,7 +8,7 @@
 
 
 void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
-  // horrible implementation.
+  // NOTE: horrible implementation.
   // this is only temporary.
   auto view = world.reg.view<PlayerTag>();
   if (IsKeyDown(KEY_UP)) {
