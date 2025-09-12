@@ -1,3 +1,8 @@
+/**
+ * @file input.hh
+ * @brief Input processing
+ */
+
 #pragma once
 #include "entt/entt.hpp"
 #include "logic/world.hh"

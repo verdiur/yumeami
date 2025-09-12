@@ -1,3 +1,9 @@
+/**
+ * @file viewport_transform.hh
+ * @brief ViewportTransform helper struct (for scaling virtual viewport onto
+ * raylib window)
+ */
+
 #include "common/raii.hh"
 #include "raylib.h"
 namespace yumeami {
