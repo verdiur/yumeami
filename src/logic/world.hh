@@ -20,8 +20,10 @@ namespace yumeami {
     tile width;
     tile height;
     spx tile_size;
-    bool wrap;
-    bool clamp_camera;
+    bool wrap;         // if true, world wrap is activated
+    bool clamp_camera; // if true, the camera position will be limited to world
+                       // bounds (i.e. the player will never be able to see
+                       // beyond the borders)
     int scale = 2;
 
     std::vector<std::string> sheet_ids;
