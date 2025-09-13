@@ -3,6 +3,14 @@
 #include <string>
 
 
+// DEBUG LINE COLORS
+// WHITE: hitboxes
+// DARKBROWN: something invalid
+// DARKGRAY: guides, like bounds or viewport center, etc.
+
+// DEBUG TEXT COLORS
+// GREEN/BLACK: fps
+
 void yumeami::draw_debug_info(int text_size) {
   int fps = GetFPS();
   DrawText((std::to_string(fps) + " FPS").c_str(), 3, 3, text_size, BLACK);
@@ -12,16 +20,47 @@ void yumeami::draw_debug_info(int text_size) {
 
 void yumeami::draw_debug_collision(const World &world) {
   // NOTE: theres probably a way to optimize this
+  BeginMode2D(world.cam);
   for (int x = 0; x < world.collision.get_width(); x++) {
     for (int y = 0; y < world.collision.get_height(); y++) {
       int val = world.collision.at(x, y);
+
       if (val > 0) {
-        DrawRectangleLines(x, y, world.tile_size * world.scale,
+        DrawRectangleLines(x * world.tile_size * world.scale,
+                           y * world.tile_size * world.scale,
+                           world.tile_size * world.scale,
                            world.tile_size * world.scale, WHITE);
         if (val > 1) {
-          DrawText(std::to_string(val).c_str(), x + 2, y + 2, 1, WHITE);
+          DrawText(std::to_string(val).c_str(),
+                   x * world.tile_size * world.scale + 3,
+                   y * world.tile_size * world.scale + 3, 1, BLACK);
+          DrawText(std::to_string(val).c_str(),
+                   x * world.tile_size * world.scale + 2,
+                   y * world.tile_size * world.scale + 2, 1, WHITE);
         }
+      }
+
+      if (val < 0) {
+        DrawRectangleLines(x * world.tile_size * world.scale,
+                           y * world.tile_size * world.scale,
+                           world.tile_size * world.scale,
+                           world.tile_size * world.scale, MAROON);
+        DrawText(std::to_string(val).c_str(),
+                 x * world.tile_size * world.scale + 3,
+                 y * world.tile_size * world.scale + 3, 1, BLACK);
+        DrawText(std::to_string(val).c_str(),
+                 x * world.tile_size * world.scale + 2,
+                 y * world.tile_size * world.scale + 2, 1, MAROON);
       }
     }
   }
+  EndMode2D();
+}
+
+
+void yumeami::draw_debug_world_bounds(const World &world) {
+  BeginMode2D(world.cam);
+  DrawRectangleLines(0, 0, world.width * world.tile_size * world.scale,
+                     world.height * world.tile_size * world.scale, DARKGRAY);
+  EndMode2D();
 }
