@@ -24,7 +24,7 @@ namespace yumeami {
     std::vector<T> vec;
 
   public:
-    Grid<T>(int width, int height, T init_val)
+    Grid(int width, int height, T init_val)
         : width(width), height(height), vec(width * height, init_val) {}
 
     /**
