@@ -43,7 +43,9 @@ namespace yumeami {
      */
     const T &at(int x, int y) const { return vec.at((x + 1) * y + x); }
 
-    int size() const { return vec.size(); }
+    int area() const { return vec.size(); }
+    int get_width() const { return width; }
+    int get_height() const { return height; }
 
     // std::vector<T> *operator->() { return vec; }
     // const std::vector<T> *operator->() const { return vec; }
