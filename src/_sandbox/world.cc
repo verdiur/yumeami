@@ -14,14 +14,7 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
     throw std::runtime_error("spritesheet loading failed");
   }
 
-  World world{
-      .width = 20,
-      .height = 15,
-      .tile_size = 16,
-      .wrap = false,
-      .clamp_camera = false,
-      .sheet_ids = {"test"},
-  };
+  World world = create_world(20, 15, 16, false, false, {"test"});
 
   for (int r = 0; r < sheet->rows; r++) {
     for (int c = 0; c < sheet->cols; c++) {
@@ -51,14 +44,7 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetPool &pool) {
     throw std::runtime_error("spritesheet loading failed");
   }
 
-  World world{
-      .width = 21,
-      .height = 16,
-      .tile_size = 16,
-      .wrap = true,
-      .clamp_camera = false,
-      .sheet_ids = {"test"},
-  };
+  World world = create_world(21, 16, 16, true, false, {"test"});
 
   for (int r = 0; r < sheet->rows; r++) {
     for (int c = 0; c < sheet->cols; c++) {
