@@ -56,8 +56,6 @@ void yumeami::impl::movement_set_src_dst(const Direction &event_dir,
 void yumeami::impl::movement_wrap_src_dst(const World &world,
                                           MovementState &tgt_mvt_state) {
   // HACK: this implementation is a little flimsy.
-  // it relies on the fact that diagonal movement is impossible.
-  // this WILL break or complexify when stairs are implemented.
   if (tgt_mvt_state.dst.x < 0) {
     tgt_mvt_state.dst.x += world.width;
     tgt_mvt_state.src.x = tgt_mvt_state.dst.x + 1;
