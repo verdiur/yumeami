@@ -103,7 +103,7 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
   Direction direction = event.direction;
 
   if (!impl::movement_target_exists(*event.world, event.target)) {
-    spdlog::warn("handle_movement_event - target not found");
+    spdlog::warn("[MovementEvent] target not found");
     return;
   }
 
@@ -115,7 +115,7 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 
   if (!impl::movement_components_exist(tgt_true_pos, tgt_draw_pos,
                                        tgt_mvt_state, tgt_velocity)) {
-    spdlog::warn("handle_movement_event - target doesn't have components");
+    spdlog::warn("[MovementEvent] target doesn't have components");
     return;
   }
 
