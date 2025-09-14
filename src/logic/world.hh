@@ -38,6 +38,15 @@ namespace yumeami {
                      int scale = 2);
 
   /**
+   * @brief Sets up collision grid of a world. Does not check if the grid is
+   * blank. For each entity with a collision tag, it increments the
+   * corresponding position on the grid.
+   *
+   * @return
+   */
+  void setup_world_collision(World &world);
+
+  /**
    * @brief Clear the entirety of a world's entity registry.
    * @param world
    */

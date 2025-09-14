@@ -3,6 +3,8 @@
 add_library(logic
   camera.cc
   camera.hh
+  collision.cc
+  collision.hh
   components.hh
   components_op.cc
   components_op.hh
