@@ -91,6 +91,7 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
   world.reg.emplace<PlayerTag>(p);
   world.reg.emplace<CameraTargetTag>(p);
   world.reg.emplace<CollisionTag>(p);
+  world.reg.emplace<Facing>(p, Direction::DOWN);
 
   setup_world_collision(world);
   return world;
