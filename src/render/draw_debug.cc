@@ -83,12 +83,16 @@ void yumeami::draw_debug_facing(const World &world, float arrow_length) {
     switch (fac) {
     case Direction::UP:
       end_pos = {.x = start_pos.x, .y = start_pos.y - arrow_length};
+      break;
     case Direction::DOWN:
       end_pos = {.x = start_pos.x, .y = start_pos.y + arrow_length};
+      break;
     case Direction::LEFT:
       end_pos = {.x = start_pos.x - arrow_length, .y = start_pos.y};
+      break;
     case Direction::RIGHT:
       end_pos = {.x = start_pos.x + arrow_length, .y = start_pos.y};
+      break;
     }
 
     DrawLineV(start_pos, end_pos, GREEN);
