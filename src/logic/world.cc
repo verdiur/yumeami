@@ -1,4 +1,5 @@
 #include "logic/world.hh"
+#include "logic/components.hh"
 
 
 yumeami::World yumeami::create_world(tile width, tile height, spx tile_size,
@@ -17,6 +18,14 @@ yumeami::World yumeami::create_world(tile width, tile height, spx tile_size,
       .collision = Grid<int>(width, height, 0),
       .cam = {},
   };
+}
+
+
+void yumeami::setup_world_collision(World &world) {
+  auto view = world.reg.view<CollisionTag, TruePos>();
+  for (auto [ent, true_pos] : view.each()) {
+    world.collision.at(true_pos.x, true_pos.y) += 1;
+  }
 }
 
 

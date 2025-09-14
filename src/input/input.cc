@@ -15,6 +15,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     for (auto [entity] : view.each()) {
       dispatcher.trigger(MovementEvent{
           .world = &world,
+          .dispatcher = &dispatcher,
           .target = entity,
           .direction = Direction::UP,
       });
@@ -23,6 +24,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     for (auto [entity] : view.each()) {
       dispatcher.trigger(MovementEvent{
           .world = &world,
+          .dispatcher = &dispatcher,
           .target = entity,
           .direction = Direction::DOWN,
       });
@@ -31,6 +33,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     for (auto [entity] : view.each()) {
       dispatcher.trigger(MovementEvent{
           .world = &world,
+          .dispatcher = &dispatcher,
           .target = entity,
           .direction = Direction::RIGHT,
       });
@@ -39,6 +42,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     for (auto [entity] : view.each()) {
       dispatcher.trigger(MovementEvent{
           .world = &world,
+          .dispatcher = &dispatcher,
           .target = entity,
           .direction = Direction::LEFT,
       });
