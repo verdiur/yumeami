@@ -100,7 +100,7 @@ namespace yumeami::impl {
                                   MovementComponents &components);
 
   bool movement_collides(const MovementEvent &event,
-                         const MovementComponents &components);
+                         const MovementCoords &coords);
 
   /**
    * @brief Calculates movement source and destination. Destination might be out
