@@ -1,10 +1,13 @@
 #include "render/draw_debug.hh"
+#include "common/direction.hh"
+#include "logic/components.hh"
 #include "raylib.h"
 #include <string>
 
 
 // DEBUG LINE COLORS
 // WHITE: hitboxes
+// GREEN: facing, entity component properties
 // DARKBROWN: something invalid
 // DARKGRAY: guides, like bounds or viewport center, etc.
 
@@ -62,5 +65,33 @@ void yumeami::draw_debug_world_bounds(const World &world) {
   BeginMode2D(world.cam);
   DrawRectangleLines(0, 0, world.width * world.tile_size * world.scale,
                      world.height * world.tile_size * world.scale, DARKGRAY);
+  EndMode2D();
+}
+
+
+void yumeami::draw_debug_facing(const World &world, float arrow_length) {
+  BeginMode2D(world.cam);
+  auto view = world.reg.view<Facing, DrawPos>();
+  for (auto [ent, fac, draw_pos] : view.each()) {
+
+    Vector2 start_pos{
+        .x = (draw_pos.x + 0.5f) * world.tile_size * world.scale,
+        .y = (draw_pos.y + 0.5f) * world.tile_size * world.scale,
+    };
+
+    Vector2 end_pos{};
+    switch (fac) {
+    case Direction::UP:
+      end_pos = {.x = start_pos.x, .y = start_pos.y - arrow_length};
+    case Direction::DOWN:
+      end_pos = {.x = start_pos.x, .y = start_pos.y + arrow_length};
+    case Direction::LEFT:
+      end_pos = {.x = start_pos.x - arrow_length, .y = start_pos.y};
+    case Direction::RIGHT:
+      end_pos = {.x = start_pos.x + arrow_length, .y = start_pos.y};
+    }
+
+    DrawLineV(start_pos, end_pos, GREEN);
+  }
   EndMode2D();
 }
