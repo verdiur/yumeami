@@ -61,9 +61,9 @@ void yumeami::impl::movement_try_update_facing(const MovementEvent &event,
 
 
 bool yumeami::impl::movement_collides(const MovementEvent &event,
-                                      const MovementComponents &components) {
-  // TODO: implement movement_collides
-  return false;
+                                      const MovementCoords &coords) {
+  int collision_value = event.world->collision.at(coords.dst.x, coords.dst.y);
+  return collision_value > 0;
 }
 
 
@@ -161,13 +161,13 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 
   impl::movement_try_update_facing(event, components);
 
-  if (impl::movement_collides(event, components))
-    return;
-
   // clang-format off
   impl::MovementCoords raw_coords = impl::movement_calc_raw_coords(event, components);
   impl::MovementCoords wrapped_coords = impl::movement_calc_wrapped_dst_and_adjust_src(event, raw_coords);
   // clang-format on
+
+  if (impl::movement_collides(event, wrapped_coords))
+    return;
 
   if (impl::movement_is_oob(event, components) && !event.world->wrap)
     return;

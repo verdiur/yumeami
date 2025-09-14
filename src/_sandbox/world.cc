@@ -70,10 +70,7 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
   World world = create_world(20, 15, 16, true, false);
 
   std::vector<TruePos> positions = {
-      {2, 2},
-      {2, 3},
-      {2, 4},
-      {3, 2},
+      {19, 0}, {19, 1}, {19, 2}, {2, 2}, {2, 3}, {2, 4}, {3, 2},
   };
   for (TruePos pos : positions) {
     entt::entity e = world.reg.create();
