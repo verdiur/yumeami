@@ -201,7 +201,6 @@ void yumeami::update_movement_state(World &world) {
         mvt_state.moving = false;
         mvt_state.progress = 0;
         draw_pos = to_draw_pos(true_pos); // snap draw_pos
-        spdlog::info("{} {}", true_pos.x.trunc(), true_pos.y.trunc());
       }
     }
   }
