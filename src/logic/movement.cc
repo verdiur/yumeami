@@ -155,7 +155,6 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 
   impl::MovementComponents components = components_opt.value();
 
-  // spdlog::info("handling movement");
   if (impl::movement_is_moving(components))
     return;
 

@@ -41,9 +41,6 @@ int main(int argc, char *argv[]) {
     BeginTextureMode(vp);
     ClearBackground(BLACK);
     yumeami::draw_world(world, sheet_pool, vp);
-    yumeami::draw_debug_world_bounds(world);
-    yumeami::draw_debug_collision(world);
-    yumeami::draw_debug_facing(world, 40);
     EndTextureMode();
 
     BeginDrawing();
