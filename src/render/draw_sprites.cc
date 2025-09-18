@@ -14,7 +14,7 @@
 
 yumeami::Sprite *yumeami::impl::get_sprite(World &world, entt::entity ent,
                                            float dst_x, float dst_y) {
-  Sprite *sprite = world.reg.try_get<Sprite>(ent);
+  Sprite *sprite = world.state.reg.try_get<Sprite>(ent);
   return sprite;
 }
 
@@ -35,6 +35,7 @@ yumeami::Sheet *yumeami::impl::get_sheet(World &world, SheetPool &pool,
 void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
                                         const Sprite &sprite, float dst_x,
                                         float dst_y) {
+  const WorldConfig &wconfig = world.config;
   spx spr_width = sheet.spr_width;
   spx spr_height = sheet.spr_height;
   Rectangle src = {
@@ -46,8 +47,8 @@ void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
   Rectangle dst = {
       .x = dst_x,
       .y = dst_y,
-      .width = spr_width * world.scale,
-      .height = spr_height * world.scale,
+      .width = spr_width * wconfig.scale,
+      .height = spr_height * wconfig.scale,
   };
   DrawTexturePro(sheet.tex, src, dst, {}, 0, WHITE);
 }
@@ -55,16 +56,18 @@ void yumeami::impl::draw_sprite_texture(World &world, const Sheet &sheet,
 
 void yumeami::impl::draw_fallback_no_sprite(World &world, float dst_x,
                                             float dst_y) {
-  DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
-                world.tile_size * world.scale, BLUE);
+  const WorldConfig &wconfig = world.config;
+  DrawRectangle(dst_x, dst_y, wconfig.tile_size * wconfig.scale,
+                wconfig.tile_size * wconfig.scale, BLUE);
   DrawText("no\nsprite", dst_x, dst_y, 1, WHITE);
 }
 
 
 void yumeami::impl::draw_fallback_no_sheet(World &world, float dst_x,
                                            float dst_y) {
-  DrawRectangle(dst_x, dst_y, world.tile_size * world.scale,
-                world.tile_size * world.scale, MAGENTA);
+  const WorldConfig &wconfig = world.config;
+  DrawRectangle(dst_x, dst_y, wconfig.tile_size * wconfig.scale,
+                wconfig.tile_size * wconfig.scale, MAGENTA);
   DrawText("no\nsheet", dst_x, dst_y, 1, WHITE);
 }
 
@@ -76,17 +79,19 @@ bool yumeami::impl::is_sprite_off_camera(const World &world,
                                          const SafeRenderTex &vp,
                                          const Sheet *sheet, float dst_x,
                                          float dst_y) {
+  const WorldConfig &wconfig = world.config;
+
   CameraBounds bounds = get_camera_bounds(world, vp);
   if (dst_x < bounds.left || dst_y < bounds.top) {
     return true;
   }
 
   // fallback to tile size if sheet not found
-  spx spr_width = (sheet) ? sheet->spr_width : world.tile_size;
-  spx spr_height = (sheet) ? sheet->spr_height : world.tile_size;
+  spx spr_width = (sheet) ? sheet->spr_width : wconfig.tile_size;
+  spx spr_height = (sheet) ? sheet->spr_height : wconfig.tile_size;
 
-  if (dst_x + spr_width * world.scale > bounds.right ||
-      dst_y + spr_height * world.scale > bounds.bottom) {
+  if (dst_x + spr_width * wconfig.scale > bounds.right ||
+      dst_y + spr_height * wconfig.scale > bounds.bottom) {
     return true;
   }
 
@@ -109,10 +114,11 @@ void yumeami::impl::draw_sprite(World &world, const Sheet *sheet,
 void yumeami::impl::draw_sprite_wrap(World &world, const Sheet *sheet,
                                      const Sprite *sprite, float dst_x,
                                      float dst_y, bool wrap_off_camera) {
+  const WorldConfig &wconfig = world.config;
   draw_sprite(world, sheet, sprite, dst_x, dst_y);
   if (wrap_off_camera) {
-    float w = world.width * world.tile_size * world.scale;
-    float h = world.height * world.tile_size * world.scale;
+    float w = wconfig.width * wconfig.tile_size * wconfig.scale;
+    float h = wconfig.height * wconfig.tile_size * wconfig.scale;
 
     // TODO: improve this i beg of you please. this is not smart, like, at all.
     draw_sprite(world, sheet, sprite, dst_x + w, dst_y);
@@ -132,11 +138,12 @@ void yumeami::impl::draw_sprite_wrap(World &world, const Sheet *sheet,
 
 
 void yumeami::draw_sprites(World &world, SafeRenderTex &vp, SheetPool &pool) {
-  auto view = world.reg.view<DrawPos>();
+  const WorldConfig &wconfig = world.config;
+  auto view = world.state.reg.view<DrawPos>();
   for (auto [entity, draw_pos] : view.each()) {
 
-    float dst_x = draw_pos.x * world.tile_size * world.scale;
-    float dst_y = draw_pos.y * world.tile_size * world.scale;
+    float dst_x = draw_pos.x * wconfig.tile_size * wconfig.scale;
+    float dst_y = draw_pos.y * wconfig.tile_size * wconfig.scale;
 
     Sprite *sprite = impl::get_sprite(world, entity, dst_x, dst_y);
     Sheet *sheet = impl::get_sheet(world, pool, sprite, dst_x, dst_y);

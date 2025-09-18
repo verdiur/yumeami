@@ -10,7 +10,7 @@
 void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
   // NOTE: horrible implementation.
   // this is only temporary.
-  auto view = world.reg.view<PlayerTag>();
+  auto view = world.state.reg.view<PlayerTag>();
   if (IsKeyDown(KEY_UP)) {
     for (auto [entity] : view.each()) {
       dispatcher.trigger(MovementEvent{

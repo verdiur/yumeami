@@ -11,7 +11,7 @@
 
 
 bool yumeami::impl::movement_tgt_exists(const MovementEvent &event) {
-  bool val = event.world->reg.valid(event.target);
+  bool val = event.world->state.reg.valid(event.target);
   if (!val) {
     spdlog::warn("[MovementEvent] target not found");
     return false;
@@ -22,15 +22,15 @@ bool yumeami::impl::movement_tgt_exists(const MovementEvent &event) {
 
 std::optional<yumeami::impl::MovementComponents>
 yumeami::impl::movement_get_components(const MovementEvent &event) {
-  World &world = *event.world;
+  WorldState &wstate = event.world->state;
   entt::entity target = event.target;
 
-  auto true_pos = world.reg.try_get<TruePos>(target);
-  auto draw_pos = world.reg.try_get<DrawPos>(target);
-  auto mvt_state = world.reg.try_get<MovementState>(target);
-  auto facing = world.reg.try_get<Facing>(target);
-  auto velocity = world.reg.try_get<Velocity>(target);
-  bool has_coll = world.reg.view<CollisionTag>().contains(target);
+  auto true_pos = wstate.reg.try_get<TruePos>(target);
+  auto draw_pos = wstate.reg.try_get<DrawPos>(target);
+  auto mvt_state = wstate.reg.try_get<MovementState>(target);
+  auto facing = wstate.reg.try_get<Facing>(target);
+  auto velocity = wstate.reg.try_get<Velocity>(target);
+  bool has_coll = wstate.reg.view<CollisionTag>().contains(target);
 
   if (!true_pos || !draw_pos || !mvt_state || !velocity) {
     spdlog::warn("[MovementEvent] target does not have required components");
@@ -62,7 +62,8 @@ void yumeami::impl::movement_try_update_facing(const MovementEvent &event,
 
 bool yumeami::impl::movement_collides(const MovementEvent &event,
                                       const MovementCoords &coords) {
-  int collision_value = event.world->collision.at(coords.dst.x, coords.dst.y);
+  int collision_value =
+      event.world->state.collision.at(coords.dst.x, coords.dst.y);
   return collision_value > 0;
 }
 
@@ -79,10 +80,11 @@ yumeami::impl::movement_calc_raw_coords(const MovementEvent &event,
 
 bool yumeami::impl::movement_is_oob(const MovementEvent &event,
                                     const MovementComponents &components) {
+  const WorldConfig &wconfig = event.world->config;
   const MovementState &mvst = *components.movement_state;
   if (mvst.dst.x < 0 || mvst.dst.y < 0)
     return true;
-  if (mvst.dst.x >= event.world->width || mvst.dst.y >= event.world->height)
+  if (mvst.dst.x >= wconfig.width || mvst.dst.y >= wconfig.height)
     return true;
   return false;
 }
@@ -92,23 +94,23 @@ yumeami::impl::MovementCoords
 yumeami::impl::movement_calc_wrapped_dst_and_adjust_src(
     const MovementEvent &event, const MovementCoords &raw) {
   // NOTE: implementation is a little flimsy
+  const WorldConfig &wconfig = event.world->config;
   MovementCoords wrapped = raw;
-  const World &world = *event.world;
 
   if (raw.dst.x < 0) {
-    wrapped.dst.x += world.width;
+    wrapped.dst.x += wconfig.width;
     wrapped.src.x = wrapped.dst.x + 1;
   }
-  if (raw.dst.x >= world.width) {
-    wrapped.dst.x -= world.width;
+  if (raw.dst.x >= wconfig.width) {
+    wrapped.dst.x -= wconfig.width;
     wrapped.src.x = wrapped.dst.x - 1;
   }
   if (raw.dst.y < 0) {
-    wrapped.dst.y += world.height;
+    wrapped.dst.y += wconfig.height;
     wrapped.src.y = wrapped.dst.y + 1;
   }
-  if (raw.dst.y >= world.height) {
-    wrapped.dst.y -= world.height;
+  if (raw.dst.y >= wconfig.height) {
+    wrapped.dst.y -= wconfig.height;
     wrapped.src.y = wrapped.dst.y - 1;
   }
 
@@ -168,7 +170,7 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
   if (impl::movement_collides(event, wrapped_coords))
     return;
 
-  if (impl::movement_is_oob(event, components) && !event.world->wrap)
+  if (impl::movement_is_oob(event, components) && !event.world->config.wrap)
     return;
 
   if (components.has_collision) {
@@ -185,7 +187,7 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 
 
 void yumeami::update_movement_state(World &world) {
-  auto view = world.reg.view<TruePos, DrawPos, MovementState, Velocity>();
+  auto view = world.state.reg.view<TruePos, DrawPos, MovementState, Velocity>();
   for (auto [ent, true_pos, draw_pos, mvt_state, velocity] : view.each()) {
 
     if (mvt_state.moving) {
