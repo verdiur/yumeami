@@ -3,8 +3,8 @@
  * @brief Generic resource management structs
  * @note We are rolling our own resource management solution. I know that
  * entt::resource_cache exists but I don't like the way it expects me to use it;
- * maybe I'm not familiar with it enough. For now I'm not familiar with it
- * enough. Might switch to this later if it proves more efficient / cleaner.
+ * maybe I'm not familiar with it enough. Might switch to this later if it
+ * proves more efficient / cleaner.
  */
 
 #pragma once
@@ -16,30 +16,19 @@ namespace yumeami {
 
 
   /**
-   * @brief Generic resource loader template. The call operator is virtual and
-   * must be defined in derived classes. No arguments are present in the call
-   * signature; they are to be defined in the derived class as struct members.
-   * You also might want to check resource validity in the call operator
-   * definition ^^
-   *
-   * @tparam Resource type of resource that the loader handles
-   */
-  template <class Resource> struct ResourceLoader {
-    virtual std::optional<Resource> operator()() const;
-  };
-
-
-  /**
    * @brief Enforces a class to be derived from ResourceLoader
    * @tparam T Target type
    * @tparam Resource Handled resource type
    */
   template <class T, class Resource>
-  concept IsLoader = std::derived_from<T, ResourceLoader<Resource>>;
+  concept IsLoader = requires(T f) {
+    { f() } -> std::convertible_to<std::optional<Resource>>;
+  };
 
 
   /**
-   * @brief Generic resource cache template. Does not check validity.
+   * @brief Generic resource cache template. Does not check validity; it's a
+   * good idea to implement validation in your loader.
    * @tparam Resource resource class
    * @tparam Loader load functor
    * @tparam Validator validation functor. The default validator does not

@@ -10,7 +10,7 @@
 #include "raylib.h"
 #include "render/draw_debug.hh"
 #include "render/draw_world.hh"
-#include "resman/texture.hh"
+#include "resman/spritesheet.hh"
 
 int main(int argc, char *argv[]) {
 
@@ -25,8 +25,9 @@ int main(int argc, char *argv[]) {
   yumeami::ViewportTransform vp_transform{};
   yumeami::calc_viewport_transform(vp, vp_transform);
 
-  yumeami::SheetPool sheet_pool{};
-  yumeami::World world = yumeami::_sandbox::create_collision_world();
+  yumeami::SpritesheetCache spritesheet_cache{};
+  yumeami::World world =
+      yumeami::_sandbox::create_spritesheet_world(spritesheet_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     BeginTextureMode(vp);
     ClearBackground(BLACK);
-    yumeami::draw_world(world, sheet_pool, vp);
+    yumeami::draw_world(world, spritesheet_cache, vp);
     EndTextureMode();
 
     BeginDrawing();

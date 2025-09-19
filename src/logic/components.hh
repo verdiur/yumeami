@@ -6,7 +6,6 @@
 #pragma once
 #include "common/direction.hh"
 #include "common/units.hh"
-#include <string>
 namespace yumeami {
 
   struct TruePos {
@@ -35,7 +34,7 @@ namespace yumeami {
   };
 
   struct Sprite {
-    std::string sheet_id;
+    int sheet_id;
     int row;
     int col;
   };
