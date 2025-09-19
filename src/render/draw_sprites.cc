@@ -45,9 +45,13 @@ void yumeami::impl::draw_one_sprite(const WorldConfig &wconfig,
       .height = spr_height,
   };
 
+  // sprites are centered on the x axis and bottom-aligned on the y axis.
+  float y_off = wconfig.scale * (spr_height - wconfig.tile_size);
+  float x_off = wconfig.scale * ((spr_width - wconfig.tile_size) / 2);
+
   Rectangle dst_rec = {
-      .x = dst.x,
-      .y = dst.y,
+      .x = dst.x - x_off,
+      .y = dst.y - y_off,
       .width = spr_width * wconfig.scale,
       .height = spr_height * wconfig.scale,
   };

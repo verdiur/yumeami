@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
   yumeami::SpritesheetCache spritesheet_cache{};
   yumeami::World world =
-      yumeami::_sandbox::create_spritesheet_world(spritesheet_cache);
+      yumeami::_sandbox::create_sprite_position_world(spritesheet_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
