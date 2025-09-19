@@ -13,6 +13,10 @@ yumeami::SpritesheetLoader::operator()() const {
 
   int tex_height = tex->height;
   int tex_width = tex->width;
+  if (tex_height <= 0 || tex_width <= 0) {
+    return std::nullopt;
+  }
+
   return Spritesheet{
       .tex = std::move(tex),
       .spr_width = spr_width,
