@@ -4,6 +4,7 @@ add_library(common
   direction.hh
   raii.cc
   raii.hh
+  static_string.hh
   units.hh
   viewport_transform.cc
   viewport_transform.hh

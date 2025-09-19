@@ -8,6 +8,7 @@
  */
 
 #pragma once
+#include "common/static_string.hh"
 #include "spdlog/spdlog.h"
 #include <concepts>
 #include <unordered_map>
@@ -34,7 +35,7 @@ namespace yumeami {
    * @param key
    * @return
    */
-  template <class Resource, class Loader>
+  template <StaticString CacheName, class Resource, class Loader>
     requires IsLoader<Loader, Resource>
   struct ResourceCache {
   private:
@@ -47,43 +48,52 @@ namespace yumeami {
     bool load(int key, const Loader &loader) {
       std::optional<Resource> res = loader();
       if (!res) {
-        spdlog::info("[] could not load resource");
+        spdlog::info("[{}] could not load resource", std::string(CacheName));
         return false;
       }
 
       pool.try_emplace(key, std::move(res.value()));
-      spdlog::info("[] loaded resource ({})", key);
+      spdlog::info("[{}] loaded resource ({})", std::string(CacheName), key);
       return true;
     }
 
 
     bool unload(int key) {
       if (!contains(key)) {
-        spdlog::error("[] could not unload: key {} not found", key);
+        spdlog::error("[{}] could not unload resource: key {} not found",
+                      std::string(CacheName), key);
         return false;
       }
       pool.erase(key);
-      spdlog::info("[] unloaded resource ({})", key);
+      spdlog::info("[{}] unloaded resource ({})", std::string(CacheName), key);
       return true;
     }
 
 
     void clear() {
       pool.clear();
-      spdlog::info("[] unloaded all resources");
+      spdlog::info("[{}] unloaded all resources", std::string(CacheName));
     }
 
 
     Resource *get(int key) {
       if (!contains(key)) {
-        spdlog::error("[] could not get: key {} not found", key);
+        spdlog::error("[{}] could not get resource: key {} not found",
+                      std::string(CacheName), key);
         return nullptr;
       }
       return &pool.at(key);
     }
 
 
-    const Resource *get(int key) const { return get(key); }
+    const Resource *get(int key) const {
+      if (!contains(key)) {
+        spdlog::error("[{}] could not get resource: key {} not found",
+                      std::string(CacheName), key);
+        return nullptr;
+      }
+      return &pool.at(key);
+    }
   };
 
 

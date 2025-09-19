@@ -30,7 +30,9 @@ namespace yumeami {
     std::optional<Spritesheet> operator()() const;
   };
 
-  using SpritesheetCache = ResourceCache<Spritesheet, SpritesheetLoader>;
+  using SpritesheetCache =
+      ResourceCache<"SpritesheetCache", Spritesheet, SpritesheetLoader>;
+
   using SheetCache = SpritesheetCache;
   using Sheet = Spritesheet;
   using SheetLoader = SpritesheetLoader;
