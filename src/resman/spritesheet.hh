@@ -23,7 +23,7 @@ namespace yumeami {
    * @brief Loader for Spritesheet resources
    *
    */
-  struct SpritesheetLoader : ResourceLoader<Spritesheet> {
+  struct SpritesheetLoader {
     std::string path;
     spx spr_width;
     spx spr_height;

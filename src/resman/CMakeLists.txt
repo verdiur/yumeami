@@ -1,8 +1,9 @@
 # resource manager
 
 add_library(resman
-  texture.cc
-  texture.hh
+  base.hh
+  spritesheet.cc
+  spritesheet.hh
 )
 
 target_compile_features(resman PUBLIC cxx_std_20)

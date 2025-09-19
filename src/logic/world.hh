@@ -9,7 +9,6 @@
 #include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 #include "raylib.h"
-#include <string>
 #include <vector>
 namespace yumeami {
 
@@ -41,7 +40,7 @@ namespace yumeami {
      *
      */
     struct Resources {
-      std::vector<std::string> sheet_ids;
+      std::vector<int> sheet_ids;
     } resources;
 
     /**

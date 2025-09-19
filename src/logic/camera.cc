@@ -69,9 +69,9 @@ void yumeami::setup_camera(World &world, const SafeRenderTex &vp) {
 }
 
 
-yumeami::CameraBounds yumeami::get_camera_bounds(const World &world,
+yumeami::CameraBounds yumeami::get_camera_bounds(const WorldState &wstate,
                                                  const SafeRenderTex &vp) {
-  const Camera2D &cam = world.state.cam;
+  const Camera2D &cam = wstate.cam;
   float left = cam.target.x - cam.offset.x / cam.zoom;
   float top = cam.target.y - cam.offset.y / cam.zoom;
   float right = left + vp->texture.width / cam.zoom;

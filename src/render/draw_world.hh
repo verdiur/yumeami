@@ -5,7 +5,7 @@
 
 #include "common/raii.hh"
 #include "logic/world.hh"
-#include "resman/texture.hh"
+#include "resman/spritesheet.hh"
 namespace yumeami {
 
   /**
@@ -13,6 +13,6 @@ namespace yumeami {
    * @param world
    * @param pool
    */
-  void draw_world(World &world, SheetPool &pool, SafeRenderTex &vp);
+  void draw_world(World &world, SheetCache &cache, SafeRenderTex &vp);
 
 } // namespace yumeami

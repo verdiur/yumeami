@@ -10,6 +10,9 @@ target_include_directories(_sandbox PRIVATE
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(_sandbox PUBLIC
+  logic
+  resman
+
   raylib
   spdlog
   EnTT::EnTT

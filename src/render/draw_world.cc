@@ -3,13 +3,12 @@
 #include "logic/camera.hh"
 #include "raylib.h"
 #include "render/draw_sprites.hh"
-#include "resman/texture.hh"
 
 
-void yumeami::draw_world(World &world, SheetPool &pool, SafeRenderTex &vp) {
+void yumeami::draw_world(World &world, SheetCache &cache, SafeRenderTex &vp) {
   update_camera(world, vp, world.config.clamp_camera);
 
   BeginMode2D(world.state.cam);
-  draw_sprites(world, vp, pool);
+  draw_sprites(world, vp, cache);
   EndMode2D();
 }

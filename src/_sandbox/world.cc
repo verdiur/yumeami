@@ -3,16 +3,15 @@
 #include "logic/components.hh"
 #include "logic/movement.hh"
 #include "logic/world.hh"
+#include "resman/spritesheet.hh"
 #include <stdexcept>
 
 
-yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
-  pool.load("test", "resources/test_sprsh.png", 16, 16);
-  Sheet *sheet = pool.get("test");
-
-  if (!sheet) {
+yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetCache &cache) {
+  if (!cache.load(1, {"resources/test_sprsh.png", 16, 16}))
     throw std::runtime_error("spritesheet loading failed");
-  }
+  Sheet *sheet = cache.get(1);
+
   World world = create_world(
       {
           .width = 20,
@@ -22,7 +21,7 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
           .clamp_camera = false,
       },
       {
-          .sheet_ids = {"test"},
+          .sheet_ids = {1},
       });
   WorldState &wstate = world.state;
 
@@ -30,7 +29,7 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
     for (int c = 0; c < sheet->cols; c++) {
       entt::entity e = wstate.reg.create();
       wstate.reg.emplace<DrawPos>(e, c, r);
-      wstate.reg.emplace<Sprite>(e, "test", r, c);
+      wstate.reg.emplace<Sprite>(e, 1, r, c);
     }
   }
 
@@ -46,15 +45,11 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetPool &pool) {
 }
 
 
-yumeami::World yumeami::_sandbox::create_wrap_world(SheetPool &pool) {
-  pool.load("test", "resources/test_sprsh.png", 16, 16);
-  Sheet *sheet = pool.get("test");
-
-  if (!sheet) {
+yumeami::World yumeami::_sandbox::create_wrap_world(SheetCache &cache) {
+  if (!cache.load(1, {"resources/test_sprsh.png", 16, 16}))
     throw std::runtime_error("spritesheet loading failed");
-  }
+  Sheet *sheet = cache.get(1);
 
-  // World world = create_world(21, 16, 16, true, false, {"test"});
   World world = create_world(
       {
           .width = 21,
@@ -64,7 +59,7 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetPool &pool) {
           .clamp_camera = false,
       },
       {
-          .sheet_ids = {"test"},
+          .sheet_ids = {1},
       });
   WorldState &wstate = world.state;
 
@@ -72,7 +67,7 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetPool &pool) {
     for (int c = 0; c < sheet->cols; c++) {
       entt::entity e = wstate.reg.create();
       wstate.reg.emplace<DrawPos>(e, c, r);
-      wstate.reg.emplace<Sprite>(e, "test", r, c);
+      wstate.reg.emplace<Sprite>(e, 1, r, c);
     }
   }
 
@@ -89,7 +84,6 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetPool &pool) {
 
 
 yumeami::World yumeami::_sandbox::create_collision_world() {
-  // World world = create_world(20, 15, 16, true, false);
   World world = create_world(
       {
           .width = 20,
@@ -99,7 +93,7 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
           .clamp_camera = false,
       },
       {
-          .sheet_ids = {"test"},
+          .sheet_ids = {},
       });
   WorldState &wstate = world.state;
 

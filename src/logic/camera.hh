@@ -34,6 +34,7 @@ namespace yumeami {
    */
   void setup_camera(World &world, const SafeRenderTex &vp);
 
-  CameraBounds get_camera_bounds(const World &world, const SafeRenderTex &vp);
+  CameraBounds get_camera_bounds(const WorldState &wstate,
+                                 const SafeRenderTex &vp);
 
 } // namespace yumeami
