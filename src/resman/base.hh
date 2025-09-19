@@ -16,24 +16,34 @@ namespace yumeami {
 
 
   /**
-   * @brief Requires class to be callable, returning an optional to a resource.
+   * @brief Generic resource loader template. The call operator is virtual and
+   * must be defined in derived classes. No arguments are present in the call
+   * signature; they are to be defined in the derived class as struct members.
+   * You also might want to check resource validity in the call operator
+   * definition ^^
    *
-   * @tparam F target functor
-   * @tparam Resource return resource type
+   * @tparam Resource type of resource that the loader handles
    */
-  template <class F, class Resource>
-  concept IsLoader = requires(F f) {
-    { f() } -> std::same_as<std::optional<Resource>>;
+  template <class Resource> struct ResourceLoader {
+    virtual std::optional<Resource> operator()() const;
   };
 
 
   /**
-   * @brief Generic resource cache template
-   *
+   * @brief Enforces a class to be derived from ResourceLoader
+   * @tparam T Target type
+   * @tparam Resource Handled resource type
+   */
+  template <class T, class Resource>
+  concept IsLoader = std::derived_from<T, ResourceLoader<Resource>>;
+
+
+  /**
+   * @brief Generic resource cache template. Does not check validity.
    * @tparam Resource resource class
    * @tparam Loader load functor
-   * @param key
-   * @return
+   * @tparam Validator validation functor. The default validator does not
+   * perform validations and always return true.
    */
   template <StaticString CacheName, class Resource, class Loader>
     requires IsLoader<Loader, Resource>
@@ -48,10 +58,11 @@ namespace yumeami {
     bool load(int key, const Loader &loader) {
       std::optional<Resource> res = loader();
       if (!res) {
-        spdlog::info("[{}] could not load resource", std::string(CacheName));
+        spdlog::info("[{}] could not load resource: resource is not valid",
+                     std::string(CacheName));
         return false;
       }
-
+      // NOTE: pretty flimsy i think
       pool.try_emplace(key, std::move(res.value()));
       spdlog::info("[{}] loaded resource ({})", std::string(CacheName), key);
       return true;
