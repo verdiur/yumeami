@@ -39,6 +39,27 @@ namespace yumeami {
     int col;
   };
 
+  struct Elevation {
+    enum struct Enum { BEHIND, NORMAL, ABOVE } elevation;
+    operator Enum() const { return elevation; }
+  };
+
+  struct Floor {
+    int floor;
+    operator int() const { return floor; }
+  };
+
+  /**
+   * @class ZOrder
+   * @brief Component used to sort drawable entities
+   *
+   */
+  struct ZOrder {
+    DrawPos *draw_pos;
+    Elevation *elevation;
+    Floor *floor;
+  };
+
   /* TAGS ********************************************************************/
 
   /**

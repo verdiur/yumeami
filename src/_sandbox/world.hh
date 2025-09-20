@@ -7,5 +7,6 @@ namespace yumeami::_sandbox {
   World create_wrap_world(SheetCache &cache);
   World create_collision_world();
   World create_sprite_position_world(SheetCache &cache);
+  World create_zorder_world(SheetCache &cache);
 
 } // namespace yumeami::_sandbox

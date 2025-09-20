@@ -8,6 +8,8 @@ add_library(logic
   components.hh
   components_op.cc
   components_op.hh
+  emplace.cc
+  emplace.hh
   movement.cc
   movement.hh
   world.cc

@@ -30,6 +30,8 @@ namespace yumeami::impl {
     const Sheet *sheet;
   };
 
+  void sort_sprites_zorder(WorldState &wstate);
+
   SpriteAndSheet get_sprite_and_sheet(WorldState &wstate, SheetCache &cache,
                                       entt::entity ent);
 

@@ -10,6 +10,19 @@
 /* IMPL ***********************************************************************/
 
 
+void yumeami::impl::sort_sprites_zorder(WorldState &wstate) {
+  wstate.reg.sort<ZOrder>([](const ZOrder &rhs, const ZOrder &lhs) {
+    if (*rhs.floor != *lhs.floor)
+      return *rhs.floor < *lhs.floor;
+
+    if (rhs.elevation->elevation != lhs.elevation->elevation)
+      return (int)rhs.elevation->elevation < (int)lhs.elevation->elevation;
+
+    return (float)rhs.draw_pos->y < (float)lhs.draw_pos->y;
+  });
+}
+
+
 yumeami::impl::SpriteAndSheet
 yumeami::impl::get_sprite_and_sheet(WorldState &wstate, SheetCache &cache,
                                     entt::entity entity) {
@@ -115,8 +128,9 @@ void yumeami::draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache) {
   WorldState &wstate = world.state;
   float scale = wconfig.tile_size * wconfig.scale;
 
-  auto view = wstate.reg.view<DrawPos>();
-  for (auto [ent, draw_pos] : view.each()) {
+  impl::sort_sprites_zorder(wstate);
+  auto view = wstate.reg.view<ZOrder, DrawPos>();
+  for (auto [ent, zorder, draw_pos] : view.each()) {
 
     const impl::DrawSpriteDst dst{
         .x = draw_pos.x * scale,

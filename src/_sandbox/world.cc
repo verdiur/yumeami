@@ -1,6 +1,7 @@
 #include "_sandbox/world.hh"
 #include "entt/entity/fwd.hpp"
 #include "logic/components.hh"
+#include "logic/emplace.hh"
 #include "logic/movement.hh"
 #include "logic/world.hh"
 #include "resman/spritesheet.hh"
@@ -28,8 +29,11 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetCache &cache) {
   for (int r = 0; r < sheet->rows; r++) {
     for (int c = 0; c < sheet->cols; c++) {
       entt::entity e = wstate.reg.create();
-      wstate.reg.emplace<DrawPos>(e, c, r);
       wstate.reg.emplace<Sprite>(e, 1, r, c);
+      wstate.reg.emplace<DrawPos>(e, c, r);
+      wstate.reg.emplace<Elevation>(e, Elevation::Enum::BEHIND);
+      wstate.reg.emplace<Floor>(e, 0);
+      emplace_zorder(wstate, e);
     }
   }
 
@@ -40,6 +44,9 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetCache &cache) {
   wstate.reg.emplace<Velocity>(p, 0.4f);
   wstate.reg.emplace<PlayerTag>(p);
   wstate.reg.emplace<CameraTargetTag>(p);
+  wstate.reg.emplace<Elevation>(p, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(p, 1);
+  emplace_zorder(wstate, p);
 
   return world;
 }
@@ -66,8 +73,11 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetCache &cache) {
   for (int r = 0; r < sheet->rows; r++) {
     for (int c = 0; c < sheet->cols; c++) {
       entt::entity e = wstate.reg.create();
-      wstate.reg.emplace<DrawPos>(e, c, r);
       wstate.reg.emplace<Sprite>(e, 1, r, c);
+      wstate.reg.emplace<DrawPos>(e, c, r);
+      wstate.reg.emplace<Elevation>(e, Elevation::Enum::BEHIND);
+      wstate.reg.emplace<Floor>(e, 0);
+      emplace_zorder(wstate, e);
     }
   }
 
@@ -78,6 +88,9 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetCache &cache) {
   wstate.reg.emplace<Velocity>(p, 0.4f);
   wstate.reg.emplace<PlayerTag>(p);
   wstate.reg.emplace<CameraTargetTag>(p);
+  wstate.reg.emplace<Elevation>(p, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(p, 0);
+  emplace_zorder(wstate, p);
 
   return world;
 }
@@ -104,12 +117,18 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
     entt::entity e = wstate.reg.create();
     wstate.reg.emplace<TruePos>(e, pos.x, pos.y);
     wstate.reg.emplace<DrawPos>(e, pos.x, pos.y);
+    wstate.reg.emplace<Elevation>(e, Elevation::Enum::BEHIND);
+    wstate.reg.emplace<Floor>(e, 0);
     wstate.reg.emplace<CollisionTag>(e);
+    emplace_zorder(wstate, e);
   }
 
   entt::entity no_coll = wstate.reg.create();
   wstate.reg.emplace<TruePos>(no_coll, 10, 10);
   wstate.reg.emplace<DrawPos>(no_coll, 10, 10);
+  wstate.reg.emplace<Elevation>(no_coll, Elevation::Enum::BEHIND);
+  wstate.reg.emplace<Floor>(no_coll, 0);
+  emplace_zorder(wstate, no_coll);
 
   entt::entity p = wstate.reg.create();
   wstate.reg.emplace<DrawPos>(p, 0, 0);
@@ -120,6 +139,9 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
   wstate.reg.emplace<CameraTargetTag>(p);
   wstate.reg.emplace<CollisionTag>(p);
   wstate.reg.emplace<Facing>(p, Direction::DOWN);
+  wstate.reg.emplace<Elevation>(p, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(p, 0);
+  emplace_zorder(wstate, p);
 
   setup_world_collision(world);
   return world;
@@ -150,6 +172,9 @@ yumeami::_sandbox::create_sprite_position_world(SheetCache &cache) {
     entt::entity e = wstate.reg.create();
     wstate.reg.emplace<DrawPos>(e, pos.x, pos.y);
     wstate.reg.emplace<Sprite>(e, 1, 1, 1);
+    wstate.reg.emplace<Elevation>(e, Elevation::Enum::BEHIND);
+    wstate.reg.emplace<Floor>(e, 0);
+    emplace_zorder(wstate, e);
   }
 
   entt::entity p = wstate.reg.create();
@@ -159,6 +184,61 @@ yumeami::_sandbox::create_sprite_position_world(SheetCache &cache) {
   wstate.reg.emplace<Velocity>(p, 0.4f);
   wstate.reg.emplace<PlayerTag>(p);
   wstate.reg.emplace<CameraTargetTag>(p);
+  wstate.reg.emplace<Elevation>(p, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(p, 0);
+  emplace_zorder(wstate, p);
+
+  return world;
+}
+
+
+yumeami::World yumeami::_sandbox::create_zorder_world(SheetCache &cache) {
+  if (!cache.load(1, {"resources/test_layer.png", 16, 16}))
+    throw std::runtime_error("spritesheet loading failed");
+  Sheet *sheet = cache.get(1);
+
+  World world = create_world(
+      {
+          .width = 20,
+          .height = 15,
+          .tile_size = 16,
+          .wrap = false,
+          .clamp_camera = true,
+      },
+      {.sheet_ids = {1}});
+  WorldState &wstate = world.state;
+
+  entt::entity floor0 = wstate.reg.create();
+  wstate.reg.emplace<DrawPos>(floor0, 0, 0);
+  wstate.reg.emplace<Sprite>(floor0, 1, 0, 0);
+  wstate.reg.emplace<Elevation>(floor0, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(floor0, 0);
+  emplace_zorder(wstate, floor0);
+
+  entt::entity floor1 = wstate.reg.create();
+  wstate.reg.emplace<DrawPos>(floor1, 0, 0);
+  wstate.reg.emplace<Sprite>(floor1, 1, 1, 0);
+  wstate.reg.emplace<Elevation>(floor1, Elevation::Enum::NORMAL);
+  wstate.reg.emplace<Floor>(floor1, 1);
+  emplace_zorder(wstate, floor1);
+
+  entt::entity elev_above = wstate.reg.create();
+  wstate.reg.emplace<DrawPos>(elev_above, 1, 0);
+  wstate.reg.emplace<Sprite>(elev_above, 1, 2, 0);
+  wstate.reg.emplace<Floor>(elev_above, 0);
+  wstate.reg.emplace<Elevation>(elev_above, Elevation::Enum::ABOVE);
+  emplace_zorder(wstate, elev_above);
+
+  entt::entity elev_under = wstate.reg.create();
+  wstate.reg.emplace<DrawPos>(elev_under, 1, 0);
+  wstate.reg.emplace<Sprite>(elev_under, 1, 2, 0);
+  wstate.reg.emplace<Floor>(elev_under, 0);
+  wstate.reg.emplace<Elevation>(elev_under, Elevation::Enum::BEHIND);
+  emplace_zorder(wstate, elev_under);
+
+  entt::entity cam_target = wstate.reg.create();
+  wstate.reg.emplace<DrawPos>(cam_target, 0, 0);
+  wstate.reg.emplace<CameraTargetTag>(cam_target);
 
   return world;
 }
