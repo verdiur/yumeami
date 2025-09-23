@@ -9,129 +9,180 @@
 
 /* IMPL ***********************************************************************/
 
+namespace {
+  using namespace yumeami;
 
-bool yumeami::impl::movement_tgt_exists(const MovementEvent &event) {
-  bool val = event.world->state.reg.valid(event.target);
-  if (!val) {
-    spdlog::warn("[MovementEvent] target not found");
+
+  /**
+   * @class MovementComponents
+   * @brief Simple container for all components used for movement
+   *
+   */
+  struct MovementComponents {
+    TruePos *true_pos;
+    DrawPos *draw_pos;
+    MovementState *movement_state;
+    Facing *facing;
+    Velocity *velocity;
+    bool has_collision;
+  };
+
+
+  /**
+   * @class MovementCoords
+   * @brief A pair of movement source and destination coordinates.
+   *
+   */
+  struct MovementCoords {
+    TruePos src;
+    TruePos dst;
+  };
+
+
+  bool tgt_exists(const MovementEvent &event) {
+    bool val = event.world->state.reg.valid(event.target);
+    if (!val) {
+      spdlog::warn("[MovementEvent] target not found");
+      return false;
+    }
+    return true;
+  }
+
+
+  std::optional<MovementComponents> get_components(const MovementEvent &event) {
+    WorldState &wstate = event.world->state;
+    entt::entity target = event.target;
+
+    auto true_pos = wstate.reg.try_get<TruePos>(target);
+    auto draw_pos = wstate.reg.try_get<DrawPos>(target);
+    auto mvt_state = wstate.reg.try_get<MovementState>(target);
+    auto facing = wstate.reg.try_get<Facing>(target);
+    auto velocity = wstate.reg.try_get<Velocity>(target);
+    bool has_coll = wstate.reg.view<CollisionTag>().contains(target);
+
+    if (!true_pos || !draw_pos || !mvt_state || !velocity) {
+      spdlog::warn("[MovementEvent] target does not have required components");
+      return std::nullopt;
+    }
+
+    return MovementComponents{
+        .true_pos = true_pos,
+        .draw_pos = draw_pos,
+        .movement_state = mvt_state,
+        .facing = facing,
+        .velocity = velocity,
+        .has_collision = has_coll,
+    };
+  }
+
+
+  bool is_moving(const MovementComponents &components) {
+    return components.movement_state->moving;
+  }
+
+
+  void try_update_facing(const MovementEvent &event,
+                         MovementComponents &components) {
+    if (components.facing)
+      components.facing->dir = event.direction;
+  }
+
+
+  bool dst_collides(const MovementEvent &event, const MovementCoords &coords) {
+    int collision_value =
+        event.world->state.collision.at(coords.dst.x, coords.dst.y);
+    return collision_value > 0;
+  }
+
+
+  /**
+   * @brief Calculates movement source and destination. Destination might be out
+   * of bounds.
+   *
+   * @param event
+   * @param components
+   * @return movement coordinates
+   */
+  MovementCoords calc_raw_coords(const MovementEvent &event,
+                                 const MovementComponents &components) {
+    return MovementCoords{
+        .src = *components.true_pos,
+        .dst = direction_to_true_pos(*components.true_pos, event.direction),
+    };
+  }
+
+
+  bool dst_is_oob(const MovementEvent &event,
+                  const MovementComponents &components) {
+    const WorldConfig &wconfig = event.world->config;
+    const MovementState &mvst = *components.movement_state;
+    if (mvst.dst.x < 0 || mvst.dst.y < 0)
+      return true;
+    if (mvst.dst.x >= wconfig.width || mvst.dst.y >= wconfig.height)
+      return true;
     return false;
   }
-  return true;
-}
 
 
-std::optional<yumeami::impl::MovementComponents>
-yumeami::impl::movement_get_components(const MovementEvent &event) {
-  WorldState &wstate = event.world->state;
-  entt::entity target = event.target;
+  /**
+   * @brief Calculates wrapped destination and ADJUSTED SOURCE. The source
+   * position will always be 1 tile behind the destination, so it might end up
+   * out of bounds. To access the actual modulo'd coordinates:
+   * - src should be from the raw coords;
+   * - dst should be from the wrapped coords.
+   *
+   * @param event
+   * @param raw
+   * @return "wrapped" movement coordinates
+   */
+  MovementCoords calc_wrapped_dst_and_adjust_src(const MovementEvent &event,
+                                                 const MovementCoords &raw) {
+    // NOTE: implementation is a little flimsy
+    const WorldConfig &wconfig = event.world->config;
+    MovementCoords wrapped = raw;
 
-  auto true_pos = wstate.reg.try_get<TruePos>(target);
-  auto draw_pos = wstate.reg.try_get<DrawPos>(target);
-  auto mvt_state = wstate.reg.try_get<MovementState>(target);
-  auto facing = wstate.reg.try_get<Facing>(target);
-  auto velocity = wstate.reg.try_get<Velocity>(target);
-  bool has_coll = wstate.reg.view<CollisionTag>().contains(target);
+    if (raw.dst.x < 0) {
+      wrapped.dst.x += wconfig.width;
+      wrapped.src.x = wrapped.dst.x + 1;
+    }
+    if (raw.dst.x >= wconfig.width) {
+      wrapped.dst.x -= wconfig.width;
+      wrapped.src.x = wrapped.dst.x - 1;
+    }
+    if (raw.dst.y < 0) {
+      wrapped.dst.y += wconfig.height;
+      wrapped.src.y = wrapped.dst.y + 1;
+    }
+    if (raw.dst.y >= wconfig.height) {
+      wrapped.dst.y -= wconfig.height;
+      wrapped.src.y = wrapped.dst.y - 1;
+    }
 
-  if (!true_pos || !draw_pos || !mvt_state || !velocity) {
-    spdlog::warn("[MovementEvent] target does not have required components");
-    return std::nullopt;
+    return wrapped;
   }
 
-  return MovementComponents{
-      .true_pos = true_pos,
-      .draw_pos = draw_pos,
-      .movement_state = mvt_state,
-      .facing = facing,
-      .velocity = velocity,
-      .has_collision = has_coll,
-  };
-}
 
+  /**
+   * @brief Apply some movement coordinates to the movement state component.
+   * @param coord
+   * @param components
+   */
+  void set_coords(MovementCoords &coord, MovementComponents &components) {
+    components.movement_state->src = coord.src;
+    components.movement_state->dst = coord.dst;
 
-bool yumeami::impl::movement_is_moving(const MovementComponents &components) {
-  return components.movement_state->moving;
-}
-
-
-void yumeami::impl::movement_try_update_facing(const MovementEvent &event,
-                                               MovementComponents &components) {
-  if (components.facing)
-    components.facing->dir = event.direction;
-}
-
-
-bool yumeami::impl::movement_collides(const MovementEvent &event,
-                                      const MovementCoords &coords) {
-  int collision_value =
-      event.world->state.collision.at(coords.dst.x, coords.dst.y);
-  return collision_value > 0;
-}
-
-
-yumeami::impl::MovementCoords
-yumeami::impl::movement_calc_raw_coords(const MovementEvent &event,
-                                        const MovementComponents &components) {
-  return MovementCoords{
-      .src = *components.true_pos,
-      .dst = direction_to_true_pos(*components.true_pos, event.direction),
-  };
-}
-
-
-bool yumeami::impl::movement_is_oob(const MovementEvent &event,
-                                    const MovementComponents &components) {
-  const WorldConfig &wconfig = event.world->config;
-  const MovementState &mvst = *components.movement_state;
-  if (mvst.dst.x < 0 || mvst.dst.y < 0)
-    return true;
-  if (mvst.dst.x >= wconfig.width || mvst.dst.y >= wconfig.height)
-    return true;
-  return false;
-}
-
-
-yumeami::impl::MovementCoords
-yumeami::impl::movement_calc_wrapped_dst_and_adjust_src(
-    const MovementEvent &event, const MovementCoords &raw) {
-  // NOTE: implementation is a little flimsy
-  const WorldConfig &wconfig = event.world->config;
-  MovementCoords wrapped = raw;
-
-  if (raw.dst.x < 0) {
-    wrapped.dst.x += wconfig.width;
-    wrapped.src.x = wrapped.dst.x + 1;
-  }
-  if (raw.dst.x >= wconfig.width) {
-    wrapped.dst.x -= wconfig.width;
-    wrapped.src.x = wrapped.dst.x - 1;
-  }
-  if (raw.dst.y < 0) {
-    wrapped.dst.y += wconfig.height;
-    wrapped.src.y = wrapped.dst.y + 1;
-  }
-  if (raw.dst.y >= wconfig.height) {
-    wrapped.dst.y -= wconfig.height;
-    wrapped.src.y = wrapped.dst.y - 1;
+    // set new true_pos before animation begins
+    *components.true_pos = coord.dst;
   }
 
-  return wrapped;
-}
+
+  void begin_movement(MovementComponents &components) {
+    components.movement_state->moving = true;
+    components.movement_state->progress = 0;
+  }
 
 
-void yumeami::impl::movement_set_coords(MovementCoords &coord,
-                                        MovementComponents &components) {
-  components.movement_state->src = coord.src;
-  components.movement_state->dst = coord.dst;
-
-  // set new true_pos before animation begins
-  *components.true_pos = coord.dst;
-}
-
-
-void yumeami::impl::movement_begin(MovementComponents &components) {
-  components.movement_state->moving = true;
-  components.movement_state->progress = 0;
-}
+} // namespace
 
 
 /* PUBL ***********************************************************************/
@@ -147,30 +198,29 @@ void yumeami::setup_movement_event_dispatcher(entt::dispatcher &dispatcher) {
 
 
 void yumeami::handle_movement_event(const MovementEvent &event) {
-  if (!impl::movement_tgt_exists(event))
+  if (!tgt_exists(event))
     return;
 
-  std::optional<impl::MovementComponents> components_opt =
-      impl::movement_get_components(event);
+  std::optional<MovementComponents> components_opt = get_components(event);
   if (!components_opt)
     return;
 
-  impl::MovementComponents components = components_opt.value();
+  MovementComponents components = components_opt.value();
 
-  if (impl::movement_is_moving(components))
+  if (is_moving(components))
     return;
 
-  impl::movement_try_update_facing(event, components);
+  try_update_facing(event, components);
 
   // clang-format off
-  impl::MovementCoords raw_coords = impl::movement_calc_raw_coords(event, components);
-  impl::MovementCoords wrapped_coords = impl::movement_calc_wrapped_dst_and_adjust_src(event, raw_coords);
+  MovementCoords raw_coords = calc_raw_coords(event, components);
+  MovementCoords wrapped_coords = calc_wrapped_dst_and_adjust_src(event, raw_coords);
   // clang-format on
 
-  if (impl::movement_collides(event, wrapped_coords))
+  if (dst_collides(event, wrapped_coords))
     return;
 
-  if (impl::movement_is_oob(event, components) && !event.world->config.wrap)
+  if (dst_is_oob(event, components) && !event.world->config.wrap)
     return;
 
   if (components.has_collision) {
@@ -181,8 +231,8 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
     });
   }
 
-  impl::movement_set_coords(wrapped_coords, components);
-  impl::movement_begin(components);
+  set_coords(wrapped_coords, components);
+  begin_movement(components);
 }
 
 

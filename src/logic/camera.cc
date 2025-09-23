@@ -1,22 +1,21 @@
 #include "logic/camera.hh"
 #include "common/raii.hh"
 #include "logic/components.hh"
+#include "logic/world.hh"
 #include "raylib.h"
 #include "spdlog/spdlog.h"
 #include <cassert>
 
 
-void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
-  const WorldConfig &wconfig = world.config;
-  WorldState &wstate = world.state;
-  auto view = wstate.reg.view<CameraTargetTag, DrawPos>();
-  if (view.begin() == view.end()) {
-    if (log)
-      spdlog::warn("[Camera] no target found");
-    return;
-  }
+/* IMPL ***********************************************************************/
 
-  for (auto [entity, draw_pos] : view.each()) {
+
+namespace {
+  using namespace yumeami;
+
+
+  void update_camera_target(WorldState &wstate, const WorldConfig &wconfig,
+                            const DrawPos &draw_pos, const SafeRenderTex &vp) {
     // clang-format off
     float intended_target_x = floorf((draw_pos.x + 1) * wconfig.tile_size * wconfig.scale);
     float intended_target_y = floorf((draw_pos.y + 1) * wconfig.tile_size * wconfig.scale);
@@ -47,7 +46,27 @@ void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
           .y = intended_target_y,
       };
     }
+  }
 
+
+} // namespace
+
+
+/* PUBL ***********************************************************************/
+
+
+void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
+  const WorldConfig &wconfig = world.config;
+  WorldState &wstate = world.state;
+  auto view = wstate.reg.view<CameraTargetTag, DrawPos>();
+  if (view.begin() == view.end()) {
+    if (log)
+      spdlog::warn("[Camera] no target found");
+    return;
+  }
+
+  for (auto [entity, draw_pos] : view.each()) {
+    update_camera_target(wstate, wconfig, draw_pos, vp);
     break;
   }
 }
