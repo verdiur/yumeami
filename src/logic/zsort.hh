@@ -32,6 +32,7 @@ namespace yumeami {
   struct ZSort {
     Elevation *elevation;
     DrawPos *draw_pos;
+
     /**
      * @brief Comparison operator. Does not require any field to be non-null.
      * @param other
@@ -40,6 +41,15 @@ namespace yumeami {
     bool operator<(const ZSort &other) const;
   };
 
+  /**
+   * @brief Utility function to emplace ZSort component. It is recommended to
+   * use this wrapper over EnTT's emplace, as emplacing ZSort this way is
+   * tedious.
+   *
+   * @param reg
+   * @param ent
+   * @return
+   */
   bool emplace_zsort(entt::registry &reg, entt::entity ent);
 
 } // namespace yumeami

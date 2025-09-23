@@ -1,4 +1,4 @@
-# resource manager
+# resource management
 
 add_library(resman
   base.hh
