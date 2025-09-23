@@ -39,27 +39,6 @@ namespace yumeami {
     int col;
   };
 
-  struct Elevation {
-    enum struct Enum { BEHIND, NORMAL, ABOVE } elevation;
-    operator Enum() const { return elevation; }
-  };
-
-  struct Floor {
-    int floor;
-    operator int() const { return floor; }
-  };
-
-  /**
-   * @class ZOrder
-   * @brief Component used to sort drawable entities
-   *
-   */
-  struct ZOrder {
-    DrawPos *draw_pos;
-    Elevation *elevation;
-    Floor *floor;
-  };
-
   /* TAGS ********************************************************************/
 
   /**
@@ -79,7 +58,7 @@ namespace yumeami {
 
   /**
    * @class CameraTargetTag
-   * @brief marks a camera target. the entity with this tag will be targeted by
+   * @brief Marks a camera target. the entity with this tag will be targeted by
    * the camera. if multiple entities have this tag, the first found entity will
    * be targeted, and the others will be ignored.
    *

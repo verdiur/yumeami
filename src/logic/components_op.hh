@@ -1,6 +1,6 @@
 /**
  * @file components_op.hh
- * @brief Common operations on components
+ * @brief Common operations on common components
  */
 
 #pragma once

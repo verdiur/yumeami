@@ -3,6 +3,7 @@
 #include "logic/camera.hh"
 #include "logic/components.hh"
 #include "logic/world.hh"
+#include "logic/zsort.hh"
 #include "raylib.h"
 #include "resman/spritesheet.hh"
 
@@ -11,15 +12,8 @@
 
 
 void yumeami::impl::sort_sprites_zorder(WorldState &wstate) {
-  wstate.reg.sort<ZOrder>([](const ZOrder &rhs, const ZOrder &lhs) {
-    if (*rhs.floor != *lhs.floor)
-      return *rhs.floor < *lhs.floor;
-
-    if (rhs.elevation->elevation != lhs.elevation->elevation)
-      return (int)rhs.elevation->elevation < (int)lhs.elevation->elevation;
-
-    return (float)rhs.draw_pos->y < (float)lhs.draw_pos->y;
-  });
+  wstate.reg.sort<ZSort>(
+      [](const ZSort &lhs, const ZSort &rhs) { return lhs < rhs; });
 }
 
 
@@ -129,8 +123,8 @@ void yumeami::draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache) {
   float scale = wconfig.tile_size * wconfig.scale;
 
   impl::sort_sprites_zorder(wstate);
-  auto view = wstate.reg.view<ZOrder, DrawPos>();
-  for (auto [ent, zorder, draw_pos] : view.each()) {
+  auto view = wstate.reg.view<ZSort, DrawPos>();
+  for (auto [ent, zsort, draw_pos] : view.each()) {
 
     const impl::DrawSpriteDst dst{
         .x = draw_pos.x * scale,
