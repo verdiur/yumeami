@@ -34,17 +34,17 @@ namespace yumeami {
    * @tparam Validator validation functor. The default validator does not
    * perform validations and always return true.
    */
-  template <StaticString CacheName, class Key, class Resource, class Loader>
+  template <StaticString CacheName, class Resource, class Loader>
     requires IsLoader<Loader, Resource>
   struct ResourceCache {
   private:
-    std::unordered_map<Key, Resource> pool = {};
+    std::unordered_map<size_t, Resource> cache = {};
 
   public:
-    bool contains(Key key) const { return pool.contains(key); }
+    bool contains(size_t key) const { return cache.contains(key); }
 
 
-    bool load(Key key, const Loader &loader) {
+    bool load(size_t key, const Loader &loader) {
       std::optional<Resource> res = loader();
       if (!res) {
         spdlog::info("[{}] could not load resource: resource is not valid",
@@ -52,47 +52,47 @@ namespace yumeami {
         return false;
       }
       // NOTE: pretty flimsy i think
-      pool.try_emplace(key, std::move(res.value()));
+      cache.try_emplace(key, std::move(res.value()));
       spdlog::info("[{}] loaded resource ({})", std::string(CacheName), key);
       return true;
     }
 
 
-    bool unload(Key key) {
+    bool unload(size_t key) {
       if (!contains(key)) {
         spdlog::error("[{}] could not unload resource: key {} not found",
                       std::string(CacheName), key);
         return false;
       }
-      pool.erase(key);
+      cache.erase(key);
       spdlog::info("[{}] unloaded resource ({})", std::string(CacheName), key);
       return true;
     }
 
 
     void clear() {
-      pool.clear();
+      cache.clear();
       spdlog::info("[{}] unloaded all resources", std::string(CacheName));
     }
 
 
-    Resource *get(Key key) {
+    Resource *get(size_t key) {
       if (!contains(key)) {
         spdlog::error("[{}] could not get resource: key {} not found",
                       std::string(CacheName), key);
         return nullptr;
       }
-      return &pool.at(key);
+      return &cache.at(key);
     }
 
 
-    const Resource *get(Key key) const {
+    const Resource *get(size_t key) const {
       if (!contains(key)) {
         spdlog::error("[{}] could not get resource: key {} not found",
                       std::string(CacheName), key);
         return nullptr;
       }
-      return &pool.at(key);
+      return &cache.at(key);
     }
   };
 

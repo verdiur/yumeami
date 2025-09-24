@@ -40,7 +40,7 @@ namespace yumeami {
      *
      */
     struct Resources {
-      std::vector<sheet_id> sheet_ids;
+      std::vector<size_t> sheet_ids;
     } resources;
 
     /**

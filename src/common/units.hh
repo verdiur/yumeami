@@ -4,8 +4,6 @@
  */
 
 #pragma once
-#include <functional>
-#include <string>
 namespace yumeami {
 
   /**
@@ -59,33 +57,5 @@ namespace yumeami {
     // @brief truncate float value into int
     int trunc() const { return static_cast<int>(val); }
   };
-
-  /**
-   * @class spritesheet_id
-   * @brief Simple wrapper for a spritesheet id. You can construct an id with a
-   * string. The constructed value will be a hash of that string.
-   *
-   */
-  struct spritesheet_id {
-    size_t id;
-    spritesheet_id(size_t id) : id(id) {}
-    spritesheet_id(std::string str) : id(std::hash<std::string>{}(str)) {}
-    operator size_t() const { return id; }
-  };
-
-  /**
-   * @class texture_id
-   * @brief Simple wrapper for a texture id. You can construct an id with a
-   * string. The constructed value will be a hash of that string.
-   *
-   */
-  struct texture_id {
-    size_t id;
-    texture_id(size_t id) : id(id) {}
-    texture_id(std::string str) : id(std::hash<std::string>{}(str)) {}
-    operator size_t() const { return id; }
-  };
-
-  using sheet_id = spritesheet_id;
 
 } // namespace yumeami
