@@ -9,6 +9,7 @@
 
 /* IMPL ***********************************************************************/
 
+
 namespace {
   using namespace yumeami;
 
@@ -212,10 +213,9 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 
   try_update_facing(event, components);
 
-  // clang-format off
   MovementCoords raw_coords = calc_raw_coords(event, components);
-  MovementCoords wrapped_coords = calc_wrapped_dst_and_adjust_src(event, raw_coords);
-  // clang-format on
+  MovementCoords wrapped_coords =
+      calc_wrapped_dst_and_adjust_src(event, raw_coords);
 
   if (dst_collides(event, wrapped_coords))
     return;
