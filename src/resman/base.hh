@@ -34,17 +34,17 @@ namespace yumeami {
    * @tparam Validator validation functor. The default validator does not
    * perform validations and always return true.
    */
-  template <StaticString CacheName, class Resource, class Loader>
+  template <StaticString CacheName, class Key, class Resource, class Loader>
     requires IsLoader<Loader, Resource>
   struct ResourceCache {
   private:
-    std::unordered_map<int, Resource> pool = {};
+    std::unordered_map<Key, Resource> pool = {};
 
   public:
-    bool contains(int key) const { return pool.contains(key); }
+    bool contains(Key key) const { return pool.contains(key); }
 
 
-    bool load(int key, const Loader &loader) {
+    bool load(Key key, const Loader &loader) {
       std::optional<Resource> res = loader();
       if (!res) {
         spdlog::info("[{}] could not load resource: resource is not valid",
@@ -58,7 +58,7 @@ namespace yumeami {
     }
 
 
-    bool unload(int key) {
+    bool unload(Key key) {
       if (!contains(key)) {
         spdlog::error("[{}] could not unload resource: key {} not found",
                       std::string(CacheName), key);
@@ -76,7 +76,7 @@ namespace yumeami {
     }
 
 
-    Resource *get(int key) {
+    Resource *get(Key key) {
       if (!contains(key)) {
         spdlog::error("[{}] could not get resource: key {} not found",
                       std::string(CacheName), key);
@@ -86,7 +86,7 @@ namespace yumeami {
     }
 
 
-    const Resource *get(int key) const {
+    const Resource *get(Key key) const {
       if (!contains(key)) {
         spdlog::error("[{}] could not get resource: key {} not found",
                       std::string(CacheName), key);
