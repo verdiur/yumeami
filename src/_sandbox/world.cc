@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 
-yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetCache &cache) {
+yumeami::World yumeami::sandbox::create_spritesheet_world(SheetCache &cache) {
   if (!cache.load(1, {"resources/test_sprsh.png", 16, 16}))
     throw std::runtime_error("spritesheet loading failed");
   Sheet *sheet = cache.get(1);
@@ -49,7 +49,7 @@ yumeami::World yumeami::_sandbox::create_spritesheet_world(SheetCache &cache) {
 }
 
 
-yumeami::World yumeami::_sandbox::create_wrap_world(SheetCache &cache) {
+yumeami::World yumeami::sandbox::create_wrap_world(SheetCache &cache) {
   if (!cache.load(1, {"resources/test_sprsh.png", 16, 16}))
     throw std::runtime_error("spritesheet loading failed");
   Sheet *sheet = cache.get(1);
@@ -90,7 +90,7 @@ yumeami::World yumeami::_sandbox::create_wrap_world(SheetCache &cache) {
 }
 
 
-yumeami::World yumeami::_sandbox::create_collision_world() {
+yumeami::World yumeami::sandbox::create_collision_world() {
   World world = create_world(
       {
           .width = 20,
@@ -139,7 +139,7 @@ yumeami::World yumeami::_sandbox::create_collision_world() {
 
 
 yumeami::World
-yumeami::_sandbox::create_sprite_position_world(SheetCache &cache) {
+yumeami::sandbox::create_sprite_position_world(SheetCache &cache) {
   if (!cache.load(1, {"resources/test_sprsh.png", 20, 30}))
     throw std::runtime_error("spritesheet loading failed");
   Sheet *sheet = cache.get(1);
@@ -179,7 +179,7 @@ yumeami::_sandbox::create_sprite_position_world(SheetCache &cache) {
 }
 
 
-yumeami::World yumeami::_sandbox::create_zorder_world(SheetCache &cache) {
+yumeami::World yumeami::sandbox::create_zorder_world(SheetCache &cache) {
   if (!cache.load(1, {"resources/test_layer.png", 16, 16}))
     throw std::runtime_error("spritesheet loading failed");
   Sheet *sheet = cache.get(1);
