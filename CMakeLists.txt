@@ -90,6 +90,10 @@ add_custom_target(resources ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory
   ${CMAKE_SOURCE_DIR}/resources/
   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/
+
+  COMMAND ${CMAKE_COMMAND} -E rm -f
+  "$<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/*.aseprite"
+  
   COMMENT "Copying resources/ to build/ for ${PROJECT_NAME}..."
 )
 add_dependencies(${PROJECT_NAME} resources)
