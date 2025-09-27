@@ -6,7 +6,6 @@ project(yumeami
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# set(CMAKE_BUILD_TYPE Debug)
 
 # packages -------------------------------------------------------------------#
 
@@ -50,11 +49,8 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/src/input/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/render/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/resman/)
-
 # debug subdirs
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  add_subdirectory(${CMAKE_SOURCE_DIR}/src/_sandbox/)
-endif()
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/_sandbox/)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
@@ -63,6 +59,15 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_SOURCE_DIR}/src/
 )
+
+# NOTE: we assume the compiler is GCC
+if(WIN32)
+  target_link_options(${PROJECT_NAME} PRIVATE
+    -static-libgcc 
+    -static-libstdc++
+  )
+endif()
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
   input
@@ -75,11 +80,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 # debug libs
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  target_link_libraries(${PROJECT_NAME} PRIVATE
-    _sandbox  
-  )
-endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  _sandbox  
+)
 
 # resources ------------------------------------------------------------------#
 
