@@ -9,6 +9,7 @@
 #include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 #include "raylib.h"
+#include <random>
 #include <vector>
 namespace yumeami {
 
@@ -54,6 +55,7 @@ namespace yumeami {
       entt::registry reg;
       Grid<int> collision;
       Camera2D cam;
+      std::mt19937 rd = {};
     } state;
   };
 

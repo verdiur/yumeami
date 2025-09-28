@@ -189,6 +189,23 @@ namespace {
 /* PUBL ***********************************************************************/
 
 
+void yumeami::RandomMoveAction::set_score(World &world) {
+  std::uniform_real_distribution<float> dist(0, 1);
+  score = (dist(world.state.rd) < probability) * weight;
+}
+
+
+void yumeami::RandomMoveAction::execute(World &world,
+                                        entt::dispatcher &dispatcher) {
+  dispatcher.enqueue(MovementEvent{
+      .world = &world,
+      .dispatcher = &dispatcher,
+      .target = target,
+      .direction = Direction::UP,
+  });
+}
+
+
 void yumeami::setup_movement_event_dispatcher(entt::dispatcher &dispatcher) {
   // clang-format off
   dispatcher
