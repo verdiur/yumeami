@@ -13,7 +13,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
   auto view = world.state.reg.view<PlayerTag>();
   if (IsKeyDown(KEY_UP)) {
     for (auto [entity] : view.each()) {
-      dispatcher.trigger(MovementEvent{
+      dispatcher.enqueue(MovementEvent{
           .world = &world,
           .dispatcher = &dispatcher,
           .target = entity,
@@ -22,7 +22,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     }
   } else if (IsKeyDown(KEY_DOWN)) {
     for (auto [entity] : view.each()) {
-      dispatcher.trigger(MovementEvent{
+      dispatcher.enqueue(MovementEvent{
           .world = &world,
           .dispatcher = &dispatcher,
           .target = entity,
@@ -31,7 +31,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     }
   } else if (IsKeyDown(KEY_RIGHT)) {
     for (auto [entity] : view.each()) {
-      dispatcher.trigger(MovementEvent{
+      dispatcher.enqueue(MovementEvent{
           .world = &world,
           .dispatcher = &dispatcher,
           .target = entity,
@@ -40,7 +40,7 @@ void yumeami::update_input(World &world, entt::dispatcher &dispatcher) {
     }
   } else if (IsKeyDown(KEY_LEFT)) {
     for (auto [entity] : view.each()) {
-      dispatcher.trigger(MovementEvent{
+      dispatcher.enqueue(MovementEvent{
           .world = &world,
           .dispatcher = &dispatcher,
           .target = entity,

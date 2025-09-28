@@ -36,14 +36,22 @@ int main(int argc, char *argv[]) {
 
   while (!WindowShouldClose()) {
 
+    // input + AI
     yumeami::update_input(world, dispatcher);
+
+    // events
+    dispatcher.update<yumeami::MovementEvent>();
+
+    // state updates
     yumeami::update_movement_state(world);
 
+    // draw on viewport
     BeginTextureMode(vp);
     ClearBackground(BLACK);
     yumeami::draw_world(world, spritesheet_cache, vp);
     EndTextureMode();
 
+    // draw on window
     BeginDrawing();
     ClearBackground(BLACK);
     yumeami::draw_viewport(vp, vp_transform);
