@@ -1,5 +1,5 @@
 #pragma once
-#include "entt/signal/fwd.hpp"
+#include "entt/entt.hpp"
 #include "logic/components.hh"
 #include "logic/world.hh"
 namespace yumeami {

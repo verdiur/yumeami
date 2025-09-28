@@ -5,9 +5,7 @@
 
 #pragma once
 #include "common/direction.hh"
-#include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
-#include "entt/signal/fwd.hpp"
 #include "logic/components.hh"
 #include "logic/decision.hh"
 #include "logic/world.hh"

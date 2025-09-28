@@ -5,7 +5,6 @@
 
 #pragma once
 #include "entt/entt.hpp"
-#include "entt/signal/fwd.hpp"
 #include "logic/world.hh"
 #include <string>
 #include <unordered_map>

@@ -22,10 +22,10 @@ add_library(logic
 
 target_compile_features(logic PUBLIC cxx_std_20)
 target_include_directories(logic PRIVATE
+  ${PROJECT_SOURCE_DIR}/external/
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(logic PUBLIC
   raylib
-  EnTT::EnTT
   spdlog
 )
