@@ -20,12 +20,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-FetchContent_Declare(
-  EnTT
-  GIT_REPOSITORY https://github.com/skypjack/entt.git
-  GIT_TAG v3.15.0
-)
-FetchContent_MakeAvailable(EnTT)
+# FetchContent_Declare(
+#   EnTT
+#   GIT_REPOSITORY https://github.com/skypjack/entt.git
+#   GIT_TAG v3.15.0
+# )
+# FetchContent_MakeAvailable(EnTT)
 
 FetchContent_Declare(
   spdlog
@@ -57,6 +57,7 @@ add_executable(${PROJECT_NAME}
 )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE
+  ${CMAKE_SOURCE_DIR}/external/
   ${CMAKE_SOURCE_DIR}/src/
 )
 
@@ -76,12 +77,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   resman
 
   raylib
-  EnTT::EnTT
 )
 
 # debug libs
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  _sandbox  
+  _sandbox
 )
 
 # resources ------------------------------------------------------------------#

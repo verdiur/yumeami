@@ -1,6 +1,5 @@
 #include "input/input.hh"
 #include "common/direction.hh"
-#include "entt/entt.hpp"
 #include "logic/components.hh"
 #include "logic/movement.hh"
 #include "logic/world.hh"

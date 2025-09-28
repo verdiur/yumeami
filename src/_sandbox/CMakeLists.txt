@@ -7,6 +7,7 @@ add_library(_sandbox
 
 target_compile_features(_sandbox PUBLIC cxx_std_20)
 target_include_directories(_sandbox PRIVATE
+  ${PROJECT_SOURCE_DIR}/external/
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(_sandbox PUBLIC
@@ -15,5 +16,4 @@ target_link_libraries(_sandbox PUBLIC
 
   raylib
   spdlog
-  EnTT::EnTT
 )

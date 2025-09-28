@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "entt/entity/fwd.hpp"
+#include "entt/entt.hpp"
 #include "logic/components.hh"
 namespace yumeami {
 

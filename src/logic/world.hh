@@ -6,7 +6,6 @@
 #pragma once
 #include "common/grid.hh"
 #include "common/units.hh"
-#include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 #include "raylib.h"
 #include <random>

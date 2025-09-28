@@ -1,5 +1,4 @@
 #include "logic/movement.hh"
-#include "entt/entt.hpp"
 #include "logic/collision.hh"
 #include "logic/components.hh"
 #include "logic/components_op.hh"

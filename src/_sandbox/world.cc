@@ -1,5 +1,4 @@
 #include "_sandbox/world.hh"
-#include "entt/entity/fwd.hpp"
 #include "logic/components.hh"
 #include "logic/movement.hh"
 #include "logic/world.hh"
