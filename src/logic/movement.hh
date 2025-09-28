@@ -9,6 +9,7 @@
 #include "entt/entt.hpp"
 #include "entt/signal/fwd.hpp"
 #include "logic/components.hh"
+#include "logic/decision.hh"
 #include "logic/world.hh"
 namespace yumeami {
 
@@ -34,6 +35,15 @@ namespace yumeami {
     entt::dispatcher *dispatcher;
     entt::entity target;
     Direction direction;
+  };
+
+  struct RandomMoveAction : Action {
+    float probability = 0.25;
+    float weight = 0.25;
+    std::string name() { return "random_move"; }
+
+    void set_score(World &world);
+    void execute(World &world, entt::dispatcher &dispatcher);
   };
 
   /**

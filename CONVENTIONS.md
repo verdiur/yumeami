@@ -22,7 +22,7 @@ be specified below.
 - File names can be plural; directory names should never be plural.
 - File extensions for implementation and header files are respectively `.cc` and `.hh`.
 - Most of the time a directory should correspond to a library, and should contain a `CMakeLists.txt` file.
-- Function names are generally preceded by a verb-like category:
+- Function names are generally preceded by a verb-like category, for example:
     - `draw` for drawing functions
     - `calc` for pure functions
     - `update` for `void`-returning functions with side-effects (except drawing functions)
@@ -54,7 +54,7 @@ namespace {
 
 ## More formatting
 
-- Line length is 80.
+- Line length is 80, but can exceptionally be longer if it improves readability.
 - In implementation files, function blocks should be separated by 2 blank lines.
 - In implementation files, header comments should separate implementation and public functions.
 
