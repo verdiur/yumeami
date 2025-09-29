@@ -11,6 +11,7 @@ target_include_directories(_sandbox PRIVATE
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(_sandbox PUBLIC
+  ai
   logic
   resman
 

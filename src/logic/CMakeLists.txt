@@ -1,4 +1,4 @@
-# game logic
+# game loop logic
 
 add_library(logic
   camera.cc
@@ -8,10 +8,6 @@ add_library(logic
   components.hh
   components_op.cc
   components_op.hh
-  death.cc
-  death.hh
-  decision.cc
-  decision.hh
   movement.cc
   movement.hh
   world.cc

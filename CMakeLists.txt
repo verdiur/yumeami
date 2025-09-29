@@ -20,13 +20,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-# FetchContent_Declare(
-#   EnTT
-#   GIT_REPOSITORY https://github.com/skypjack/entt.git
-#   GIT_TAG v3.15.0
-# )
-# FetchContent_MakeAvailable(EnTT)
-
 FetchContent_Declare(
   spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
@@ -44,6 +37,7 @@ FetchContent_MakeAvailable(reflectcpp)
 
 # targets --------------------------------------------------------------------#
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/ai/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/input/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic/)
@@ -70,6 +64,7 @@ if(WIN32)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+  ai
   common
   input
   logic

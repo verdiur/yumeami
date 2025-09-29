@@ -1,13 +1,14 @@
 /**
  * @file movement.hh
- * @brief Movement updates and event handling
+ * @brief Movement updates and event handling.
+ * @important This header does NOT define movement-related actions. For this,
+ * see the logic/action/ directory.
  */
 
 #pragma once
 #include "common/direction.hh"
 #include "entt/entt.hpp"
 #include "logic/components.hh"
-#include "logic/decision.hh"
 #include "logic/world.hh"
 namespace yumeami {
 
@@ -35,15 +36,6 @@ namespace yumeami {
     Direction direction;
   };
 
-  struct RandomMoveAction : Action {
-    float probability = 0.25;
-    float weight = 0.25;
-    std::string name() { return "random_move"; }
-
-    void set_score(World &world);
-    void execute(World &world, entt::dispatcher &dispatcher);
-  };
-
   /**
    * @brief Connect movement events to handler
    * @param dispatcher
@@ -68,6 +60,6 @@ namespace yumeami {
    * @brief Update the current movement state
    * @param world
    */
-  void update_movement_state(World &world);
+  void update_movement_state(World &world, entt::dispatcher &dispatcher);
 
 } // namespace yumeami

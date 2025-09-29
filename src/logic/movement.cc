@@ -1,4 +1,5 @@
 #include "logic/movement.hh"
+#include "ai/base.hh"
 #include "logic/collision.hh"
 #include "logic/components.hh"
 #include "logic/components_op.hh"
@@ -188,29 +189,8 @@ namespace {
 /* PUBL ***********************************************************************/
 
 
-void yumeami::RandomMoveAction::set_score(World &world) {
-  std::uniform_real_distribution<float> dist(0, 1);
-  score = (dist(world.state.rd) < probability) * weight;
-}
-
-
-void yumeami::RandomMoveAction::execute(World &world,
-                                        entt::dispatcher &dispatcher) {
-  dispatcher.enqueue(MovementEvent{
-      .world = &world,
-      .dispatcher = &dispatcher,
-      .target = target,
-      .direction = Direction::UP,
-  });
-}
-
-
 void yumeami::setup_movement_event_dispatcher(entt::dispatcher &dispatcher) {
-  // clang-format off
-  dispatcher
-    .sink<MovementEvent>()
-    .connect<&handle_movement_event>();
-  // clang-format on
+  dispatcher.sink<MovementEvent>().connect<&handle_movement_event>();
 }
 
 
@@ -239,6 +219,7 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
   if (dst_is_oob(event, components) && !event.world->config.wrap)
     return;
 
+  // collision updates must be triggered on the spot
   if (components.has_collision) {
     event.dispatcher->trigger(UpdateCollisionEvent{
         .world = event.world,
@@ -252,23 +233,31 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
 }
 
 
-void yumeami::update_movement_state(World &world) {
-  auto view = world.state.reg.view<TruePos, DrawPos, MovementState, Velocity>();
+void yumeami::update_movement_state(World &world,
+                                    entt::dispatcher &dispatcher) {
+  WorldState &wstate = world.state;
+  auto view = wstate.reg.view<TruePos, DrawPos, MovementState, Velocity>();
   for (auto [ent, true_pos, draw_pos, mvt_state, velocity] : view.each()) {
+    if (!mvt_state.moving)
+      return;
 
-    if (mvt_state.moving) {
-      mvt_state.progress += (1 / velocity) * GetFrameTime();
-      draw_pos = {
-          .x = std::lerp(mvt_state.src.x, mvt_state.dst.x, mvt_state.progress),
-          .y = std::lerp(mvt_state.src.y, mvt_state.dst.y, mvt_state.progress),
-      };
+    mvt_state.progress += (1 / velocity) * GetFrameTime();
+    draw_pos = {
+        .x = std::lerp(mvt_state.src.x, mvt_state.dst.x, mvt_state.progress),
+        .y = std::lerp(mvt_state.src.y, mvt_state.dst.y, mvt_state.progress),
+    };
 
-      // when movement is finished
-      if (mvt_state.progress >= 1) {
-        mvt_state.moving = false;
-        mvt_state.progress = 0;
-        draw_pos = to_draw_pos(true_pos); // snap draw_pos
-      }
+    // when movement is finished
+    if (mvt_state.progress >= 1) {
+      mvt_state.moving = false;
+      mvt_state.progress = 0;
+      draw_pos = to_draw_pos(true_pos); // snap draw_pos
+
+      if (!wstate.reg.view<PlayerTag>().contains(ent))
+        dispatcher.trigger(ActionFinishedEvent{
+            .world = &world,
+            .target = ent,
+        });
     }
   }
 }
