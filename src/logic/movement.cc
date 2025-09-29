@@ -3,6 +3,7 @@
 #include "logic/collision.hh"
 #include "logic/components.hh"
 #include "logic/components_op.hh"
+#include "logic/event_op.hh"
 #include "spdlog/spdlog.h"
 #include <optional>
 
@@ -195,6 +196,10 @@ void yumeami::setup_movement_event_dispatcher(entt::dispatcher &dispatcher) {
 
 
 void yumeami::handle_movement_event(const MovementEvent &event) {
+  if (!check_world_pointer(event.world) ||
+      !check_dispatcher_pointer(event.dispatcher))
+    return;
+
   if (!tgt_exists(event))
     return;
 

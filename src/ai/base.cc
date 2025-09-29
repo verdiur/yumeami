@@ -1,4 +1,5 @@
 #include "ai/base.hh"
+#include "logic/event_op.hh"
 #include "spdlog/spdlog.h"
 #include <algorithm>
 
@@ -48,6 +49,9 @@ void yumeami::setup_action_finished_event_dispatcher(
 
 
 void yumeami::handle_action_finished_event(const ActionFinishedEvent &event) {
+  if (!check_world_pointer(event.world))
+    return;
+
   WorldState &wstate = event.world->state;
 
   auto action_state = wstate.reg.try_get<ActionState>(event.target);
