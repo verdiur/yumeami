@@ -1,4 +1,6 @@
 #include "_sandbox/world.hh"
+#include "ai/base.hh"
+#include "ai/death.hh"
 #include "common/raii.hh"
 #include "common/viewport_transform.hh"
 #include "entt/entt.hpp"
@@ -18,7 +20,7 @@ int main(int argc, char *argv[]) {
   InitWindow(640 * 2, 480 * 2, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
-  // SetWindowState(FLAG_VSYNC_HINT);
+  SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
   yumeami::SafeRenderTex vp(640, 480);
@@ -26,24 +28,26 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SpritesheetCache spritesheet_cache{};
-  yumeami::World world =
-      yumeami::sandbox::create_zorder_world(spritesheet_cache);
+  yumeami::World world = yumeami::sandbox::create_random_move_world();
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
   yumeami::setup_movement_event_dispatcher(dispatcher);
   yumeami::setup_update_collision_event_dispatcher(dispatcher);
+  yumeami::setup_action_finished_event_dispatcher(dispatcher);
+  yumeami::setup_death_event_dispatcher(dispatcher);
 
   while (!WindowShouldClose()) {
 
     // input + AI
     yumeami::update_input(world, dispatcher);
+    yumeami::update_actions(world, dispatcher);
 
     // events
     dispatcher.update<yumeami::MovementEvent>();
 
     // state updates
-    yumeami::update_movement_state(world);
+    yumeami::update_movement_state(world, dispatcher);
 
     // draw on viewport
     BeginTextureMode(vp);

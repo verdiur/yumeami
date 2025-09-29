@@ -5,9 +5,8 @@
 void yumeami::setup_update_collision_event_dispatcher(
     entt::dispatcher &dispatcher) {
   // clang-format off
-  dispatcher
-      .sink<UpdateCollisionEvent>()
-      .connect<&handle_update_collision_event>();
+  dispatcher.sink<UpdateCollisionEvent>()
+            .connect<&handle_update_collision_event>();
   // clang-format on
 }
 
