@@ -22,6 +22,8 @@ target_include_directories(logic PRIVATE
   ${PROJECT_SOURCE_DIR}/src/
 )
 target_link_libraries(logic PUBLIC
+  common
+
   raylib
   spdlog
 )
