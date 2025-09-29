@@ -1,6 +1,7 @@
 #include "ai/death.hh"
 #include "ai/base.hh"
 #include "entt/entt.hpp"
+#include "logic/event_op.hh"
 
 
 yumeami::DeathAction::DeathAction(entt::entity target) {
@@ -30,6 +31,8 @@ void yumeami::setup_death_event_dispatcher(entt::dispatcher &dispatcher) {
 
 
 void yumeami::handle_death_event(const DeathEvent &event) {
+  if (!check_world_pointer(event.world))
+    return;
   // trigger animation
   // and then die (when animation ends another event will be fired, and will
   // kill the entity for real)

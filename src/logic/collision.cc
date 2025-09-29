@@ -1,4 +1,5 @@
 #include "logic/collision.hh"
+#include "logic/event_op.hh"
 #include "spdlog/spdlog.h"
 
 
@@ -12,6 +13,9 @@ void yumeami::setup_update_collision_event_dispatcher(
 
 
 void yumeami::handle_update_collision_event(const UpdateCollisionEvent &event) {
+  if (!check_world_pointer(event.world))
+    return;
+
   WorldState &wstate = event.world->state;
   TruePos src = event.src;
   TruePos dst = event.dst;
