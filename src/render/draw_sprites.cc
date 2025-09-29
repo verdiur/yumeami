@@ -89,17 +89,15 @@ namespace {
                         const DrawSpriteDst &dst) {
     CameraBounds bounds = get_camera_bounds(wstate, vp);
 
-    if (dst.x < bounds.left || dst.y < bounds.top) {
+    if (dst.x < bounds.left || dst.y < bounds.top)
       return true;
-    }
 
     spx spr_width = (res.sheet) ? res.sheet->spr_width : wconfig.tile_size;
     spx spr_height = (res.sheet) ? res.sheet->spr_height : wconfig.tile_size;
 
     if (dst.x + spr_width * wconfig.scale > bounds.right ||
-        dst.y + spr_height * wconfig.scale > bounds.bottom) {
+        dst.y + spr_height * wconfig.scale > bounds.bottom)
       return true;
-    }
 
     return false;
   }
@@ -118,8 +116,8 @@ namespace {
     draw_one_sprite(wconfig, res, dst, scale);
 
     if (wrap) {
-      float wwidth = wconfig.width * scale;
-      float wheight = wconfig.height * scale;
+      float wwidth = wconfig.width * scale;   // window width
+      float wheight = wconfig.height * scale; // window height
 
       draw_one_sprite(wconfig, res, {dst.x + wwidth, dst.y}, scale);
       draw_one_sprite(wconfig, res, {dst.x - wwidth, dst.y}, scale);
