@@ -11,7 +11,7 @@ Building has been tested on Fedora with:
 - `gcc` targeting Linux x86_64
 - provided `mingw-w64` (UCRT) toolchain targeting Windows x86_64, with statically linked libraries.
 
-This project can likely be built for and on other platforms, but these are untested.
+This project can likely be easily built for and on other platforms, but these are untested.
 
 All external libraries are automatically fetched and built by CMake, or provided in the `external/` directory:
 
