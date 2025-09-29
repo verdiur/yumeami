@@ -1,8 +1,13 @@
 # sandbox, placeholder functions for use in development
 
 add_library(_sandbox
-  world.cc
-  world.hh
+  ai_random_move.cc
+  collision.cc
+  decl.hh
+  position.cc
+  spritesheet.cc
+  wrap.cc
+  zorder.cc
 )
 
 target_compile_features(_sandbox PUBLIC cxx_std_20)

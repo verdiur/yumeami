@@ -1,4 +1,4 @@
-#include "_sandbox/world.hh"
+#include "_sandbox/decl.hh"
 #include "ai/base.hh"
 #include "ai/death.hh"
 #include "common/raii.hh"
