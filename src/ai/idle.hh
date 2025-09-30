@@ -21,6 +21,14 @@ namespace yumeami {
     static std::string name() { return "idle"; }
     std::string to_string() override { return name(); }
     void set_score(World &world) override;
+
+    /**
+     * @brief IdleAction does not enqueue anything, and simply triggers an
+     * ActionFinishedEvent
+     *
+     * @param world
+     * @param dispatcher
+     */
     void execute(World &world, entt::dispatcher &dispatcher) override;
   };
 
