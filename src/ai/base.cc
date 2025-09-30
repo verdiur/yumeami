@@ -38,8 +38,7 @@ namespace {
 /* PUBL ***********************************************************************/
 
 
-void yumeami::setup_action_finished_event_dispatcher(
-    entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_action(entt::dispatcher &dispatcher) {
   // clang-format off
   dispatcher
     .sink<ActionFinishedEvent>()

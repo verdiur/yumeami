@@ -41,7 +41,7 @@ namespace yumeami {
    * @brief Connect movement events to handler
    * @param dispatcher
    */
-  void setup_movement_event_dispatcher(entt::dispatcher &dispatcher);
+  void setup_dispatcher_movement(entt::dispatcher &dispatcher);
 
   /**
    * @brief Movement event handler. Does multiple checks and if they pass,

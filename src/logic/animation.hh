@@ -52,7 +52,7 @@ namespace yumeami {
    * @brief Connect animation events to handler
    * @param dispatcher
    */
-  void setup_animation_event_dispatcher(entt::dispatcher &dispatcher);
+  void setup_dispatcher_animation(entt::dispatcher &dispatcher);
 
   /**
    * @brief Animation start event handler

@@ -190,7 +190,7 @@ namespace {
 /* PUBL ***********************************************************************/
 
 
-void yumeami::setup_movement_event_dispatcher(entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
   dispatcher.sink<MovementEvent>().connect<&handle_movement_event>();
 }
 

@@ -120,7 +120,7 @@ namespace yumeami {
   };
 
 
-  void setup_action_finished_event_dispatcher(entt::dispatcher &dispatcher);
+  void setup_dispatcher_action(entt::dispatcher &dispatcher);
 
 
   /**

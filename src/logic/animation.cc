@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 
-void yumeami::setup_animation_event_dispatcher(entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_animation(entt::dispatcher &dispatcher) {
   // clang-format off
   dispatcher
     .sink<AnimationStartEvent>()
@@ -16,7 +16,7 @@ void yumeami::setup_animation_event_dispatcher(entt::dispatcher &dispatcher) {
     .sink<AnimationStopEvent>()
     .connect<&handle_animation_stop_event>();
   dispatcher
-    .sink<AnimationStopEvent>()
+    .sink<AnimationFpsEvent>()
     .connect<&handle_animation_fps_event>();
   dispatcher
     .sink<AnimationSwitchEvent>()
