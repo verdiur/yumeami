@@ -16,7 +16,8 @@ namespace yumeami {
    *
    */
   struct AnimationState YUMEAMI_COMPONENT {
-    std::map<std::string, Animation> map;
+    using Map = std::map<std::string, Animation>;
+    Map map;
     bool on;
     std::string current;
     int frame = 0;

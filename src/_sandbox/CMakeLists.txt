@@ -2,6 +2,7 @@
 
 add_library(_sandbox
   ai_random_move.cc
+  animation.cc
   collision.cc
   decl.hh
   position.cc
