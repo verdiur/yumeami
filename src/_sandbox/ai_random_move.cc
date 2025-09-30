@@ -35,7 +35,7 @@ yumeami::World yumeami::sandbox::create_random_move_world(SheetCache &cache) {
   actions.possible[IdleAction::name()] =
       std::make_unique<IdleAction>(IdleAction{rm});
   actions.possible[RandomMoveAction::name()] =
-      std::make_unique<RandomMoveAction>(RandomMoveAction{rm, 0.01});
+      std::make_unique<RandomMoveAction>(RandomMoveAction{rm});
 
   entt::entity cam_target = wstate.reg.create();
   wstate.reg.emplace<DrawPos>(cam_target, 0, 0);

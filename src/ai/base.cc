@@ -1,5 +1,6 @@
 #include "ai/base.hh"
 #include "logic/event_op.hh"
+#include "raylib.h"
 #include "spdlog/spdlog.h"
 #include <algorithm>
 
@@ -32,6 +33,16 @@ namespace {
   }
 
 
+  void update_timeout_state(ActionState &action_state) {
+    action_state.timeout_progress += GetFrameTime();
+
+    if (action_state.timeout_progress >= action_state.timeout_duration) {
+      action_state.timeout_progress = 0;
+      action_state.timeout = false;
+    }
+  }
+
+
 } // namespace
 
 
@@ -43,14 +54,17 @@ void yumeami::setup_dispatcher_action(entt::dispatcher &dispatcher) {
   dispatcher
     .sink<ActionFinishedEvent>()
     .connect<&handle_action_finished_event>();
+  dispatcher
+    .sink<ActionTimeoutEvent>()
+    .connect<&handle_action_timeout_event>();
   // clang-format on
 }
 
 
 void yumeami::handle_action_finished_event(const ActionFinishedEvent &event) {
-  if (!check_world_pointer(event.world))
+  if (!check_world_pointer(event.world) ||
+      !check_dispatcher_pointer(event.dispatcher))
     return;
-
   WorldState &wstate = event.world->state;
 
   auto action_state = wstate.reg.try_get<ActionState>(event.target);
@@ -61,17 +75,42 @@ void yumeami::handle_action_finished_event(const ActionFinishedEvent &event) {
   }
 
   action_state->busy = false;
+  event.dispatcher->trigger(ActionTimeoutEvent{
+      .world = event.world,
+      .target = event.target,
+  });
+}
+
+
+void yumeami::handle_action_timeout_event(const ActionTimeoutEvent &event) {
+  if (!check_world_pointer(event.world))
+    return;
+  WorldState &wstate = event.world->state;
+
+  auto action_state = wstate.reg.try_get<ActionState>(event.target);
+  if (!action_state) {
+    spdlog::info("[ActionFinishedEvent] target does not have ActionState "
+                 "component. This event will be ignored.");
+    return;
+  }
+
+  action_state->timeout = true;
 }
 
 
 void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
   auto view = world.state.reg.view<ActionState>();
-  for (auto [entity, action_state] : view.each()) {
-    if (action_state.busy)
+  for (auto [entity, state] : view.each()) {
+    if (state.busy)
       continue;
 
-    evaluate_actions(action_state, world);
-    Action *best = action_state.best;
+    if (state.timeout) {
+      update_timeout_state(state);
+      continue;
+    }
+
+    evaluate_actions(state, world);
+    Action *best = state.best;
     if (!best) {
       spdlog::error(
           "[ActionState] no best action found. No event will be fired");
@@ -79,13 +118,13 @@ void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
     }
 
     // order here matters, IdleAction immediately fires an ActionFinishedEvent.
-    // occupied cannot be set to true before execute because of instant actions
+    // busy cannot be set to true before execute because of instant actions
     // such as IdleAction.
-    action_state.busy = true;
+    state.busy = true;
+    best->execute(world, dispatcher);
     dispatcher.trigger(ActionBeginEvent{
         .world = &world,
         .sender = best->target,
     });
-    best->execute(world, dispatcher);
   }
 }

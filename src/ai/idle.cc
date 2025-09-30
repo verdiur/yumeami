@@ -17,6 +17,7 @@ void yumeami::IdleAction::set_score(World &world) {
 void yumeami::IdleAction::execute(World &world, entt::dispatcher &dispatcher) {
   dispatcher.trigger(ActionFinishedEvent{
       .world = &world,
+      .dispatcher = &dispatcher,
       .target = target,
   });
 }

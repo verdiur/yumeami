@@ -261,6 +261,7 @@ void yumeami::update_movement_state(World &world,
       if (!wstate.reg.view<PlayerTag>().contains(ent))
         dispatcher.trigger(ActionFinishedEvent{
             .world = &world,
+            .dispatcher = &dispatcher,
             .target = ent,
         });
     }

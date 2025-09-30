@@ -14,7 +14,6 @@ yumeami::RandomMoveAction::RandomMoveAction(entt::entity target,
 void yumeami::RandomMoveAction::set_score(World &world) {
   std::uniform_real_distribution<float> dist(0, 1);
   score = (dist(world.state.rd) < probability) * weight;
-  // score = 1;
 }
 
 

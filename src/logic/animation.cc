@@ -7,6 +7,35 @@
 #include <stdexcept>
 
 
+/* IMPL ***********************************************************************/
+
+
+namespace {
+  using namespace yumeami;
+
+
+  void advance_frame(AnimationState &state, Sprite &sprite) {
+    try {
+      state.frame_progress = 0;
+      Animation &animation = state.map.at(state.current);
+      state.frame = (state.frame + 1) % animation.length;
+      sprite.row = animation.row;
+      sprite.col = state.frame;
+
+    } catch (std::out_of_range err) {
+      spdlog::error(
+          "[Animation] animation name {} not found, could not advance frame",
+          state.current);
+    }
+  }
+
+
+} // namespace
+
+
+/* PUBL ***********************************************************************/
+
+
 void yumeami::setup_dispatcher_animation(entt::dispatcher &dispatcher) {
   // clang-format off
   dispatcher
@@ -28,8 +57,8 @@ void yumeami::setup_dispatcher_animation(entt::dispatcher &dispatcher) {
 void yumeami::handle_animation_start_event(const AnimationStartEvent &event) {
   if (!check_world_pointer(event.world))
     return;
-
   WorldState &wstate = event.world->state;
+
   auto anim_state = wstate.reg.try_get<AnimationState>(event.target);
   if (!anim_state) {
     spdlog::warn(
@@ -37,18 +66,17 @@ void yumeami::handle_animation_start_event(const AnimationStartEvent &event) {
     return;
   }
 
+  anim_state->on = true;
   if (event.reset)
     anim_state->frame = 0;
-
-  anim_state->on = true;
 }
 
 
 void yumeami::handle_animation_stop_event(const AnimationStopEvent &event) {
   if (!check_world_pointer(event.world))
     return;
-
   WorldState &wstate = event.world->state;
+
   auto anim_state = wstate.reg.try_get<AnimationState>(event.target);
   if (!anim_state) {
     spdlog::warn(
@@ -63,8 +91,8 @@ void yumeami::handle_animation_stop_event(const AnimationStopEvent &event) {
 void yumeami::handle_animation_fps_event(const AnimationFpsEvent &event) {
   if (!check_world_pointer(event.world))
     return;
-
   WorldState &wstate = event.world->state;
+
   auto anim_state = wstate.reg.try_get<AnimationState>(event.target);
   if (!anim_state) {
     spdlog::warn(
@@ -79,8 +107,8 @@ void yumeami::handle_animation_fps_event(const AnimationFpsEvent &event) {
 void yumeami::handle_animation_switch_event(const AnimationSwitchEvent &event) {
   if (!check_world_pointer(event.world))
     return;
-
   WorldState &wstate = event.world->state;
+
   auto anim_state = wstate.reg.try_get<AnimationState>(event.target);
   if (!anim_state) {
     spdlog::warn(
@@ -98,22 +126,14 @@ void yumeami::update_animation_state(World &world,
                                      entt::dispatcher &dispatcher) {
   WorldState &wstate = world.state;
   auto view = wstate.reg.view<AnimationState, Sprite>();
+
   for (auto [ent, state, sprite] : view.each()) {
     if (!state.on)
       continue;
 
     state.frame_progress += state.fps * GetFrameTime();
     if (state.frame_progress >= 1) {
-      try {
-        state.frame_progress = 0;
-        Animation &animation = state.map.at(state.current);
-        state.frame = (state.frame + 1) % animation.length;
-        sprite.row = animation.row;
-        sprite.col = state.frame;
-
-      } catch (std::out_of_range err) {
-        spdlog::error("[Animation] animation name {} not found", state.current);
-      }
+      advance_frame(state, sprite);
     }
   }
 }

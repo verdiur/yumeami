@@ -5,7 +5,7 @@ namespace yumeami {
     float probability;
     float weight;
 
-    RandomMoveAction(entt::entity target, float probability = 0.25,
+    RandomMoveAction(entt::entity target, float probability = 0.2,
                      float weight = 0.25);
 
     static std::string name() { return "random_move"; }

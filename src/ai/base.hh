@@ -8,9 +8,9 @@
  * At the start of each game loop iteration, all entities that have the
  * ActionState component calculates the scores of their possible actions.
  * The best action is then executed and the ActionState component is set as
- * "occupied". When the event handling is over (this can take multiple frames),
+ * "busy". When the event handling is over (this can take multiple frames),
  * the system triggers an event back to the ActionState, signalling it that the
- * action is finished. ActionState is no longer marked as "occupied".
+ * action is finished. ActionState is no longer marked as "busy".
  *
  * ## WHERE IS EVERYTHING DEFINED ?
  *
@@ -92,6 +92,13 @@ namespace yumeami {
    */
   struct ActionFinishedEvent {
     World *world;
+    entt::dispatcher *dispatcher;
+    entt::entity target;
+  };
+
+
+  struct ActionTimeoutEvent {
+    World *world;
     entt::entity target;
   };
 
@@ -110,6 +117,9 @@ namespace yumeami {
     Map possible;
     Action *best = nullptr;
     bool busy = false;
+    bool timeout = false;
+    float timeout_duration = 0.5;
+    float timeout_progress = 0;
 
     // std::unique_ptr cannot be copied
     ActionState(const ActionState &other) = delete;
@@ -130,6 +140,9 @@ namespace yumeami {
    * @param event
    */
   void handle_action_finished_event(const ActionFinishedEvent &event);
+
+
+  void handle_action_timeout_event(const ActionTimeoutEvent &event);
 
 
   /**
