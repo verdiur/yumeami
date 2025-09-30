@@ -105,6 +105,7 @@ void yumeami::update_animation_state(World &world,
     state.frame_progress += state.fps * GetFrameTime();
     if (state.frame_progress >= 1) {
       try {
+        state.frame_progress = 0;
         Animation &animation = state.map.at(state.current);
         state.frame = (state.frame + 1) % animation.length;
         sprite.row = animation.row;

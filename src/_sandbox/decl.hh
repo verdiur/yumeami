@@ -8,6 +8,7 @@ namespace yumeami::sandbox {
   World create_collision_world();
   World create_sprite_position_world(SheetCache &cache);
   World create_zorder_world(SheetCache &cache);
-  World create_random_move_world();
+  World create_random_move_world(SheetCache &cache);
+  World create_animation_world(SheetCache &cache);
 
 } // namespace yumeami::sandbox

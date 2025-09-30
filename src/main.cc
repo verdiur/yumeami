@@ -15,6 +15,7 @@
 #include "render/draw_world.hh"
 #include "resman/spritesheet.hh"
 
+
 int main(int argc, char *argv[]) {
 
   SetTraceLogLevel(LOG_WARNING);
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]) {
 
   yumeami::SpritesheetCache spritesheet_cache{};
   yumeami::World world =
-      yumeami::sandbox::create_spritesheet_world(spritesheet_cache);
+      yumeami::sandbox::create_random_move_world(spritesheet_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
