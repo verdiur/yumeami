@@ -6,6 +6,7 @@
 #include "logic/zsort.hh"
 #include "raylib.h"
 #include "resman/spritesheet.hh"
+#include <cmath>
 
 
 /* IMPL ***********************************************************************/
@@ -47,15 +48,20 @@ namespace {
    */
   void draw_one_sprite(const WorldConfig &wconfig, const SpriteAndSheet &res,
                        const DrawSpriteDst &dst, float scale) {
+    // we need to explicitly floor the coordinates, otherwise they are truncated
+    // by raylib (causes the coords being offset by 1px when negative)
+    float dst_x_floor = std::floorf(dst.x);
+    float dst_y_floor = std::floorf(dst.y);
+
     if (!res.sprite) {
-      DrawRectangle(dst.x, dst.y, scale, scale, BLUE);
-      DrawText("no\nsprite", dst.x, dst.y, 1, WHITE);
+      DrawRectangle(dst_x_floor, dst_y_floor, scale, scale, BLUE);
+      DrawText("no\nsprite", dst_x_floor, dst_y_floor, 1, WHITE);
       return;
     }
 
     if (!res.sheet) {
-      DrawRectangle(dst.x, dst.y, scale, scale, MAGENTA);
-      DrawText("no\nsheet", dst.x, dst.y, 1, WHITE);
+      DrawRectangle(dst_x_floor, dst_y_floor, scale, scale, MAGENTA);
+      DrawText("no\nsheet", dst_x_floor, dst_y_floor, 1, WHITE);
       return;
     }
 
@@ -74,8 +80,8 @@ namespace {
     float x_off = wconfig.scale * ((spr_width - wconfig.tile_size) / 2);
 
     Rectangle dst_rec = {
-        .x = dst.x - x_off,
-        .y = dst.y - y_off,
+        .x = dst_x_floor - x_off,
+        .y = dst_y_floor - y_off,
         .width = spr_width * wconfig.scale,
         .height = spr_height * wconfig.scale,
     };
