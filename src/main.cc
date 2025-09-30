@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SpritesheetCache spritesheet_cache{};
-  yumeami::World world = yumeami::sandbox::create_collision_world();
+  yumeami::World world =
+      yumeami::sandbox::create_spritesheet_world(spritesheet_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};

@@ -13,7 +13,7 @@ yumeami::World yumeami::sandbox::create_spritesheet_world(SheetCache &cache) {
   World world = create_world(
       {
           .width = 20,
-          .height = 15,
+          .height = 16,
           .tile_size = 16,
           .wrap = false,
           .clamp_camera = false,
