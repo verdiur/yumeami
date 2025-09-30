@@ -244,7 +244,7 @@ void yumeami::update_movement_state(World &world,
   auto view = wstate.reg.view<TruePos, DrawPos, MovementState, Velocity>();
   for (auto [ent, true_pos, draw_pos, mvt_state, velocity] : view.each()) {
     if (!mvt_state.moving)
-      return;
+      continue;
 
     mvt_state.progress += (1 / velocity) * GetFrameTime();
     draw_pos = {
