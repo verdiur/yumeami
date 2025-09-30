@@ -4,36 +4,37 @@
  */
 
 #pragma once
+#include "common/defines.hh"
 #include "common/direction.hh"
 #include "common/units.hh"
 namespace yumeami {
 
-  struct TruePos {
+  struct TruePos YUMEAMI_COMPONENT {
     tile x;
     tile y;
   };
 
-  struct DrawPos {
+  struct DrawPos YUMEAMI_COMPONENT {
     tile x;
     tile y;
   };
 
-  struct PixelPos {
+  struct PixelPos YUMEAMI_COMPONENT {
     float x;
     float y;
   };
 
-  struct Velocity {
+  struct Velocity YUMEAMI_COMPONENT {
     float vel; // time in seconds that it takes to move 1 tile.
     operator float() const { return vel; }
   };
 
-  struct Facing {
+  struct Facing YUMEAMI_COMPONENT {
     Direction dir;
     operator Direction() const { return dir; }
   };
 
-  struct Sprite {
+  struct Sprite YUMEAMI_COMPONENT {
     int sheet_id;
     int row;
     int col;
@@ -47,14 +48,14 @@ namespace yumeami {
    * input.
    *
    */
-  struct PlayerTag {};
+  struct PlayerTag YUMEAMI_COMPONENT{};
 
   /**
    * @class CollisionTag
    * @brief Marks a collidable entity.
    *
    */
-  struct CollisionTag {};
+  struct CollisionTag YUMEAMI_COMPONENT{};
 
   /**
    * @class CameraTargetTag
@@ -63,6 +64,6 @@ namespace yumeami {
    * be targeted, and the others will be ignored.
    *
    */
-  struct CameraTargetTag {};
+  struct CameraTargetTag YUMEAMI_COMPONENT{};
 
 } // namespace yumeami

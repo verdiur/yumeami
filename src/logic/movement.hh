@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include "common/defines.hh"
 #include "common/direction.hh"
 #include "entt/entt.hpp"
 #include "logic/components.hh"
@@ -17,7 +18,7 @@ namespace yumeami {
    * @brief Component representing current movement state
    *
    */
-  struct MovementState {
+  struct MovementState YUMEAMI_COMPONENT {
     TruePos src = {0, 0};
     TruePos dst = {0, 0};
     float progress = 0;
