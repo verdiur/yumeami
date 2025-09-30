@@ -5,6 +5,7 @@
  */
 
 #pragma once
+#include "common/defines.hh"
 #include "entt/entt.hpp"
 #include "logic/components.hh"
 namespace yumeami {
@@ -16,7 +17,7 @@ namespace yumeami {
    * has an elevation of 0.
    *
    */
-  struct Elevation {
+  struct Elevation YUMEAMI_COMPONENT {
     int elevation;
     operator int() const { return elevation; }
   };
@@ -29,7 +30,7 @@ namespace yumeami {
    * cannot be accessed due to a nullptr will be defaulted to 0.
    *
    */
-  struct ZSort {
+  struct ZSort YUMEAMI_COMPONENT {
     Elevation *elevation;
     DrawPos *draw_pos;
 

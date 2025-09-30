@@ -19,6 +19,7 @@
  */
 
 #pragma once
+#include "common/defines.hh"
 #include "entt/entt.hpp"
 #include "logic/world.hh"
 #include <string>
@@ -102,13 +103,13 @@ namespace yumeami {
    * corresponding actions.
    *
    */
-  struct ActionState {
+  struct ActionState YUMEAMI_COMPONENT {
     // abstract classes can only be used in templates via a ref or pointer
     using Map = std::unordered_map<std::string, std::unique_ptr<Action>>;
 
     Map possible;
     Action *best = nullptr;
-    bool occupied = false;
+    bool busy = false;
 
     // std::unique_ptr cannot be copied
     ActionState(const ActionState &other) = delete;

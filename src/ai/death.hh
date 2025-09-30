@@ -6,11 +6,12 @@
 
 #pragma once
 #include "ai/base.hh"
+#include "common/defines.hh"
 #include "entt/entt.hpp"
 #include "logic/world.hh"
 namespace yumeami {
 
-  struct Health {
+  struct Health YUMEAMI_COMPONENT {
     enum struct State { ALIVE, DYING, DEAD } state = Health::State::ALIVE;
     int value;
   };

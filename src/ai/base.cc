@@ -61,14 +61,14 @@ void yumeami::handle_action_finished_event(const ActionFinishedEvent &event) {
     return;
   }
 
-  action_state->occupied = false;
+  action_state->busy = false;
 }
 
 
 void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
   auto view = world.state.reg.view<ActionState>();
   for (auto [entity, action_state] : view.each()) {
-    if (action_state.occupied)
+    if (action_state.busy)
       continue;
 
     evaluate_actions(action_state, world);
@@ -82,7 +82,7 @@ void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
     // order here matters, IdleAction immediately fires an ActionFinishedEvent.
     // occupied cannot be set to true before execute because of instant actions
     // such as IdleAction.
-    action_state.occupied = true;
+    action_state.busy = true;
     dispatcher.trigger(ActionBeginEvent{
         .world = &world,
         .sender = best->target,
