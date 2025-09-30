@@ -3,8 +3,7 @@
 #include "spdlog/spdlog.h"
 
 
-void yumeami::setup_update_collision_event_dispatcher(
-    entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_collision(entt::dispatcher &dispatcher) {
   // clang-format off
   dispatcher.sink<UpdateCollisionEvent>()
             .connect<&handle_update_collision_event>();

@@ -1,6 +1,8 @@
 # game loop logic
 
 add_library(logic
+  animation.cc
+  animation.hh
   camera.cc
   camera.hh
   collision.cc

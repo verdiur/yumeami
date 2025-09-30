@@ -30,7 +30,7 @@ namespace yumeami {
     void execute(World &world, entt::dispatcher &dispatcher) override;
   };
 
-  void setup_death_event_dispatcher(entt::dispatcher &dispatcher);
+  void setup_dispatcher_death(entt::dispatcher &dispatcher);
 
   void handle_death_event(const DeathEvent &event);
 

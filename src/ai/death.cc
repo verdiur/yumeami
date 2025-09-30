@@ -25,7 +25,7 @@ void yumeami::DeathAction::execute(World &world, entt::dispatcher &dispatcher) {
 }
 
 
-void yumeami::setup_death_event_dispatcher(entt::dispatcher &dispatcher) {
+void yumeami::setup_dispatcher_death(entt::dispatcher &dispatcher) {
   dispatcher.sink<DeathEvent>().connect<&handle_death_event>();
 }
 

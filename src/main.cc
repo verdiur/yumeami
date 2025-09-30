@@ -5,6 +5,7 @@
 #include "common/viewport_transform.hh"
 #include "entt/entt.hpp"
 #include "input/input.hh"
+#include "logic/animation.hh"
 #include "logic/camera.hh"
 #include "logic/collision.hh"
 #include "logic/movement.hh"
@@ -33,10 +34,11 @@ int main(int argc, char *argv[]) {
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
-  yumeami::setup_movement_event_dispatcher(dispatcher);
-  yumeami::setup_update_collision_event_dispatcher(dispatcher);
-  yumeami::setup_action_finished_event_dispatcher(dispatcher);
-  yumeami::setup_death_event_dispatcher(dispatcher);
+  yumeami::setup_dispatcher_movement(dispatcher);
+  yumeami::setup_dispatcher_collision(dispatcher);
+  yumeami::setup_dispatcher_action(dispatcher);
+  yumeami::setup_dispatcher_death(dispatcher);
+  yumeami::setup_dispatcher_animation(dispatcher);
 
   while (!WindowShouldClose()) {
 
@@ -49,6 +51,7 @@ int main(int argc, char *argv[]) {
 
     // state updates
     yumeami::update_movement_state(world, dispatcher);
+    yumeami::update_animation_state(world, dispatcher);
 
     // draw on viewport
     BeginTextureMode(vp);

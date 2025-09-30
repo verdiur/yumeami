@@ -14,7 +14,7 @@ namespace yumeami {
    * @brief Connect update collision events to dispatcher
    * @param dispatcher
    */
-  void setup_update_collision_event_dispatcher(entt::dispatcher &dispatcher);
+  void setup_dispatcher_collision(entt::dispatcher &dispatcher);
 
   /**
    * @brief Handle update collision event. Decrements src position and
