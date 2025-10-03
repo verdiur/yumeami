@@ -24,7 +24,9 @@ namespace yumeami {
    *
    * @param world
    * @param vp
-   * @param clamp if true, clamp the target to the boundaries of the world
+   * @param clamp if true, clamp the target to the boundaries of the world. If
+   * the world is smaller than the viewport, then the camera will target the
+   * center of the world.
    */
   void update_camera(World &world, const SafeRenderTex &vp, bool log = false);
 
