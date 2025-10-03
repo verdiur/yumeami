@@ -115,12 +115,12 @@ namespace {
 
 
   bool dst_is_oob(const MovementEvent &event,
-                  const MovementComponents &components) {
+                  const MovementCoords &raw_coords) {
     const WorldConfig &wconfig = event.world->config;
-    const MovementState &mvst = *components.movement_state;
-    if (mvst.dst.x < 0 || mvst.dst.y < 0)
+    if (raw_coords.dst.x.trunc() < 0 || raw_coords.dst.y.trunc() < 0)
       return true;
-    if (mvst.dst.x >= wconfig.width || mvst.dst.y >= wconfig.height)
+    if (raw_coords.dst.x.trunc() >= wconfig.width.trunc() ||
+        raw_coords.dst.y.trunc() >= wconfig.height.trunc())
       return true;
     return false;
   }
@@ -221,8 +221,9 @@ void yumeami::handle_movement_event(const MovementEvent &event) {
   if (dst_collides(event, wrapped_coords))
     return;
 
-  if (dst_is_oob(event, components) && !event.world->config.wrap)
+  if (dst_is_oob(event, raw_coords) && !event.world->config.wrap) {
     return;
+  }
 
   // collision updates must be triggered on the spot
   if (components.has_collision) {
