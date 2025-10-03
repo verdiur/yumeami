@@ -1,6 +1,10 @@
 # render functions
 
 add_library(render
+  base.cc
+  base.hh
+  draw_background.cc
+  draw_background.hh
   draw_debug.cc
   draw_debug.hh
   draw_sprites.cc

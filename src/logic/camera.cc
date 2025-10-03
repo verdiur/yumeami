@@ -95,6 +95,8 @@ yumeami::CameraBounds yumeami::get_camera_bounds(const WorldState &wstate,
   float top = cam.target.y - cam.offset.y / cam.zoom;
   float right = left + vp->texture.width / cam.zoom;
   float bottom = top + vp->texture.height / cam.zoom;
+  float width = right - left;
+  float height = bottom - top;
 
-  return CameraBounds{left, right, top, bottom};
+  return CameraBounds{left, right, top, bottom, width, height};
 }

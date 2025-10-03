@@ -14,6 +14,7 @@ yumeami::SpritesheetLoader::operator()() const {
   int tex_height = tex->height;
   int tex_width = tex->width;
   if (tex_height <= 0 || tex_width <= 0) {
+    spdlog::error("[SpritesheetLoader] invalid dimensions for path {}", path);
     return std::nullopt;
   }
 

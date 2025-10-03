@@ -12,7 +12,8 @@ namespace yumeami {
   /**
    * @brief Draw all sprite-bearing entities
    * @param world
-   * @param pool
+   * @param vp
+   * @param cache
    */
   void draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache);
 

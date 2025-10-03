@@ -14,6 +14,7 @@
 #include "render/draw_debug.hh"
 #include "render/draw_world.hh"
 #include "resman/spritesheet.hh"
+#include "resman/texture.hh"
 
 
 int main(int argc, char *argv[]) {
@@ -30,8 +31,9 @@ int main(int argc, char *argv[]) {
   yumeami::calc_viewport_transform(vp, vp_transform);
 
   yumeami::SpritesheetCache spritesheet_cache{};
-  yumeami::World world =
-      yumeami::sandbox::create_random_move_world(spritesheet_cache);
+  yumeami::TextureCache texture_cache{};
+  yumeami::World world = yumeami::sandbox::create_background_world(
+      spritesheet_cache, texture_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
@@ -57,7 +59,7 @@ int main(int argc, char *argv[]) {
     // draw on viewport
     BeginTextureMode(vp);
     ClearBackground(BLACK);
-    yumeami::draw_world(world, spritesheet_cache, vp);
+    yumeami::draw_world(world, spritesheet_cache, texture_cache, vp);
     EndTextureMode();
 
     // draw on window

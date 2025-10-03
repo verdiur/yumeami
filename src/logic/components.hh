@@ -19,9 +19,9 @@ namespace yumeami {
     tile y;
   };
 
-  struct PixelPos YUMEAMI_COMPONENT {
-    float x;
-    float y;
+  struct SpritePixelPos YUMEAMI_COMPONENT {
+    spx x;
+    spx y;
   };
 
   struct Velocity YUMEAMI_COMPONENT {
@@ -40,7 +40,16 @@ namespace yumeami {
     int col;
   };
 
-  /* TAGS ********************************************************************/
+  struct Background YUMEAMI_COMPONENT {
+    int texture_id;
+    spx margin_x = 0;
+    spx margin_y = 0;
+    float parallax = 0.5;
+    spx_per_sec drift_x = 4;
+    spx_per_sec drift_y = 4;
+  };
+
+  /* TAGS *********************************************************************/
 
   /**
    * @class PlayerTag

@@ -3,22 +3,16 @@
 #include "logic/components.hh"
 #include "logic/world.hh"
 #include "raylib.h"
+#include "render/base.hh"
 #include <string>
 
 
-// DEBUG LINE COLORS
-// WHITE: hitboxes
-// GREEN: facing, entity component properties
-// DARKBROWN: something invalid
-// DARKGRAY: guides, like bounds or viewport center, etc.
-
-// DEBUG TEXT COLORS
-// GREEN/BLACK: fps
-
 void yumeami::draw_debug_info(int text_size) {
   int fps = GetFPS();
-  DrawText((std::to_string(fps) + " FPS").c_str(), 3, 3, text_size, BLACK);
-  DrawText((std::to_string(fps) + " FPS").c_str(), 2, 2, text_size, GREEN);
+  std::string txt = (std::to_string(fps) + " FPS");
+
+  DrawText(txt.c_str(), 3, 3, text_size, BLACK);
+  DrawText(txt.c_str(), 2, 2, text_size, COLOR_DEBUG_TEXT);
 }
 
 
@@ -36,14 +30,14 @@ void yumeami::draw_debug_collision(const World &world) {
         DrawRectangleLines(x * wconfig.tile_size * wconfig.scale,
                            y * wconfig.tile_size * wconfig.scale,
                            wconfig.tile_size * wconfig.scale,
-                           wconfig.tile_size * wconfig.scale, WHITE);
+                           wconfig.tile_size * wconfig.scale, COLOR_HITBOX);
         if (val > 1) {
           DrawText(std::to_string(val).c_str(),
                    x * wconfig.tile_size * wconfig.scale + 3,
                    y * wconfig.tile_size * wconfig.scale + 3, 1, BLACK);
           DrawText(std::to_string(val).c_str(),
                    x * wconfig.tile_size * wconfig.scale + 2,
-                   y * wconfig.tile_size * wconfig.scale + 2, 1, WHITE);
+                   y * wconfig.tile_size * wconfig.scale + 2, 1, COLOR_HITBOX);
         }
       }
 
@@ -51,13 +45,13 @@ void yumeami::draw_debug_collision(const World &world) {
         DrawRectangleLines(x * wconfig.tile_size * wconfig.scale,
                            y * wconfig.tile_size * wconfig.scale,
                            wconfig.tile_size * wconfig.scale,
-                           wconfig.tile_size * wconfig.scale, MAROON);
+                           wconfig.tile_size * wconfig.scale, COLOR_ERROR);
         DrawText(std::to_string(val).c_str(),
                  x * wconfig.tile_size * wconfig.scale + 3,
                  y * wconfig.tile_size * wconfig.scale + 3, 1, BLACK);
         DrawText(std::to_string(val).c_str(),
                  x * wconfig.tile_size * wconfig.scale + 2,
-                 y * wconfig.tile_size * wconfig.scale + 2, 1, MAROON);
+                 y * wconfig.tile_size * wconfig.scale + 2, 1, COLOR_ERROR);
       }
     }
   }
@@ -70,7 +64,7 @@ void yumeami::draw_debug_world_bounds(const World &world) {
   BeginMode2D(world.state.cam);
   DrawRectangleLines(0, 0, wconfig.width * wconfig.tile_size * wconfig.scale,
                      wconfig.height * wconfig.tile_size * wconfig.scale,
-                     DARKGRAY);
+                     COLOR_GUIDE);
   EndMode2D();
 }
 
@@ -104,7 +98,7 @@ void yumeami::draw_debug_facing(const World &world, float arrow_length) {
       break;
     }
 
-    DrawLineV(start_pos, end_pos, GREEN);
+    DrawLineV(start_pos, end_pos, COLOR_FACING);
   }
   EndMode2D();
 }

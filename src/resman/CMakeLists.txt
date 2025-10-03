@@ -4,6 +4,8 @@ add_library(resman
   base.hh
   spritesheet.cc
   spritesheet.hh
+  texture.cc
+  texture.hh
 )
 
 target_compile_features(resman PUBLIC cxx_std_20)

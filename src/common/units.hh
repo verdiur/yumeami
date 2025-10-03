@@ -58,4 +58,14 @@ namespace yumeami {
     int trunc() const { return static_cast<int>(val); }
   };
 
+  struct spx_per_sec {
+    float val;
+    spx_per_sec(float val) : val(val) {}
+    spx_per_sec(int val) : val(static_cast<float>(val)) {}
+    operator float() const { return val; }
+
+    // @brief truncate float value into int
+    int trunc() const { return static_cast<int>(val); }
+  };
+
 } // namespace yumeami
