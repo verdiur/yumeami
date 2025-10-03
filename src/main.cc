@@ -32,8 +32,7 @@ int main(int argc, char *argv[]) {
 
   yumeami::SpritesheetCache spritesheet_cache{};
   yumeami::TextureCache texture_cache{};
-  yumeami::World world = yumeami::sandbox::create_background_world(
-      spritesheet_cache, texture_cache);
+  yumeami::World world = yumeami::sandbox::create_clamp_world();
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
@@ -60,6 +59,7 @@ int main(int argc, char *argv[]) {
     BeginTextureMode(vp);
     ClearBackground(BLACK);
     yumeami::draw_world(world, spritesheet_cache, texture_cache, vp);
+    yumeami::draw_debug_world_bounds(world);
     EndTextureMode();
 
     // draw on window

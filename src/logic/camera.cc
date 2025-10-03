@@ -17,23 +17,33 @@ namespace {
   void update_camera_target(WorldState &wstate, const WorldConfig &wconfig,
                             const DrawPos &draw_pos, const SafeRenderTex &vp) {
     // clang-format off
-    float intended_target_x = floorf((draw_pos.x + 1) * wconfig.tile_size * wconfig.scale);
-    float intended_target_y = floorf((draw_pos.y + 1) * wconfig.tile_size * wconfig.scale);
+    float intended_target_x = floorf((draw_pos.x + 0.5) * wconfig.tile_size * wconfig.scale);
+    float intended_target_y = floorf((draw_pos.y + 0.5) * wconfig.tile_size * wconfig.scale);
     // clang-format on
 
     // NOTE: as of now, clamp_camera being activated on a world smaller than the
     // viewport leads to the game crashing. The crash is caused by std::clamp
     // bounds failing assertions.
     if (wconfig.clamp_camera) {
-      // clang-format off
-      float bound_x = wconfig.width * wconfig.tile_size * wconfig.scale;
-      float bound_y = wconfig.height * wconfig.tile_size * wconfig.scale;
 
+      float wwidth = wconfig.width * wconfig.tile_size * wconfig.scale;
+      float wheight = wconfig.height * wconfig.tile_size * wconfig.scale;
       float halfscr_width = vp->texture.width / (2.0 * wstate.cam.zoom);
       float halfscr_height = vp->texture.height / (2.0 * wstate.cam.zoom);
-      float real_target_x = std::clamp(intended_target_x, halfscr_width, bound_x - halfscr_width);
-      float real_target_y = std::clamp(intended_target_y, halfscr_height, bound_y - halfscr_height);
-      // clang-format on
+      float real_target_y{};
+      float real_target_x{};
+
+      if (wwidth < vp->texture.width)
+        real_target_x = wwidth / 2;
+      else
+        real_target_x = std::clamp(intended_target_x, halfscr_width,
+                                   wwidth - halfscr_width);
+
+      if (wheight < vp->texture.height)
+        real_target_y = wheight / 2;
+      else
+        real_target_y = std::clamp(intended_target_y, halfscr_height,
+                                   wheight - halfscr_height);
 
       wstate.cam.target = Vector2{
           .x = real_target_x,
