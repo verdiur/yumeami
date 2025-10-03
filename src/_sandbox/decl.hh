@@ -13,5 +13,6 @@ namespace yumeami::sandbox {
   World create_animation_world(SheetCache &cache);
   World create_background_world(SheetCache &sheet_cache,
                                 TextureCache &tex_cache);
+  World create_clamp_world();
 
 } // namespace yumeami::sandbox
