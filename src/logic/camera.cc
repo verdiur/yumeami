@@ -21,9 +21,6 @@ namespace {
     float intended_target_y = floorf((draw_pos.y + 0.5) * wconfig.tile_size * wconfig.scale);
     // clang-format on
 
-    // NOTE: as of now, clamp_camera being activated on a world smaller than the
-    // viewport leads to the game crashing. The crash is caused by std::clamp
-    // bounds failing assertions.
     if (wconfig.clamp_camera) {
 
       float wwidth = wconfig.width * wconfig.tile_size * wconfig.scale;
