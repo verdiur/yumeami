@@ -2,7 +2,6 @@
 #include "common/raii.hh"
 #include "logic/camera.hh"
 #include "raylib.h"
-#include "spdlog/spdlog.h"
 
 
 namespace {
