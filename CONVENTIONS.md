@@ -30,6 +30,30 @@ be specified below.
     - `create / load` if creation involves construction / addition / manual allocation
     - `delete / unload` for deletion / removal / manual deallocation
 
+### Common variable names
+
+In function signatures, parameters may be specified following the order of the table below:
+
+| thing | name | notes |
+|-------|------|-------|
+| World | world | |
+| WorldConfig | wconfig | |
+| WorldResources | wres | |
+| WorldState | wstate | |
+| Camera | cam | |
+| CameraBounds | cam_bounds | |
+| event | event | |
+| entt::registry | reg | |
+| entt::entity | ent | |
+| entt::dispatcher | dispatcher | |
+| viewport SafeRenderTexture | vp | |
+| SheetCache | sheet_cache | |
+| TextureCache | tex_cache | |
+| Spritesheet | sheet | |
+| Texture | tex | |
+| other params, in no particular order | N/A | |
+| flags and optional params | N/A | |
+
 ## Coding style
 
 - `structs` holding game logic data should never be any more than data containers. That means all members should be public, default constructors only, and member functions must only be defined if they provide functionalities that are intrinsic to the struct. If you need to define a specific way a `struct` should be constructed, consider doing so in a `create_...()` function or in a `load_...()` function instead.

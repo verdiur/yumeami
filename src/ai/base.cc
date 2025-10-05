@@ -19,7 +19,7 @@ namespace {
    * @param actions
    * @param world
    */
-  void evaluate_actions(ActionState &action_state, World &world) {
+  void evaluate_actions(World &world, ActionState &action_state) {
     for (auto &[_, action] : action_state.possible) {
       action->set_score(world);
     }
@@ -100,7 +100,7 @@ void yumeami::handle_action_timeout_event(const ActionTimeoutEvent &event) {
 
 void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
   auto view = world.state.reg.view<ActionState>();
-  for (auto [entity, state] : view.each()) {
+  for (auto [ent, state] : view.each()) {
     if (state.busy)
       continue;
 
@@ -109,7 +109,7 @@ void yumeami::update_actions(World &world, entt::dispatcher &dispatcher) {
       continue;
     }
 
-    evaluate_actions(state, world);
+    evaluate_actions(world, state);
     Action *best = state.best;
     if (!best) {
       spdlog::error(

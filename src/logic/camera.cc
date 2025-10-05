@@ -15,7 +15,7 @@ namespace {
 
 
   void update_camera_target(WorldState &wstate, const WorldConfig &wconfig,
-                            const DrawPos &draw_pos, const SafeRenderTex &vp) {
+                            const SafeRenderTex &vp, const DrawPos &draw_pos) {
     // clang-format off
     float intended_target_x = floorf((draw_pos.x + 0.5) * wconfig.tile_size * wconfig.scale);
     float intended_target_y = floorf((draw_pos.y + 0.5) * wconfig.tile_size * wconfig.scale);
@@ -73,7 +73,7 @@ void yumeami::update_camera(World &world, const SafeRenderTex &vp, bool log) {
   }
 
   for (auto [entity, draw_pos] : view.each()) {
-    update_camera_target(wstate, wconfig, draw_pos, vp);
+    update_camera_target(wstate, wconfig, vp, draw_pos);
     break;
   }
 }

@@ -9,7 +9,7 @@
 
 
 void yumeami::draw_background(World &world, SafeRenderTex &vp,
-                              TextureCache &cache) {
+                              TextureCache &tex_cache) {
   const WorldConfig &wconfig = world.config;
   WorldState &wstate = world.state;
   CameraBounds bounds = get_camera_bounds(wstate, vp);
@@ -17,7 +17,7 @@ void yumeami::draw_background(World &world, SafeRenderTex &vp,
   auto view = wstate.reg.view<Background, SpritePixelPos>();
   for (auto [ent, bg, pos] : view.each()) {
 
-    SafeTexture *tex = cache.get(bg.texture_id);
+    SafeTexture *tex = tex_cache.get(bg.texture_id);
     if (!tex) {
       DrawText("no spritesheet for bg", 0, 0, 30, DARKBROWN);
       continue;
@@ -41,6 +41,6 @@ void yumeami::draw_background(World &world, SafeRenderTex &vp,
         .y = dst.height + bg.margin_y,
     };
 
-    draw_texture_tiled(bounds, spacing, *tex, src, dst, {0, 0}, 0, WHITE);
+    draw_texture_tiled(bounds, *tex, spacing, src, dst, {0, 0}, 0, WHITE);
   }
 }

@@ -13,8 +13,8 @@ namespace yumeami {
    * @brief Draw all sprite-bearing entities
    * @param world
    * @param vp
-   * @param cache
+   * @param sheet_cache
    */
-  void draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache);
+  void draw_sprites(World &world, SafeRenderTex &vp, SheetCache &sheet_cache);
 
 } // namespace yumeami

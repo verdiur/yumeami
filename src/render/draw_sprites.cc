@@ -40,14 +40,14 @@ namespace {
   /**
    * @brief Get resources necessary to draw a sprite
    * @param wstate
-   * @param cache
-   * @param entity
+   * @param sheet_cache
+   * @param ent
    * @return
    */
-  Resources get_resources(WorldState &wstate, SheetCache &cache,
-                          entt::entity entity) {
-    Sprite *sprite = wstate.reg.try_get<Sprite>(entity);
-    Sheet *sheet = (sprite) ? cache.get(sprite->sheet_id) : nullptr;
+  Resources get_resources(WorldState &wstate, SheetCache &sheet_cache,
+                          entt::entity ent) {
+    Sprite *sprite = wstate.reg.try_get<Sprite>(ent);
+    Sheet *sheet = (sprite) ? sheet_cache.get(sprite->sheet_id) : nullptr;
 
     return Resources{sprite, sheet};
   }
@@ -56,14 +56,14 @@ namespace {
   /**
    * @brief Draw a single sprite. Implements wrap drawing
    * @param wconfig
-   * @param bounds
+   * @param cam_bounds
    * @param res
    * @param coords
    * @param scaled_tile_size
    */
-  void draw_one_sprite(const WorldConfig &wconfig, const CameraBounds &bounds,
-                       const Resources &res, DstCoords &coords,
-                       float scaled_tile_size) {
+  void draw_one_sprite(const WorldConfig &wconfig,
+                       const CameraBounds &cam_bounds, const Resources &res,
+                       DstCoords &coords, float scaled_tile_size) {
     DstCoords floored_coords = {
         std::floorf(coords.x),
         std::floorf(coords.y),
@@ -85,7 +85,7 @@ namespace {
       if (!wconfig.wrap) {
         draw_fallback(fallback_dst, COLOR_NO_SPRITE, "no\nsprite");
       } else {
-        draw_fallback_tiled(bounds, spacing, fallback_dst, COLOR_NO_SPRITE,
+        draw_fallback_tiled(cam_bounds, spacing, fallback_dst, COLOR_NO_SPRITE,
                             "no\nsprite");
       }
       return;
@@ -95,7 +95,7 @@ namespace {
       if (!wconfig.wrap) {
         draw_fallback(fallback_dst, COLOR_NO_SPRITE, "no\nsprite");
       } else {
-        draw_fallback_tiled(bounds, spacing, fallback_dst, COLOR_NO_SHEET,
+        draw_fallback_tiled(cam_bounds, spacing, fallback_dst, COLOR_NO_SHEET,
                             "no\nsheet");
       }
       return;
@@ -125,7 +125,7 @@ namespace {
     if (!wconfig.wrap) {
       DrawTexturePro(res.sheet->tex, src_rec, dst_rec, {0, 0}, 0, WHITE);
     } else {
-      draw_texture_tiled(bounds, spacing, res.sheet->tex, src_rec, dst_rec,
+      draw_texture_tiled(cam_bounds, res.sheet->tex, spacing, src_rec, dst_rec,
                          {0, 0}, 0, WHITE);
     }
   }
@@ -137,7 +137,8 @@ namespace {
 /* PUBL ***********************************************************************/
 
 
-void yumeami::draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache) {
+void yumeami::draw_sprites(World &world, SafeRenderTex &vp,
+                           SheetCache &sheet_cache) {
   const WorldConfig &wconfig = world.config;
   WorldState &wstate = world.state;
   float scaled_tile_size = wconfig.tile_size * wconfig.scale;
@@ -152,7 +153,7 @@ void yumeami::draw_sprites(World &world, SafeRenderTex &vp, SheetCache &cache) {
         .y = draw_pos.y * scaled_tile_size,
     };
 
-    const Resources res = get_resources(wstate, cache, ent);
+    const Resources res = get_resources(wstate, sheet_cache, ent);
     draw_one_sprite(wconfig, bounds, res, dst, scaled_tile_size);
   }
 }

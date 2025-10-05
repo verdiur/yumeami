@@ -40,23 +40,23 @@ namespace yumeami {
    */
   /**
    * @brief Draws a texture in a tile pattern, across the camera
-   * @param bounds Camera bounds
+   * @param cam_bounds Camera bounds
+   * @param tex Texture to draw
    * @param spacing Tile spacing
-   * @param texture Texture to draw
    * @param src Source rectangle
    * @param dst Destination rectangle
    * @param origin Center origin
    * @param rotation
    * @param tint
    */
-  void draw_texture_tiled(const CameraBounds &bounds, const Vector2 spacing,
-                          const SafeTex &texture, const Rectangle src,
+  void draw_texture_tiled(const CameraBounds &cam_bounds, const SafeTex &tex,
+                          const Vector2 spacing, const Rectangle src,
                           const Rectangle dst, const Vector2 origin,
                           const float rotation, const Color tint);
 
   /**
    * @brief Draws a "fallback" rectangle in a tile pattern, accros the camera
-   * @param bounds Camera bounds
+   * @param cam_bounds Camera bounds
    * @param spacing Spacing in pixels
    * @param dst Destination rectangle
    * @param tint

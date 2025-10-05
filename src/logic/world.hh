@@ -62,15 +62,13 @@ namespace yumeami {
   using WorldResources = World::Resources;
   using WorldState = World::State;
 
-  World create_world(const World::Config &config,
-                     const World::Resources &resources);
+  World create_world(const World::Config &wconfig,
+                     const World::Resources &wres);
 
   /**
    * @brief Sets up collision grid of a world. Does not check if the grid is
    * blank. For each entity with a collision tag, it increments the
    * corresponding position on the grid.
-   *
-   * @return
    */
   void setup_world_collision(World &world);
 

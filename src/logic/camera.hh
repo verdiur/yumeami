@@ -24,9 +24,8 @@ namespace yumeami {
    *
    * @param world
    * @param vp
-   * @param clamp if true, clamp the target to the boundaries of the world. If
-   * the world is smaller than the viewport, then the camera will target the
-   * center of the world.
+   * @param log if true, print errors and warnings. These logs are printed every
+   * frame and severely impact performance.
    */
   void update_camera(World &world, const SafeRenderTex &vp, bool log = false);
 
@@ -34,7 +33,6 @@ namespace yumeami {
    * @brief Setup world camera fields. Includes an initial update of the camera.
    * @param world
    * @param vp
-   * @param clamp if true, clamp the target to the boundaries of the world
    */
   void setup_camera(World &world, const SafeRenderTex &vp);
 

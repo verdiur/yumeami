@@ -13,8 +13,9 @@ namespace yumeami {
    * @brief Draw background of world
    * @param world
    * @param vp
-   * @param cache
+   * @param tex_cache
    */
-  void draw_background(World &world, SafeRenderTex &vp, TextureCache &cache);
+  void draw_background(World &world, SafeRenderTex &vp,
+                       TextureCache &tex_cache);
 
 } // namespace yumeami

@@ -2,13 +2,13 @@
 #include "logic/components.hh"
 
 
-yumeami::World yumeami::create_world(const World::Config &config,
-                                     const World::Resources &resources) {
+yumeami::World yumeami::create_world(const World::Config &wconfig,
+                                     const World::Resources &wres) {
   return World{
-      .config = config,
-      .resources = resources,
+      .config = wconfig,
+      .resources = wres,
       .state = {.reg = {},
-                .collision = Grid<int>(config.width, config.height, 0),
+                .collision = Grid<int>(wconfig.width, wconfig.height, 0),
                 .cam = {}},
   };
 }
