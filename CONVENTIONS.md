@@ -36,21 +36,21 @@ In function signatures, parameters may be specified following the order of the t
 
 | thing | name | notes |
 |-------|------|-------|
-| World | world | |
-| WorldConfig | wconfig | |
-| WorldResources | wres | |
-| WorldState | wstate | |
-| Camera | cam | |
-| CameraBounds | cam_bounds | |
-| event | event | |
+| yumeami::World | world | |
+| yumeami::WorldConfig | wconfig | |
+| yumeami::WorldResources | wres | |
+| yumeami::WorldState | wstate | |
+| (raylib) Camera2D | cam | |
+| (raylib) CameraBounds | cam_bounds | |
+| some event | event | |
 | entt::registry | reg | |
 | entt::entity | ent | |
 | entt::dispatcher | dispatcher | |
-| viewport SafeRenderTexture | vp | |
-| SheetCache | sheet_cache | |
-| TextureCache | tex_cache | |
-| Spritesheet | sheet | |
-| Texture | tex | |
+| viewport (yumeami::SafeRenderTexture) | vp | |
+| yumeami::SpritesheetCache | sheet_cache | |
+| yumeami::TextureCache | tex_cache | |
+| yumemai::Spritesheet | sheet | |
+| yumeami::SafeTexture or (raylib) Texture | tex | |
 | other params, in no particular order | N/A | |
 | flags and optional params | N/A | |
 
