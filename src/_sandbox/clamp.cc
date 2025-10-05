@@ -13,6 +13,7 @@ yumeami::World yumeami::sandbox::create_clamp_world() {
           .tile_size = 16,
           .wrap = false,
           .clamp_camera = true,
+          .scale = 2,
       },
       {.sheet_ids = {}});
   WorldState &wstate = world.state;
@@ -21,7 +22,7 @@ yumeami::World yumeami::sandbox::create_clamp_world() {
   wstate.reg.emplace<DrawPos>(p, 0, 0);
   wstate.reg.emplace<TruePos>(p, 0, 0);
   wstate.reg.emplace<MovementState>(p);
-  wstate.reg.emplace<Velocity>(p, 0.4f);
+  wstate.reg.emplace<Velocity>(p, 0.3f);
   wstate.reg.emplace<PlayerTag>(p);
   wstate.reg.emplace<CameraTargetTag>(p);
   emplace_zsort(wstate.reg, p);

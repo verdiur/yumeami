@@ -4,6 +4,9 @@
 #include "raylib.h"
 
 
+/* IMPL ***********************************************************************/
+
+
 namespace {
   using namespace yumeami;
 
@@ -53,6 +56,16 @@ namespace {
 
 
 } // namespace
+
+
+/* PUBL ***********************************************************************/
+
+
+void yumeami::draw_fallback(const Rectangle dst, const Color tint,
+                            const std::string msg) {
+  DrawRectangleRec(dst, tint);
+  DrawText(msg.c_str(), dst.x, dst.y, 1, WHITE);
+}
 
 
 void yumeami::draw_texture_tiled(const CameraBounds &bounds,

@@ -8,6 +8,8 @@
 #include "raylib.h"
 namespace yumeami {
 
+  /* COLOR DEFINITIONS ********************************************************/
+
   const Color COLOR_NO_SPRITE = BLUE;
   const Color COLOR_NO_SHEET = MAGENTA;
 
@@ -18,17 +20,48 @@ namespace yumeami {
 
   const Color COLOR_DEBUG_TEXT = GREEN;
 
+  /****************************************************************************/
+
   /**
-   * @brief Draws a texture in a tile pattern, across the camera.
+   * @brief Draws a "fallback" rectangle. Used for placeholder rendering if
+   * something goes wrong.
+   * @param dst Destination rectangle
+   * @param tint
+   * @param msg Message to display
+   */
+  void draw_fallback(const Rectangle dst, const Color tint,
+                     const std::string msg);
+
+  /**
+   * @brief Draws a texture in a tile pattern, across the camera
    * @param bounds Camera bounds
    * @param callback Draw callback
    * @param spacing Spacing in pixels
+   */
+  /**
+   * @brief Draws a texture in a tile pattern, across the camera
+   * @param bounds Camera bounds
+   * @param spacing Tile spacing
+   * @param texture Texture to draw
+   * @param src Source rectangle
+   * @param dst Destination rectangle
+   * @param origin Center origin
+   * @param rotation
+   * @param tint
    */
   void draw_texture_tiled(const CameraBounds &bounds, const Vector2 spacing,
                           const SafeTex &texture, const Rectangle src,
                           const Rectangle dst, const Vector2 origin,
                           const float rotation, const Color tint);
 
+  /**
+   * @brief Draws a "fallback" rectangle in a tile pattern, accros the camera
+   * @param bounds Camera bounds
+   * @param spacing Spacing in pixels
+   * @param dst Destination rectangle
+   * @param tint
+   * @param msg Message to display
+   */
   void draw_fallback_tiled(const CameraBounds &bounds, const Vector2 spacing,
                            const Rectangle dst, const Color tint,
                            const std::string msg);

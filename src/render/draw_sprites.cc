@@ -3,6 +3,7 @@
 #include "logic/components.hh"
 #include "logic/world.hh"
 #include "logic/zsort.hh"
+#include "raylib.h"
 #include "render/base.hh"
 #include <cmath>
 
@@ -71,27 +72,32 @@ namespace {
     Vector2 spacing = {
         .x = wconfig.width * scaled_tile_size,
         .y = wconfig.height * scaled_tile_size,
-        // .x = 50,
-        // .y = 50,
+    };
+
+    Rectangle fallback_dst = {
+        .x = floored_coords.x,
+        .y = floored_coords.y,
+        .width = scaled_tile_size,
+        .height = scaled_tile_size,
     };
 
     if (!res.sprite) {
-      draw_fallback_tiled(bounds, spacing,
-                          {.x = floored_coords.x,
-                           .y = floored_coords.y,
-                           .width = scaled_tile_size,
-                           .height = scaled_tile_size},
-                          COLOR_NO_SPRITE, "no\nsprite");
+      if (!wconfig.wrap) {
+        draw_fallback(fallback_dst, COLOR_NO_SPRITE, "no\nsprite");
+      } else {
+        draw_fallback_tiled(bounds, spacing, fallback_dst, COLOR_NO_SPRITE,
+                            "no\nsprite");
+      }
       return;
     }
 
     if (!res.sheet) {
-      draw_fallback_tiled(bounds, spacing,
-                          {.x = floored_coords.x,
-                           .y = floored_coords.y,
-                           .width = scaled_tile_size,
-                           .height = scaled_tile_size},
-                          COLOR_NO_SHEET, "no\nsheet");
+      if (!wconfig.wrap) {
+        draw_fallback(fallback_dst, COLOR_NO_SPRITE, "no\nsprite");
+      } else {
+        draw_fallback_tiled(bounds, spacing, fallback_dst, COLOR_NO_SHEET,
+                            "no\nsheet");
+      }
       return;
     }
 
@@ -116,8 +122,12 @@ namespace {
         .height = spr_height * wconfig.scale,
     };
 
-    draw_texture_tiled(bounds, spacing, res.sheet->tex, src_rec, dst_rec,
-                       {0, 0}, 0, WHITE);
+    if (!wconfig.wrap) {
+      DrawTexturePro(res.sheet->tex, src_rec, dst_rec, {0, 0}, 0, WHITE);
+    } else {
+      draw_texture_tiled(bounds, spacing, res.sheet->tex, src_rec, dst_rec,
+                         {0, 0}, 0, WHITE);
+    }
   }
 
 

@@ -88,8 +88,8 @@ void yumeami::setup_camera(World &world, const SafeRenderTex &vp) {
   wstate.cam.zoom = 1;
   wstate.cam.rotation = 0;
   wstate.cam.offset = Vector2{
-      .x = (float)vp->texture.width / wconfig.scale,
-      .y = (float)vp->texture.height / wconfig.scale,
+      .x = (float)vp->texture.width / 2,
+      .y = (float)vp->texture.height / 2,
   };
   update_camera(world, vp, true);
 }
