@@ -19,7 +19,6 @@ be specified below.
 | primitive type alias or extension of primitive type | snake_case | |
 | enum | TitleCase | |
 
-- File names can be plural; directory names should never be plural.
 - File extensions for implementation and header files are respectively `.cc` and `.hh`.
 - Most of the time a directory should correspond to a library, and should contain a `CMakeLists.txt` file.
 - Function names are generally preceded by a verb-like category, for example:
