@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "common/defines.hh"
 #include "common/grid.hh"
 #include "common/units.hh"
 #include "entt/entt.hpp"
@@ -31,7 +32,7 @@ namespace yumeami {
       bool wrap;         // if true, world wrap is activated
       bool clamp_camera; // if true, the camera position will be limited to
                          // world bounds
-      int scale = 4;     // how many viewport pixels is a sprite pixel?
+      int scale = DEFAULT_SPRITE_SCALE; // how many vp pixels is a sprite pixel?
     } config;
 
     /**

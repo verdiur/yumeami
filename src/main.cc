@@ -20,7 +20,7 @@
 int main(int argc, char *argv[]) {
 
   SetTraceLogLevel(LOG_WARNING);
-  InitWindow(1920, 1080, "yumeami");
+  InitWindow(640 * 2, 480 * 2, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
   // SetWindowState(FLAG_VSYNC_HINT);
@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
 
   yumeami::SpritesheetCache sheet_cache{};
   yumeami::TextureCache tex_cache{};
-  yumeami::World world = yumeami::sandbox::create_collision_world();
+  yumeami::World world =
+      yumeami::sandbox::create_background_world(sheet_cache, tex_cache);
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
