@@ -26,7 +26,6 @@ yumeami::sandbox::create_background_world(SheetCache &sheet_cache,
           .tile_size = 16,
           .wrap = false,
           .clamp_camera = false,
-          .scale = 2,
       },
       {.sheet_ids = {}});
   WorldState &wstate = world.state;

@@ -2,6 +2,7 @@
 #include "common/raii.hh"
 #include "logic/camera.hh"
 #include "raylib.h"
+#include "spdlog/spdlog.h"
 
 
 /* IMPL ***********************************************************************/
@@ -48,8 +49,7 @@ namespace {
           .width = dst.width,
           .height = dst.height,
       };
-      DrawRectangleRec(offset_x_dst, tint);
-      DrawText(msg.c_str(), offset_x_dst.x, offset_x_dst.y, 1, WHITE);
+      draw_fallback(offset_x_dst, tint, msg);
       current_x_pos += spacing.x;
     }
   }
@@ -64,7 +64,7 @@ namespace {
 void yumeami::draw_fallback(const Rectangle dst, const Color tint,
                             const std::string msg) {
   DrawRectangleRec(dst, tint);
-  DrawText(msg.c_str(), dst.x, dst.y, 1, WHITE);
+  DrawText(msg.c_str(), dst.x, dst.y, 2, WHITE);
 }
 
 

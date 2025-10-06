@@ -31,7 +31,7 @@ namespace yumeami {
       bool wrap;         // if true, world wrap is activated
       bool clamp_camera; // if true, the camera position will be limited to
                          // world bounds
-      int scale = 2;
+      int scale = 4;     // how many viewport pixels is a sprite pixel?
     } config;
 
     /**

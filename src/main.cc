@@ -20,19 +20,20 @@
 int main(int argc, char *argv[]) {
 
   SetTraceLogLevel(LOG_WARNING);
-  InitWindow(640 * 2, 480 * 2, "yumeami");
+  InitWindow(1920, 1080, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
-  SetWindowState(FLAG_VSYNC_HINT);
+  // SetWindowState(FLAG_VSYNC_HINT);
+  SetTargetFPS(480);
   SetExitKey(KEY_ESCAPE);
 
-  yumeami::SafeRenderTex vp(640, 480);
+  yumeami::SafeRenderTex vp(640 * 2, 480 * 2);
   yumeami::ViewportTransform vp_transform{};
   yumeami::calc_viewport_transform(vp, vp_transform);
 
-  yumeami::SpritesheetCache spritesheet_cache{};
-  yumeami::TextureCache texture_cache{};
-  yumeami::World world = yumeami::sandbox::create_clamp_world();
+  yumeami::SpritesheetCache sheet_cache{};
+  yumeami::TextureCache tex_cache{};
+  yumeami::World world = yumeami::sandbox::create_collision_world();
   yumeami::setup_camera(world, vp);
 
   entt::dispatcher dispatcher{};
@@ -58,8 +59,9 @@ int main(int argc, char *argv[]) {
     // draw on viewport
     BeginTextureMode(vp);
     ClearBackground(BLACK);
-    yumeami::draw_world(world, spritesheet_cache, texture_cache, vp);
     yumeami::draw_debug_world_bounds(world);
+    yumeami::draw_world(world, sheet_cache, tex_cache, vp);
+    yumeami::draw_debug_facing(world, 50);
     EndTextureMode();
 
     // draw on window
