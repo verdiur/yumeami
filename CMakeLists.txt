@@ -48,6 +48,7 @@ endif()
 # targets --------------------------------------------------------------------#
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/render)
 
 add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cc)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
@@ -63,6 +64,9 @@ if(WIN32)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+  common
+  render
+
   raylib
   EnTT::EnTT
   spdlog

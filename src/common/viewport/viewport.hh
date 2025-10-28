@@ -14,7 +14,7 @@ namespace yumeami {
   struct Viewport {
     SafeRenderTexture rt;
     px tx_scale;
-    Viewport(tx width, tx height);
+    Viewport(int width, int height);
     tx get_width() const;
     tx get_height() const;
   };

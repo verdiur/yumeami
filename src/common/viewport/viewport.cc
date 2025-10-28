@@ -8,7 +8,7 @@
 #include <raylib.h>
 
 
-yumeami::Viewport::Viewport(tx width, tx height)
+yumeami::Viewport::Viewport(int width, int height)
     : rt(SafeRenderTexture(width, height)), tx_scale(1) {}
 
 
@@ -25,7 +25,7 @@ float yumeami::calc_viewport_texel_scale(const Viewport &vp) {
   float raw_scale = std::min(width_ratio, height_ratio);
 
   float quantized_scale =
-      std::floor(raw_scale * VIEWPORT_SCALE_BASE) * VIEWPORT_SCALE_BASE;
+      std::floor(raw_scale * VIEWPORT_SCALE_BASE) / VIEWPORT_SCALE_BASE;
 
   return (quantized_scale >= 1.0f) ? quantized_scale : 1.0f;
 }
