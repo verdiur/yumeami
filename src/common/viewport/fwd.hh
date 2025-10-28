@@ -1,6 +1,7 @@
 #pragma once
 namespace yumeami {
 
-  struct Viewport {};
+  struct Viewport;
+  struct ViewportScaleUpdatedEvent;
 
 } // namespace yumeami

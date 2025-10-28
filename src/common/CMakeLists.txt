@@ -9,4 +9,5 @@ target_include_directories(${LIB_NAME} PRIVATE
 
 target_link_libraries(${LIB_NAME} PUBLIC
   raylib
+  EnTT::EnTT
 )

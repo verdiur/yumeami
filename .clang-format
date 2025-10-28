@@ -1,4 +1,4 @@
 BasedOnStyle: LLVM
 ColumnLimit: 80
 NamespaceIndentation: All
-MaxEmptyLinesToKeep: 1
+MaxEmptyLinesToKeep: 2
