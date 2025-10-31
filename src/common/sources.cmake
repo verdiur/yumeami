@@ -9,7 +9,4 @@ set(SOURCES
   units/px.hh
   units/tile.hh
   units/tx.hh
-  viewport/fwd.hh
-  viewport/viewport.cc
-  viewport/viewport.hh
 )

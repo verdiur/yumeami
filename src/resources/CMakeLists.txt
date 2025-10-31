@@ -1,4 +1,4 @@
-set(LIB_NAME render)
+set(LIB_NAME resources)
 include(sources.cmake)
 add_library(${LIB_NAME} ${SOURCES})
 

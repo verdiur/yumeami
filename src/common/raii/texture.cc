@@ -17,11 +17,7 @@ yumeami::SafeTexture::~SafeTexture() {
 yumeami::SafeTexture::SafeTexture(SafeTexture &&other)
     : t(other.t), valid(other.valid) {
   other.valid = false;
-  other.t.id = 0;
-  other.t.width = 0;
-  other.t.height = 0;
-  other.t.mipmaps = 0;
-  other.t.format = 0;
+  other.t = {};
 }
 
 yumeami::SafeTexture &yumeami::SafeTexture::operator=(SafeTexture &&other) {
@@ -35,12 +31,7 @@ yumeami::SafeTexture &yumeami::SafeTexture::operator=(SafeTexture &&other) {
   t = other.t;
   valid = other.valid;
 
-  other.valid = false;
-  other.t.id = 0;
-  other.t.width = 0;
-  other.t.height = 0;
-  other.t.mipmaps = 0;
-  other.t.format = 0;
+  other.t = {};
 
   return *this;
 }

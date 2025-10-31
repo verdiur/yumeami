@@ -13,6 +13,10 @@ namespace yumeami {
     SafeRenderTexture(const SafeRenderTexture &) = delete;
     SafeRenderTexture &operator=(const SafeRenderTexture &) = delete;
 
+    // move
+    SafeRenderTexture(SafeRenderTexture &&other);
+    SafeRenderTexture &operator=(SafeRenderTexture &&other);
+
     // access
     RenderTexture *operator->();
     const RenderTexture *operator->() const;

@@ -48,7 +48,7 @@ endif()
 # targets --------------------------------------------------------------------#
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/render)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/resources)
 
 add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cc)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
@@ -65,7 +65,7 @@ endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
-  render
+  resources
 
   raylib
   EnTT::EnTT
