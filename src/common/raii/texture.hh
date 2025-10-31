@@ -6,8 +6,7 @@ namespace yumeami {
   /**
    * @class SafeTexture
    * @brief RAII wrapper around raylib's Texture. Code adapted from raylib-cpp.
-   * A SafeTexture cannot be copied, as there can only be one Texture handle per
-   * GPU id.
+   * A SafeTexture cannot be copied.
    *
    */
   struct SafeTexture {
