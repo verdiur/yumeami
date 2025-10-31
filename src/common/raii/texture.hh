@@ -1,8 +1,15 @@
 #pragma once
-#include "raylib.h"
+#include <raylib.h>
 #include <string>
 namespace yumeami {
 
+  /**
+   * @class SafeTexture
+   * @brief RAII wrapper around raylib's Texture. Code adapted from raylib-cpp.
+   * A SafeTexture cannot be copied, as there can only be one Texture handle per
+   * GPU id.
+   *
+   */
   struct SafeTexture {
     Texture t;
     bool valid;
