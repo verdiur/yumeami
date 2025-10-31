@@ -1,4 +1,5 @@
 #include "model/viewport.hh"
+#include "common/raii/render_texture.hh"
 #include "resources/render_texture_cache.hh"
 #include <entt/core/hashed_string.hpp>
 #include <spdlog/spdlog.h>
@@ -13,5 +14,10 @@ yumeami::Viewport::Viewport(tx width, tx height, px tx_scale,
   if (!ret.second) {
     std::runtime_error("[Viewport] could not load RenderTexture");
   }
-  rt = ret.first->second;
+  render_texture_handle = ret.first->second;
+}
+
+
+yumeami::SafeRenderTexture &yumeami::Viewport::render_texture() {
+  return *render_texture_handle.handle();
 }

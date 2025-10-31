@@ -68,6 +68,7 @@ endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
   model
+  render
   resources
 
   raylib

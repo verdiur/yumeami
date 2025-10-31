@@ -16,10 +16,11 @@ namespace yumeami {
    *
    */
   struct Viewport {
-    tx width;                             // width of the viewport in tx
-    tx height;                            // height of the viewport in tx
-    px tx_scale;                          // how many px is 1 tx?
-    entt::resource<SafeRenderTexture> rt; // render texture. measured in px.
+    tx width;    // width of the viewport in tx
+    tx height;   // height of the viewport in tx
+    px tx_scale; // how many px is 1 tx?
+    entt::resource<SafeRenderTexture>
+        render_texture_handle; // render texture. measured in px.
 
     /**
      * @brief Viewport constructor. Throws if loading the SafeRenderTexture
@@ -32,6 +33,12 @@ namespace yumeami {
      */
     Viewport(tx width, tx height, px tx_scale,
              SafeRenderTextureCache &rt_cache);
+
+    /**
+     * @brief Get raw reference to SafeRenderTexture
+     * @return SafeRenderTexture
+     */
+    SafeRenderTexture &render_texture();
   };
 
 } // namespace yumeami
