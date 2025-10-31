@@ -48,6 +48,7 @@ endif()
 # targets --------------------------------------------------------------------#
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/model)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/resources)
 
 add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cc)
@@ -65,6 +66,7 @@ endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
+  model
   resources
 
   raylib

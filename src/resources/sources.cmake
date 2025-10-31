@@ -1,6 +1,5 @@
 set(SOURCES
-  all.hh
   fwd.hh
-  render_texture.cc
-  render_texture.hh
+  render_texture_cache.cc
+  render_texture_cache.hh
 )

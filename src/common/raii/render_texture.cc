@@ -1,5 +1,5 @@
 #include "common/raii/render_texture.hh"
-#include "raylib.h"
+#include <raylib.h>
 
 
 yumeami::SafeRenderTexture::SafeRenderTexture(int width, int height)

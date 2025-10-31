@@ -1,5 +1,5 @@
 #include "common/raii/texture.hh"
-#include "raylib.h"
+#include <raylib.h>
 
 yumeami::SafeTexture::SafeTexture(std::string path)
     : t(LoadTexture(path.c_str())), valid(true) {
