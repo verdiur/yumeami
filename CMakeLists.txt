@@ -49,6 +49,7 @@ endif()
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/model)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/render)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/resources)
 
 add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cc)
