@@ -18,7 +18,7 @@ namespace yumeami {
   struct Viewport {
     tx width;    // width of the viewport in tx
     tx height;   // height of the viewport in tx
-    px tx_scale; // how many px is 1 tx?
+    px tx_scale; // amount of px that 1 tx corresponds to
     entt::resource<SafeRenderTexture>
         render_texture_handle; // render texture. measured in px.
 
@@ -40,5 +40,16 @@ namespace yumeami {
      */
     SafeRenderTexture &render_texture();
   };
+
+  /**
+   * @brief Calculate the largest possible texel size that enables drawing
+   * the entire viewport on the window. The result will be quantized per
+   * 1/VIEWPORT_SCALE_DENOMINATOR. If the result is smaller than 1, then the
+   * function will return 1.
+   *
+   * @param vp
+   * @return texel scaling factor
+   */
+  px calc_best_tx_scale(px rt_width, px rt_height);
 
 } // namespace yumeami

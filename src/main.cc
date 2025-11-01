@@ -8,14 +8,15 @@
 int main(void) {
 
   SetTraceLogLevel(LOG_WARNING);
-  InitWindow(640, 480, "yumeami");
+  InitWindow(640 * 2, 480 * 2, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
   SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
   yumeami::SafeRenderTextureCache rt_cache{};
-  yumeami::Viewport vp(320, 240, 2, rt_cache);
+  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_scale(320, 240),
+                       rt_cache);
 
   while (!WindowShouldClose()) {
     BeginTextureMode(vp.render_texture());
