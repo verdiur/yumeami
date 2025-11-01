@@ -1,10 +1,10 @@
 #include "model/viewport.hh"
 #include "common/defines.hh"
 #include "common/raii/render_texture.hh"
-#include "raylib.h"
 #include "resources/render_texture_cache.hh"
 #include <entt/core/hashed_string.hpp>
-#include <spdlog/spdlog.h>
+#include <raylib.h>
+#include <stdexcept>
 
 
 yumeami::Viewport::Viewport(tx width, tx height, px tx_scale,
@@ -25,7 +25,18 @@ yumeami::SafeRenderTexture &yumeami::Viewport::render_texture() {
 }
 
 
-yumeami::px yumeami::calc_best_tx_scale(px rt_width, px rt_height) {
+void yumeami::Viewport::update_viewport_size(SafeRenderTextureCache &rt_cache) {
+  tx_scale = calc_best_tx_scale(width, height);
+  auto ret = rt_cache.force_load(VIEWPORT_RT_ID, (int)width * (int)tx_scale,
+                                 (int)height * (int)tx_scale);
+  if (!ret.second) {
+    std::runtime_error("[Viewport] could not load RenderTexture");
+  }
+  render_texture_handle = ret.first->second;
+}
+
+
+yumeami::px yumeami::calc_best_tx_scale(tx rt_width, tx rt_height) {
   float width_ratio = (float)GetScreenWidth() / (float)rt_width;
   float height_ratio = (float)GetScreenHeight() / (float)rt_height;
 

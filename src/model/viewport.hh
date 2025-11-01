@@ -19,9 +19,12 @@ namespace yumeami {
     tx width;    // width of the viewport in tx
     tx height;   // height of the viewport in tx
     px tx_scale; // amount of px that 1 tx corresponds to
+
+  private:
     entt::resource<SafeRenderTexture>
         render_texture_handle; // render texture. measured in px.
 
+  public:
     /**
      * @brief Viewport constructor. Throws if loading the SafeRenderTexture
      * fails.
@@ -35,10 +38,22 @@ namespace yumeami {
              SafeRenderTextureCache &rt_cache);
 
     /**
-     * @brief Get raw reference to SafeRenderTexture
+     * @brief Get raw reference to SafeRenderTexture.
+     * @warning Do not store this reference long-term, as it can be invalidated
+     * at any time by window resizing.
      * @return SafeRenderTexture
      */
     SafeRenderTexture &render_texture();
+
+    /**
+     * @brief Update the viewport size. This will delete and replace the
+     * corresponding SafeRenderTexture, and update the viewport's
+     * SafeRenderTexture handle. Pointers to the render texture will become
+     * invalid.
+     *
+     * @param vp
+     */
+    void update_viewport_size(SafeRenderTextureCache &rt_cache);
   };
 
   /**
@@ -50,6 +65,6 @@ namespace yumeami {
    * @param vp
    * @return texel scaling factor
    */
-  px calc_best_tx_scale(px rt_width, px rt_height);
+  px calc_best_tx_scale(tx rt_width, tx rt_height);
 
 } // namespace yumeami

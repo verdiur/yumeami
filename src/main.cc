@@ -3,11 +3,13 @@
 #include "resources/render_texture_cache.hh"
 #include <entt/signal/dispatcher.hpp>
 #include <raylib.h>
+#include <spdlog/spdlog.h>
 
 
 int main(void) {
 
   SetTraceLogLevel(LOG_WARNING);
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(640 * 2, 480 * 2, "yumeami");
   InitAudioDevice();
   ChangeDirectory(GetApplicationDirectory());
@@ -27,6 +29,10 @@ int main(void) {
     ClearBackground(GRAY);
     yumeami::draw_viewport(vp);
     EndDrawing();
+
+    if (IsWindowResized()) {
+      vp.update_viewport_size(rt_cache);
+    }
   }
 
   return 0;
