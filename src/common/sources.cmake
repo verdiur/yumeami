@@ -5,6 +5,10 @@ set(SOURCES
   raii/render_texture.hh
   raii/texture.cc
   raii/texture.hh
+  types/direction.cc
+  types/direction.hh
+  types/fwd.hh
+  types/vector.hh
   units/fwd.hh
   units/px.hh
   units/tile.hh
