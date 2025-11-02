@@ -1,5 +1,7 @@
 set(SOURCES
   defines.hh
+  grid/fwd.hh
+  grid/grid.hh
   raii/fwd.hh
   raii/render_texture.cc
   raii/render_texture.hh

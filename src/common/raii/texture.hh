@@ -10,7 +10,10 @@ namespace yumeami {
    *
    */
   struct SafeTexture {
+  private:
     Texture t;
+
+  public:
     bool valid;
 
     SafeTexture(std::string path);

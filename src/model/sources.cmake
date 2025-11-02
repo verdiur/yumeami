@@ -5,4 +5,8 @@ set(SOURCES
   viewport/fwd.hh
   viewport/viewport.cc
   viewport/viewport.hh
+  world/builder.cc
+  world/builder.hh
+  world/fwd.hh
+  world/world.hh
 )

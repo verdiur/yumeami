@@ -9,7 +9,10 @@ namespace yumeami {
    *
    */
   struct SafeRenderTexture {
+  private:
     RenderTexture rt;
+
+  public:
     bool valid;
 
     SafeRenderTexture(int width, int height);

@@ -13,6 +13,7 @@ namespace yumeami {
     tx(double val) : val(val) {}
     tx(float val) : val(val) {}
     tx(int val) : val(val) {}
+    tx() : val() {}
 
     operator double() const { return val; }
     operator float() const { return val; }

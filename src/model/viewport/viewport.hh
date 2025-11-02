@@ -16,9 +16,9 @@ namespace yumeami {
    *
    */
   struct Viewport {
-    tx width;    // width of the viewport in tx
-    tx height;   // height of the viewport in tx
-    px tx_scale; // amount of px that 1 tx corresponds to
+    tx width;   // width of the viewport in tx
+    tx height;  // height of the viewport in tx
+    px tx_size; // amount of px that 1 tx corresponds to
 
   private:
     entt::resource<SafeRenderTexture>
@@ -65,6 +65,6 @@ namespace yumeami {
    * @param vp
    * @return texel scaling factor
    */
-  px calc_best_tx_scale(tx rt_width, tx rt_height);
+  px calc_best_tx_size(tx rt_width, tx rt_height);
 
 } // namespace yumeami

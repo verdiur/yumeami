@@ -13,6 +13,7 @@ namespace yumeami {
     px(double val) : val(val) {}
     px(float val) : val(val) {}
     px(int val) : val(val) {}
+    px() : val() {}
 
     operator double() const { return val; }
     operator float() const { return val; }

@@ -13,6 +13,7 @@ namespace yumeami {
     tile(double val) : val(val) {}
     tile(float val) : val(val) {}
     tile(int val) : val(val) {}
+    tile() : val() {}
 
     operator double() const { return val; }
     operator float() const { return val; }

@@ -17,7 +17,7 @@ int main(void) {
   SetExitKey(KEY_ESCAPE);
 
   yumeami::SafeRenderTextureCache rt_cache{};
-  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_scale(320, 240),
+  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240),
                        rt_cache);
 
   while (!WindowShouldClose()) {
