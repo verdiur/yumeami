@@ -3,6 +3,7 @@
 #include "common/raii/render_texture.hh"
 #include "common/units/px.hh"
 #include "common/units/tx.hh"
+#include "entt/signal/fwd.hpp"
 #include "resources/fwd.hh"
 #include <entt/core/hashed_string.hpp>
 #include <entt/resource/resource.hpp>
@@ -54,8 +55,11 @@ namespace yumeami {
      *
      * @param vp
      */
-    void update_viewport_size(SafeRenderTextureCache &rt_cache);
+    void update_viewport_size(SafeRenderTextureCache &rt_cache,
+                              entt::dispatcher &dispatcher);
   };
+
+  struct ViewportSizeUpdatedEvent {};
 
   /**
    * @brief Calculate the largest possible texel size that enables drawing

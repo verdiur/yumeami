@@ -1,6 +1,4 @@
 #include "model/world/builder.hh"
-#include "common/grid/grid.hh"
-#include "common/raii/render_texture.hh"
 #include "model/components/components.hh"
 #include "model/viewport/viewport.hh"
 #include "model/world/world.hh"
