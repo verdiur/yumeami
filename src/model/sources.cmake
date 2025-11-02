@@ -1,6 +1,6 @@
 set(SOURCES
   components/components.hh
-  components.hh
+  components/fwd.hh
   fwd.hh
   viewport/fwd.hh
   viewport/viewport.cc
