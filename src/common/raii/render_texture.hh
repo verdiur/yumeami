@@ -5,7 +5,8 @@ namespace yumeami {
   /**
    * @class SafeRenderTexture
    * @brief RAII wrapper around raylib's RenderTexture. Code adapted from
-   * raylib-cpp. A SafeRenderTexture cannot be copied.
+   * raylib-cpp. A SafeRenderTexture cannot be copied (see
+   * https://github.com/raysan5/raylib/wiki/Using-raylib-with-Cpp).
    *
    */
   struct SafeRenderTexture {

@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief "Texel mode" wrapper functions for raylib draw functions.
+ *
+ * @desc The current implementation might lead to irregular texel rendering, due
+ * to raylib snapping coordinates to integer values.
+ */
+
 #pragma once
 #include "common/raii/fwd.hh"
 #include "common/units/fwd.hh"

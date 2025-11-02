@@ -5,10 +5,6 @@
 #include <raylib.h>
 
 
-// TODO: floor or ceil scaled coordinates and dimensions to avoid irregular
-// pixels
-
-
 namespace {
   using namespace yumeami;
 

@@ -25,6 +25,11 @@ yumeami::SafeRenderTexture &yumeami::Viewport::render_texture() {
 }
 
 
+const yumeami::SafeRenderTexture &yumeami::Viewport::render_texture() const {
+  return *render_texture_handle.handle();
+}
+
+
 void yumeami::Viewport::update_viewport_size(SafeRenderTextureCache &rt_cache) {
   tx_size = calc_best_tx_size(width, height);
   auto ret = rt_cache.force_load(VIEWPORT_RT_ID, (int)width * (int)tx_size,
@@ -45,6 +50,6 @@ yumeami::px yumeami::calc_best_tx_size(tx rt_width, tx rt_height) {
     return 1;
   }
 
-  return std::floorf(raw_scale * VIEWPORT_SCALE_DENOMINATOR) /
-         VIEWPORT_SCALE_DENOMINATOR;
+  int denominator = YUMEAMI_VIEWPORT_SCALE_DENOMINATOR;
+  return std::floorf(raw_scale * denominator) / denominator;
 }

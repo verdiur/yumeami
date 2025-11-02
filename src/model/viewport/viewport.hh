@@ -44,6 +44,7 @@ namespace yumeami {
      * @return SafeRenderTexture
      */
     SafeRenderTexture &render_texture();
+    const SafeRenderTexture &render_texture() const;
 
     /**
      * @brief Update the viewport size. This will delete and replace the

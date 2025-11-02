@@ -1,16 +1,24 @@
 #include "model/world/builder.hh"
 #include "common/grid/grid.hh"
+#include "common/raii/render_texture.hh"
 #include "model/components/components.hh"
+#include "model/viewport/viewport.hh"
 #include "model/world/world.hh"
 
 
-yumeami::WorldBuilder::WorldBuilder(int width, int height) : world_() {
+yumeami::WorldBuilder::WorldBuilder(int width, int height, const Viewport &vp)
+    : world_() {
+  const SafeRenderTexture &rt = vp.render_texture();
+
   world_->config.width = width;
   world_->config.height = height;
 
   // setup state
   world_->state.collision = Grid<int>(width, height, 0);
-  world_->state.camera.offset = {}; // TODO: center target
+  world_->state.camera.offset = {
+      .x = (float)rt->texture.width / 2,
+      .y = (float)rt->texture.height / 2,
+  };
   world_->state.camera.rotation = 0;
   world_->state.camera.target = {};
   world_->state.camera.zoom = 1;

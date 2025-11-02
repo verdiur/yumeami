@@ -1,5 +1,6 @@
 #pragma once
 #include "common/units/fwd.hh"
+#include "model/viewport/fwd.hh"
 #include "model/world/fwd.hh"
 #include <memory>
 namespace yumeami {
@@ -9,7 +10,7 @@ namespace yumeami {
     std::unique_ptr<World> world_;
 
   public:
-    WorldBuilder(int width, int height);
+    WorldBuilder(int width, int height, const Viewport &vp);
     WorldBuilder &build_config(tx tile_size, bool wrap, bool clamp_camera);
     WorldBuilder &build_resources();
     World world();

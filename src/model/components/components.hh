@@ -1,32 +1,33 @@
 #pragma once
+#include "common/defines.hh"
 #include "common/types/direction.hh"
 #include "common/types/vector.hh"
 namespace yumeami {
 
-  struct TrueTilePos {
+  YUMEAMI_COMPONENT struct TrueTilePos {
     TileVector2 pos;
   };
 
-  struct DrawTilePos {
+  YUMEAMI_COMPONENT struct DrawTilePos {
     TileVector2 pos;
   };
 
-  struct TexelPos {
+  YUMEAMI_COMPONENT struct TexelPos {
     TexelVector2 pos;
   };
 
-  struct Velocity {
+  YUMEAMI_COMPONENT struct Velocity {
     float vel;
   };
 
-  struct Facing {
+  YUMEAMI_COMPONENT struct Facing {
     Direction dir;
   };
 
   /* TAGS *********************************************************************/
 
-  struct PlayerTag {};
-  struct CollisionTag {};
-  struct CameraTargetTag {};
+  YUMEAMI_COMPONENT struct PlayerTag {};
+  YUMEAMI_COMPONENT struct CollisionTag {};
+  YUMEAMI_COMPONENT struct CameraTargetTag {};
 
 } // namespace yumeami
