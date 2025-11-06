@@ -2,6 +2,7 @@
 #include "common/types/direction.hh"
 #include "common/types/vector.hh"
 #include "common/variant_helpers.hh"
+#include "logic/utils/event.hh"
 #include "model/components/components.hh"
 #include "model/components/movement.hh"
 #include "model/world/world.hh"
@@ -34,15 +35,6 @@ namespace {
     TrueTilePos src;
     TrueTilePos dst;
   };
-
-
-  bool tgt_exists(const EntityMoveCommand &cmd) {
-    bool val = cmd.world->state.registry.valid(cmd.target);
-    if (!val) {
-      spdlog::warn("[EntityMoveCommand] target not found");
-    }
-    return val;
-  }
 
 
   std::optional<MovementComponents>
@@ -179,7 +171,10 @@ void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
 
 
 void yumeami::handle_entity_move_command(const EntityMoveCommand &cmd) {
-  if (!tgt_exists(cmd)) {
+  if (!is_event_valid(cmd)) {
+    return;
+  }
+  if (!event_entity_exists(cmd.world, cmd.target, "EntityMoveCommand")) {
     return;
   }
   std::optional<MovementComponents> components_opt = get_components(cmd);
