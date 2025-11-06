@@ -1,3 +1,4 @@
+#include "entt/signal/fwd.hpp"
 #include "model/viewport/viewport.hh"
 #include "render/draw_viewport.hh"
 #include "resources/render_texture_cache.hh"
@@ -16,6 +17,7 @@ int main(void) {
   SetWindowState(FLAG_VSYNC_HINT);
   SetExitKey(KEY_ESCAPE);
 
+  entt::dispatcher dispatcher{};
   yumeami::SafeRenderTextureCache rt_cache{};
   yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240),
                        rt_cache);
@@ -31,7 +33,7 @@ int main(void) {
     EndDrawing();
 
     if (IsWindowResized()) {
-      vp.update_viewport_size(rt_cache);
+      vp.update_viewport_size(rt_cache, dispatcher);
     }
   }
 

@@ -15,4 +15,5 @@ set(SOURCES
   units/px.hh
   units/tile.hh
   units/tx.hh
+  variant_helpers.hh
 )

@@ -1,4 +1,5 @@
 #pragma once
+#include <variant>
 namespace yumeami {
 
   struct TrueTilePos;
@@ -10,5 +11,10 @@ namespace yumeami {
   struct PlayerTag;
   struct CollisionTag;
   struct CameraTargetTag;
+
+  struct MovementStateIdle;
+  struct MovementStateMoving;
+  using MovementState = std::variant<MovementStateIdle, MovementStateMoving>;
+  struct MovementData;
 
 } // namespace yumeami

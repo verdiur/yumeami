@@ -48,6 +48,7 @@ endif()
 # targets --------------------------------------------------------------------#
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/common)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/logic)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/model)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/render)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/resources)
@@ -67,6 +68,7 @@ endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   common
+  logic
   model
   render
   resources
