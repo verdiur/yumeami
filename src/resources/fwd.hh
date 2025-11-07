@@ -7,4 +7,7 @@ namespace yumeami {
   using SafeRenderTextureCache =
       entt::resource_cache<SafeRenderTexture, SafeRenderTextureLoader>;
 
+  struct SafeTextureLoader;
+  using SafeTextureCache = entt::resource_cache<SafeTexture, SafeTextureLoader>;
+
 } // namespace yumeami
