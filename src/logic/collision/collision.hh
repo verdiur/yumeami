@@ -23,6 +23,12 @@ namespace yumeami {
    */
   void setup_dispatcher_collision(entt::dispatcher &dispatcher);
 
+  /**
+   * @brief Update collision grid. Decrements src position and increments dst
+   * position.
+   *
+   * @param cmd
+   */
   void handle_update_collision_command(const UpdateCollisionCommand &cmd);
 
 } // namespace yumeami
