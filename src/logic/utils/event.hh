@@ -2,9 +2,10 @@
 #include "model/world/fwd.hh"
 #include <concepts>
 #include <entt/entity/fwd.hpp>
-#include <entt/signal/fwd.hpp>
+#include <entt/signal/dispatcher.hpp>
 #include <string_view>
 namespace yumeami {
+
 
   /**
    * @brief Requires T to have a World pointer and an entt::dispatcher pointer.
@@ -16,6 +17,7 @@ namespace yumeami {
     { t.world } -> std::convertible_to<World *>;
     { t.dispatcher } -> std::convertible_to<entt::dispatcher *>;
   };
+
 
   /**
    * @brief Check if the members of an event is valid.
@@ -30,6 +32,7 @@ namespace yumeami {
     return world_check && dispatcher_check;
   }
 
+
   /**
    * @brief Check if an entity of an event exists
    * @param world
@@ -37,5 +40,6 @@ namespace yumeami {
    */
   bool event_entity_exists(World *world, const entt::entity ent,
                            const std::string_view log_prefix);
+
 
 } // namespace yumeami

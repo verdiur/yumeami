@@ -1,5 +1,6 @@
 #pragma once
 #include "common/types/direction.hh"
+#include "common/types/vector.hh"
 #include "model/world/fwd.hh"
 #include <entt/entity/fwd.hpp>
 #include <entt/signal/fwd.hpp>
@@ -26,6 +27,9 @@ namespace yumeami {
     World *world;
     entt::dispatcher *dispatcher;
     entt::entity sender;
+    Direction dir;
+    TileVector2 src;
+    TileVector2 dst;
   };
 
   /**

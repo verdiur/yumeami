@@ -200,6 +200,9 @@ void yumeami::handle_entity_move_command(const EntityMoveCommand &cmd) {
       cmd.world,
       cmd.dispatcher,
       cmd.target,
+      cmd.direction,
+      raw_coords.src.pos,
+      wrapped_coords.dst.pos,
   });
 }
 

@@ -1,4 +1,6 @@
 set(SOURCES
+  collision/collision.cc
+  collision/collision.hh
   movement/fwd.hh
   movement/movement.cc
   movement/movement.hh
