@@ -2,6 +2,8 @@ set(SOURCES
   components/components.hh
   components/fwd.hh
   components/movement.hh
+  texture/spritesheet.cc
+  texture/spritesheet.hh
   viewport/fwd.hh
   viewport/viewport.cc
   viewport/viewport.hh

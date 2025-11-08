@@ -1,5 +1,7 @@
 set(SOURCES
   fwd.hh
+  id_counter.cc
+  id_counter.hh
   render_texture_cache.cc
   render_texture_cache.hh
   texture_cache.cc
