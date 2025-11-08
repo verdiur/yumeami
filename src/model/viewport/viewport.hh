@@ -35,8 +35,7 @@ namespace yumeami {
      * @param tx_scale how many px is 1 tx?
      * @param rt_cache SafeRenderTexture cache
      */
-    Viewport(tx width, tx height, px tx_scale,
-             SafeRenderTextureCache &rt_cache);
+    Viewport(tx width, tx height, px tx_scale, SafeRenderTexturePool &rt_pool);
 
     /**
      * @brief Get raw reference to SafeRenderTexture.
@@ -55,7 +54,7 @@ namespace yumeami {
      *
      * @param vp
      */
-    void update_viewport_size(SafeRenderTextureCache &rt_cache,
+    void update_viewport_size(SafeRenderTexturePool &rt_pool,
                               entt::dispatcher &dispatcher);
   };
 

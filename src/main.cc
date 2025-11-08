@@ -18,9 +18,8 @@ int main(void) {
   SetExitKey(KEY_ESCAPE);
 
   entt::dispatcher dispatcher{};
-  yumeami::SafeRenderTextureCache rt_cache{};
-  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240),
-                       rt_cache);
+  yumeami::SafeRenderTexturePool rt_pool{};
+  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240), rt_pool);
 
   while (!WindowShouldClose()) {
     BeginTextureMode(vp.render_texture());
@@ -33,7 +32,7 @@ int main(void) {
     EndDrawing();
 
     if (IsWindowResized()) {
-      vp.update_viewport_size(rt_cache, dispatcher);
+      vp.update_viewport_size(rt_pool, dispatcher);
     }
   }
 
