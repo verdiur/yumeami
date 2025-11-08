@@ -40,9 +40,7 @@ void yumeami::setup_dispatcher_collision(entt::dispatcher &dispatcher) {
 
 
 void handle_update_collision_command(const UpdateCollisionCommand &cmd) {
-  if (!is_event_valid(cmd)) {
-    return;
-  }
+  if (!is_event_valid(cmd)) return;
 
   WorldState &wstate = cmd.world->state;
   TileVector2 src = cmd.src;

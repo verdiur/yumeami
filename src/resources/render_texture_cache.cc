@@ -6,8 +6,6 @@
 yumeami::SafeRenderTextureLoader::result_type
 yumeami::SafeRenderTextureLoader::operator()(int width, int height) {
   SafeRenderTexture res(width, height);
-  if (!res.valid) {
-    return nullptr;
-  }
+  if (!res.valid) return nullptr;
   return std::make_shared<SafeRenderTexture>(std::move(res));
 }

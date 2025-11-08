@@ -171,29 +171,22 @@ void yumeami::setup_dispatcher_movement(entt::dispatcher &dispatcher) {
 
 
 void yumeami::handle_entity_move_command(const EntityMoveCommand &cmd) {
-  if (!is_event_valid(cmd)) {
-    return;
-  }
-  if (!event_entity_exists(cmd.world, cmd.target, "EntityMoveCommand")) {
-    return;
-  }
+  if (!is_event_valid(cmd)) return;
+  if (!event_entity_exists(cmd.world, cmd.target, "EntityMoveCommand")) return;
+
   std::optional<MovementComponents> components_opt = get_components(cmd);
-  if (!components_opt) {
-    return;
-  }
+  if (!components_opt) return;
+
   MovementComponents &components = components_opt.value();
-  if (is_moving(components)) {
-    return;
-  }
+  if (is_moving(components)) return;
+
   try_update_facing(cmd, components);
   MovementCoords raw_coords = calc_raw_coords(cmd, components);
   auto [wrapped_coords, wrap_status] = calc_wrapped_coords(cmd, raw_coords);
-  if (dst_collides(cmd, wrapped_coords)) {
-    return;
-  }
-  if (dst_is_oob(cmd, raw_coords) && !cmd.world->config.wrap) {
-    return;
-  }
+
+  if (dst_collides(cmd, wrapped_coords)) return;
+  if (dst_is_oob(cmd, raw_coords) && !cmd.world->config.wrap) return;
+
   set_coords(wrapped_coords, components);
   begin_movement(components);
   cmd.dispatcher->trigger(EntityMoveStartEvent{

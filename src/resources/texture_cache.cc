@@ -6,8 +6,7 @@
 yumeami::SafeTextureLoader::result_type
 yumeami::SafeTextureLoader::operator()(std::string path) {
   SafeTexture res(path);
-  if (!res.valid) {
-    return nullptr;
-  }
+  if (!res.valid) return nullptr;
+
   return std::make_shared<SafeTexture>(std::move(res));
 }
