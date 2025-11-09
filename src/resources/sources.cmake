@@ -5,6 +5,8 @@ set(SOURCES
   render_texture/cache.hh
   render_texture/fwd.hh
   resources.hh
+  spritesheet/cache.cc
+  spritesheet/cache.hh
   texture/cache.cc
   texture/cache.hh
   texture/fwd.hh
