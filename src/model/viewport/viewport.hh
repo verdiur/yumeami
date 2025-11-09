@@ -5,6 +5,7 @@
 #include "resources/render_texture/fwd.hh"
 #include <entt/resource/resource.hpp>
 #include <entt/signal/fwd.hpp>
+#include <optional>
 
 namespace yumeami {
 
@@ -19,17 +20,8 @@ namespace yumeami {
     px tx_size; // amount of px that 1 tx corresponds to
     entt::resource<SafeRenderTexture> render_texture;
 
-    /**
-     * @brief Viewport constructor. Throws if loading the SafeRenderTexture
-     * fails.
-     *
-     * @param width width of the viewport in tx
-     * @param height height of the viewport in tx
-     * @param tx_scale how many px is 1 tx?
-     * @param rt_pool SafeRenderTexture pool
-     */
-    Viewport(tx width, tx height, px tx_scale,
-             SafeRenderTextureCache &rt_cache);
+    static std::optional<Viewport> create(tx width, tx height, px tx_scale,
+                                          SafeRenderTextureCache &rt_cache);
 
     /**
      * @brief Update the viewport size. This will delete and replace the
@@ -41,6 +33,19 @@ namespace yumeami {
      */
     void update_viewport_size(SafeRenderTextureCache &rt_cache,
                               entt::dispatcher &dispatcher);
+
+  private:
+    /**
+     * @brief Viewport constructor. Throws if loading the SafeRenderTexture
+     * fails.
+     *
+     * @param width width of the viewport in tx
+     * @param height height of the viewport in tx
+     * @param tx_scale how many px is 1 tx?
+     * @param rt_pool SafeRenderTexture pool
+     */
+    Viewport(tx width, tx height, px tx_scale,
+             SafeRenderTextureCache &rt_cache);
   };
 
   struct ViewportSizeUpdatedEvent {};

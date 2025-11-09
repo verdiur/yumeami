@@ -3,6 +3,8 @@
 #include "resources/texture/cache.hh"
 #include <entt/core/hashed_string.hpp>
 #include <optional>
+#include <spdlog/spdlog.h>
+#include <stdexcept>
 
 
 yumeami::Spritesheet::Spritesheet(SafeTextureCache &tex_cache, std::string path,
@@ -19,9 +21,23 @@ yumeami::Spritesheet::Spritesheet(SafeTextureCache &tex_cache, std::string path,
 }
 
 
-std::optional<Rectangle> yumeami::Spritesheet::source_rec_at(int row, int col) {
-  if (row >= rows) return std::nullopt;
-  if (col >= cols) return std::nullopt;
+std::optional<yumeami::Spritesheet>
+yumeami::Spritesheet::create(SafeTextureCache &tex_cache, std::string path,
+                             int rows, int cols, tx sprite_width,
+                             tx sprite_height) {
+  try {
+    return Spritesheet(tex_cache, path, rows, cols, sprite_width,
+                       sprite_height);
+  } catch (std::runtime_error &err) {
+    spdlog::error("{}", err.what());
+    return std::nullopt;
+  }
+}
+
+
+Rectangle yumeami::Spritesheet::source_rec_at(int row, int col) {
+  assert(row >= rows);
+  assert(col >= cols);
   return Rectangle{
       .x = col * (float)sprite_width,
       .y = row * (float)sprite_height,

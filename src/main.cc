@@ -19,8 +19,10 @@ int main(void) {
 
   entt::dispatcher dispatcher{};
   yumeami::ResourceCaches pools{};
-  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240),
-                       pools.render_texture_pool);
+  yumeami::Viewport vp =
+      yumeami::Viewport::create(320, 240, yumeami::calc_best_tx_size(320, 240),
+                                pools.render_texture_pool)
+          .value();
 
   while (!WindowShouldClose()) {
     yumeami::begin_viewport_texture_mode(vp);

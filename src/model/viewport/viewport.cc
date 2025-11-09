@@ -2,9 +2,10 @@
 #include "common/defines.hh"
 #include "resources/core/id.hh"
 #include "resources/render_texture/cache.hh"
-#include <entt/core/hashed_string.hpp>
 #include <entt/signal/dispatcher.hpp>
+#include <optional>
 #include <raylib.h>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 
 
@@ -18,6 +19,19 @@ yumeami::Viewport::Viewport(tx width, tx height, px tx_scale,
     std::runtime_error("[Viewport] could not load RenderTexture");
   }
   render_texture = ret.first->second;
+}
+
+
+std::optional<yumeami::Viewport>
+yumeami::Viewport::create(tx width, tx height, px tx_scale,
+                          SafeRenderTextureCache &rt_cache) {
+  try {
+    return Viewport(width, height, tx_scale, rt_cache);
+
+  } catch (std::runtime_error &err) {
+    spdlog::error("{}", err.what());
+    return std::nullopt;
+  }
 }
 
 
