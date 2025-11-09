@@ -19,6 +19,7 @@ yumeami::Viewport::Viewport(tx width, tx height, px tx_scale,
     std::runtime_error("[Viewport] could not load RenderTexture");
   }
   render_texture = ret.first->second;
+  render_texture_id = ret.first->first;
 }
 
 
@@ -38,7 +39,7 @@ yumeami::Viewport::create(tx width, tx height, px tx_scale,
 void yumeami::Viewport::update_viewport_size(SafeRenderTextureCache &rt_cache,
                                              entt::dispatcher &dispatcher) {
   tx_size = calc_best_tx_size(width, height);
-  auto ret = rt_cache.force_load(generate_id(), (int)width * (int)tx_size,
+  auto ret = rt_cache.force_load(render_texture_id, (int)width * (int)tx_size,
                                  (int)height * (int)tx_size);
   if (!ret.second) {
     std::runtime_error("[Viewport] could not load RenderTexture");

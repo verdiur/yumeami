@@ -2,6 +2,7 @@ set(SOURCES
   components/components.hh
   components/fwd.hh
   components/movement.hh
+  components/sprite.hh
   spritesheet/fwd.hh
   spritesheet/spritesheet.cc
   spritesheet/spritesheet.hh

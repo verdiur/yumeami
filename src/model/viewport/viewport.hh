@@ -2,6 +2,7 @@
 #include "common/raii/fwd.hh"
 #include "common/units/px.hh"
 #include "common/units/tx.hh"
+#include "entt/core/fwd.hpp"
 #include "resources/render_texture/fwd.hh"
 #include <entt/resource/resource.hpp>
 #include <entt/signal/fwd.hpp>
@@ -20,6 +21,10 @@ namespace yumeami {
     px tx_size; // amount of px that 1 tx corresponds to
     entt::resource<SafeRenderTexture> render_texture;
 
+  private:
+    entt::id_type render_texture_id;
+
+  public:
     static std::optional<Viewport> create(tx width, tx height, px tx_scale,
                                           SafeRenderTextureCache &rt_cache);
 
