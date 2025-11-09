@@ -1,6 +1,5 @@
 #include "model/viewport/viewport.hh"
 #include "common/defines.hh"
-#include "resources/core/id.hh"
 #include "resources/render_texture/cache.hh"
 #include <entt/signal/dispatcher.hpp>
 #include <optional>
@@ -9,17 +8,29 @@
 #include <stdexcept>
 
 
+/* IMPL ***********************************************************************/
+
+
+namespace {
+  const entt::hashed_string VIEWPORT_RENDERTEXTURE_ID =
+      "viewport/render_texture";
+}
+
+
+/* PUBL ***********************************************************************/
+
+
 yumeami::Viewport::Viewport(tx width, tx height, px tx_scale,
                             SafeRenderTextureCache &rt_cache)
     : width(width), height(height), tx_size(tx_scale) {
 
-  auto ret = rt_cache.load(generate_id(), (int)width * (int)tx_scale,
-                           (int)height * (int)tx_scale);
+  auto ret =
+      rt_cache.load(VIEWPORT_RENDERTEXTURE_ID, (int)width * (int)tx_scale,
+                    (int)height * (int)tx_scale);
   if (!ret.second) {
     std::runtime_error("[Viewport] could not load RenderTexture");
   }
   render_texture = ret.first->second;
-  render_texture_id = ret.first->first;
 }
 
 
@@ -39,8 +50,9 @@ yumeami::Viewport::create(tx width, tx height, px tx_scale,
 void yumeami::Viewport::update_viewport_size(SafeRenderTextureCache &rt_cache,
                                              entt::dispatcher &dispatcher) {
   tx_size = calc_best_tx_size(width, height);
-  auto ret = rt_cache.force_load(render_texture_id, (int)width * (int)tx_size,
-                                 (int)height * (int)tx_size);
+  auto ret =
+      rt_cache.force_load(VIEWPORT_RENDERTEXTURE_ID, (int)width * (int)tx_size,
+                          (int)height * (int)tx_size);
   if (!ret.second) {
     std::runtime_error("[Viewport] could not load RenderTexture");
   }

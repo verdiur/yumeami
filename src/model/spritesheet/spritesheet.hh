@@ -14,9 +14,9 @@ namespace yumeami {
     entt::resource<SafeTexture> texture;
 
     static std::optional<Spritesheet> create(SafeTextureCache &tex_cache,
-                                             std::string path, int rows,
-                                             int cols, tx sprite_width,
-                                             tx sprite_height);
+                                             std::string name, std::string path,
+                                             int rows, int cols,
+                                             tx sprite_width, tx sprite_height);
 
     /**
      * @brief Get source rectangle of a sprite, for draw_*_ex or draw_*_pro.
@@ -29,7 +29,8 @@ namespace yumeami {
   private:
     /**
      * @brief Spritesheet constructor that also creates a new texture.
-     * @param tex_pool texture pool
+     * @param tex_cache texture cache
+     * @param name name that will be used as the ID in the cache.
      * @param path path to the file
      * @param rows amount of sprites per row
      * @param cols amount of sprites per column
@@ -37,8 +38,8 @@ namespace yumeami {
      * @param sprite_height height of a single sprite
      * @throws runtime_error if texture cannot be created
      */
-    Spritesheet(SafeTextureCache &tex_cache, std::string path, int rows,
-                int cols, tx sprite_width, tx sprite_height);
+    Spritesheet(SafeTextureCache &tex_cache, std::string name, std::string path,
+                int rows, int cols, tx sprite_width, tx sprite_height);
   };
 
 } // namespace yumeami

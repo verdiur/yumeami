@@ -5,12 +5,11 @@
 #include <spdlog/spdlog.h>
 
 
-yumeami::SpritesheetLoader::result_type
-yumeami::SpritesheetLoader::operator()(SafeTextureCache &tex_cache,
-                                       std::string path, int rows, int cols,
-                                       tx sprite_width, tx sprite_height) {
+yumeami::SpritesheetLoader::result_type yumeami::SpritesheetLoader::operator()(
+    SafeTextureCache &tex_cache, std::string name, std::string path, int rows,
+    int cols, tx sprite_width, tx sprite_height) {
   std::optional<Spritesheet> res = Spritesheet::create(
-      tex_cache, path, rows, cols, sprite_width, sprite_height);
+      tex_cache, name, path, rows, cols, sprite_width, sprite_height);
 
   if (!res) {
     spdlog::error("[SpritesheetCache] could not load spritesheet");

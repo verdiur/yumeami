@@ -6,10 +6,9 @@ namespace yumeami {
    * @brief Generate a new unique ID.
    *
    * @details This function works without a generator class, but the counterpart
-   * of it is that it's not possible to reset its internal ID counter. This
-   * should be fine for most use cases as the integer limit of entt::id_type
-   * most likely far exceeds the amount of resources that will be loaded during
-   * the lifetime of the process.
+   * of it is that it's not possible to reset its internal ID counter. It is not
+   * recommended to mix IDs generated with this function and IDs generated from
+   * an entt::hashed_string.
    */
   entt::id_type generate_id();
 
