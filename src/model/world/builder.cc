@@ -1,4 +1,5 @@
 #include "model/world/builder.hh"
+#include "common/raii/render_texture.hh"
 #include "model/components/components.hh"
 #include "model/viewport/viewport.hh"
 #include "model/world/world.hh"
@@ -6,7 +7,8 @@
 
 yumeami::WorldBuilder::WorldBuilder(int width, int height, const Viewport &vp)
     : world_() {
-  const SafeRenderTexture &rt = vp.render_texture();
+
+  SafeRenderTexture &rt = vp.render_texture;
 
   world_->config.width = width;
   world_->config.height = height;

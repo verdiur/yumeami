@@ -1,4 +1,4 @@
-#include "resources/texture_cache.hh"
+#include "resources/texture/cache.hh"
 #include "common/raii/texture.hh"
 #include <memory>
 

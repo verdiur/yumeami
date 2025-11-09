@@ -1,6 +1,5 @@
 #pragma once
 #include "common/raii/fwd.hh"
-#include "resources/id_counter.hh"
 #include <entt/resource/cache.hpp>
 #include <memory>
 namespace yumeami {
@@ -16,15 +15,5 @@ namespace yumeami {
   };
 
   using SafeTextureCache = entt::resource_cache<SafeTexture, SafeTextureLoader>;
-
-  /**
-   * @class SafeTexturePool
-   * @brief Combination of cache and counter
-   *
-   */
-  struct SafeTexturePool {
-    SafeTextureCache cache;
-    IdCounter counter;
-  };
 
 } // namespace yumeami

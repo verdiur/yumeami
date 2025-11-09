@@ -1,9 +1,11 @@
 set(SOURCES
-  fwd.hh
-  id_counter.cc
-  id_counter.hh
-  render_texture_cache.cc
-  render_texture_cache.hh
-  texture_cache.cc
-  texture_cache.hh
+  core/id.cc
+  core/id.hh
+  render_texture/cache.cc
+  render_texture/cache.hh
+  render_texture/fwd.hh
+  resources.hh
+  texture/cache.cc
+  texture/cache.hh
+  texture/fwd.hh
 )

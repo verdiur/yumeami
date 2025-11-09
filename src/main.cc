@@ -1,8 +1,8 @@
-#include "entt/signal/fwd.hpp"
 #include "model/viewport/viewport.hh"
-#include "render/draw_viewport.hh"
-#include "resources/render_texture_cache.hh"
+#include "render/viewport/draw.hh"
+#include "resources/resources.hh"
 #include <entt/signal/dispatcher.hpp>
+#include <entt/signal/fwd.hpp>
 #include <raylib.h>
 #include <spdlog/spdlog.h>
 
@@ -18,13 +18,14 @@ int main(void) {
   SetExitKey(KEY_ESCAPE);
 
   entt::dispatcher dispatcher{};
-  yumeami::SafeRenderTexturePool rt_pool{};
-  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240), rt_pool);
+  yumeami::ResourceCaches pools{};
+  yumeami::Viewport vp(320, 240, yumeami::calc_best_tx_size(320, 240),
+                       pools.render_texture_pool);
 
   while (!WindowShouldClose()) {
-    BeginTextureMode(vp.render_texture());
+    yumeami::begin_viewport_texture_mode(vp);
     ClearBackground(BLACK);
-    EndTextureMode();
+    yumeami::end_viewport_texture_mode();
 
     BeginDrawing();
     ClearBackground(GRAY);
@@ -32,7 +33,7 @@ int main(void) {
     EndDrawing();
 
     if (IsWindowResized()) {
-      vp.update_viewport_size(rt_pool, dispatcher);
+      vp.update_viewport_size(pools.render_texture_pool, dispatcher);
     }
   }
 

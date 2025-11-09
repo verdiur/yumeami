@@ -1,11 +1,11 @@
-#include "render/draw_viewport.hh"
+#include "render/viewport/draw.hh"
 #include "common/raii/render_texture.hh"
 #include "model/viewport/viewport.hh"
 #include <raylib.h>
 
 
 void yumeami::draw_viewport(Viewport &vp) {
-  SafeRenderTexture &rt = vp.render_texture();
+  SafeRenderTexture &rt = vp.render_texture;
   int rt_width = rt->texture.width;
   int rt_height = rt->texture.height;
 
@@ -24,3 +24,11 @@ void yumeami::draw_viewport(Viewport &vp) {
 
   DrawTexturePro(rt->texture, src, dst, {0, 0}, 0, WHITE);
 }
+
+
+void yumeami::begin_viewport_texture_mode(Viewport &vp) {
+  BeginTextureMode(*vp.render_texture);
+}
+
+
+void yumeami::end_viewport_texture_mode() { EndTextureMode(); }

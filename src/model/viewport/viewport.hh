@@ -1,15 +1,12 @@
 #pragma once
 #include "common/raii/fwd.hh"
-#include "common/raii/render_texture.hh"
 #include "common/units/px.hh"
 #include "common/units/tx.hh"
-#include "entt/signal/fwd.hpp"
-#include "resources/fwd.hh"
-#include <entt/core/hashed_string.hpp>
+#include "resources/render_texture/fwd.hh"
 #include <entt/resource/resource.hpp>
-namespace yumeami {
+#include <entt/signal/fwd.hpp>
 
-  const entt::hashed_string VIEWPORT_RT_ID = "VIEWPORT";
+namespace yumeami {
 
   /**
    * @class Viewport
@@ -20,12 +17,8 @@ namespace yumeami {
     tx width;   // width of the viewport in tx
     tx height;  // height of the viewport in tx
     px tx_size; // amount of px that 1 tx corresponds to
+    entt::resource<SafeRenderTexture> render_texture;
 
-  private:
-    entt::resource<SafeRenderTexture>
-        render_texture_handle; // render texture. measured in px.
-
-  public:
     /**
      * @brief Viewport constructor. Throws if loading the SafeRenderTexture
      * fails.
@@ -33,18 +26,10 @@ namespace yumeami {
      * @param width width of the viewport in tx
      * @param height height of the viewport in tx
      * @param tx_scale how many px is 1 tx?
-     * @param rt_cache SafeRenderTexture cache
+     * @param rt_pool SafeRenderTexture pool
      */
-    Viewport(tx width, tx height, px tx_scale, SafeRenderTexturePool &rt_pool);
-
-    /**
-     * @brief Get raw reference to SafeRenderTexture.
-     * @warning Do not store this reference long-term, as it can be invalidated
-     * at any time by window resizing.
-     * @return SafeRenderTexture
-     */
-    SafeRenderTexture &render_texture();
-    const SafeRenderTexture &render_texture() const;
+    Viewport(tx width, tx height, px tx_scale,
+             SafeRenderTextureCache &rt_cache);
 
     /**
      * @brief Update the viewport size. This will delete and replace the
@@ -54,7 +39,7 @@ namespace yumeami {
      *
      * @param vp
      */
-    void update_viewport_size(SafeRenderTexturePool &rt_pool,
+    void update_viewport_size(SafeRenderTextureCache &rt_cache,
                               entt::dispatcher &dispatcher);
   };
 
