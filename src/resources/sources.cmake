@@ -7,6 +7,7 @@ set(SOURCES
   resources.hh
   spritesheet/cache.cc
   spritesheet/cache.hh
+  spritesheet/fwd.hh
   texture/cache.cc
   texture/cache.hh
   texture/fwd.hh

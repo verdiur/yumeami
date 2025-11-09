@@ -3,7 +3,7 @@
 #include "common/types/vector.hh"
 #include "common/variant_helpers.hh"
 #include "logic/utils/event.hh"
-#include "model/components/components.hh"
+#include "model/components/common.hh"
 #include "model/components/movement.hh"
 #include "model/world/world.hh"
 #include <entt/signal/dispatcher.hpp>

@@ -17,4 +17,6 @@ namespace yumeami {
   using MovementState = std::variant<MovementStateIdle, MovementStateMoving>;
   struct MovementData;
 
+  struct Sprite;
+
 } // namespace yumeami

@@ -1,6 +1,6 @@
 #pragma once
 #include "common/defines.hh"
-#include "model/components/components.hh"
+#include "model/components/common.hh"
 #include <variant>
 namespace yumeami {
 
