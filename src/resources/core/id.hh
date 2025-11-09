@@ -10,6 +10,6 @@ namespace yumeami {
    * recommended to mix IDs generated with this function and IDs generated from
    * an entt::hashed_string.
    */
-  entt::id_type generate_id();
+  // entt::id_type generate_id();
 
 } // namespace yumeami
