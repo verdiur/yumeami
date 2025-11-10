@@ -1,6 +1,11 @@
 set(SOURCES
+  core/color.hh
   core/raylib_tx.cc
   core/raylib_tx.hh
+  core/tiled.cc
+  core/tiled.hh
+  sprite/draw.cc
+  sprite/draw.hh
   viewport/draw.cc
   viewport/draw.hh
 )

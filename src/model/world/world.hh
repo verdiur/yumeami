@@ -61,4 +61,14 @@ namespace yumeami {
     WorldTools tools;
   };
 
+  /**
+   * @brief Convert tile value to texel value
+   * @param world
+   * @param val
+   * @return Texel value
+   */
+  inline tx tile_to_tx(World &world, tile val) {
+    return (float)val * (float)world.config.tile_size;
+  }
+
 } // namespace yumeami

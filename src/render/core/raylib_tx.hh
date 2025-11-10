@@ -10,6 +10,7 @@
 #include "common/raii/fwd.hh"
 #include "common/units/fwd.hh"
 #include <raylib.h>
+#include <string>
 namespace yumeami {
 
   void draw_pixel_tx(px tx_scale, Vector2 position, Color color);
@@ -55,5 +56,8 @@ namespace yumeami {
                            Color tint);
 
   // TODO: draw_texture_npatch_tx
+
+  void draw_text_tx(px tx_scale, const std::string text, tx posX, tx posY,
+                    tx fontSize, Color color);
 
 } // namespace yumeami

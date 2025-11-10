@@ -1,4 +1,7 @@
 set(SOURCES
+  camera/camera.cc
+  camera/camera.hh
+  camera/fwd.hh
   components/common.hh
   components/fwd.hh
   components/movement.hh

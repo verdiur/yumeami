@@ -106,3 +106,11 @@ void yumeami::draw_texture_pro_tx(px tx_scale, SafeTexture &texture,
   DrawTexturePro(texture, source, scale_rec(tx_scale, dest),
                  scale_vec(tx_scale, origin), rotation, tint);
 }
+
+
+void yumeami::draw_text_tx(px tx_scale, const std::string text, tx posX,
+                           tx posY, tx fontSize, Color color) {
+  DrawText(text.c_str(), (float)posX * (float)tx_scale,
+           (float)posY * (float)tx_scale, (float)fontSize * (float)tx_scale,
+           color);
+}
