@@ -2,8 +2,11 @@
  * @file
  * @brief "Texel mode" wrapper functions for raylib draw functions.
  *
- * @desc The current implementation might lead to irregular texel rendering, due
- * to raylib snapping coordinates to integer values.
+ * @warning The current implementation might lead to irregular texel rendering
+ * with non-integer scaling.
+ *
+ * @warning All texel drawing functions floor the scaled coordinates to avoid
+ * negative coordinates being rounded incorrectly.
  */
 
 #pragma once
@@ -43,13 +46,6 @@ namespace yumeami {
 
   /**
    * @brief Draw a texture with "pro" parameters in "texel mode"
-   * @param tx_scale
-   * @param texture
-   * @param source source rectangle, in pixels
-   * @param dest destination rectangle, in texels
-   * @param origin origin in texels
-   * @param rotation
-   * @param tint
    */
   void draw_texture_pro_tx(px tx_scale, SafeTexture &texture, Rectangle source,
                            Rectangle dest, Vector2 origin, float rotation,
@@ -59,5 +55,12 @@ namespace yumeami {
 
   void draw_text_tx(px tx_scale, const std::string text, tx posX, tx posY,
                     tx fontSize, Color color);
+
+  /**
+   * @brief Draw text in "texel mode". The fontSize will be in pixels (i.e. does
+   * not take into account texel scaling).
+   */
+  void draw_text_tx_raw(px tx_scale, const std::string text, tx posX, tx posY,
+                        px fontSize, Color color);
 
 } // namespace yumeami

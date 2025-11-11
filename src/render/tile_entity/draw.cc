@@ -22,11 +22,6 @@ namespace {
 
   /**
    * @brief Draw a single fallback tile
-   * @param world
-   * @param vp
-   * @param dst
-   * @param color
-   * @param msg
    */
   void draw_one_fallback(World &world, const Viewport &vp, TexelVector2 dst,
                          Color color, std::string msg) {
@@ -37,21 +32,13 @@ namespace {
         world.config.tile_size,
     };
     draw_rectangle_tx(vp.tx_size, dst_rec, {}, 0, color);
-    draw_text_tx(vp.tx_size, msg, dst_rec.x, dst_rec.y, 1, WHITE);
+    draw_text_tx_raw(vp.tx_size, msg, dst_rec.x, dst_rec.y, 1, WHITE);
   }
 
 
   /**
    * @brief Draw a single fallback tile, tiled across the camera for
    * wrapping.
-   *
-   * @param world
-   * @param vp
-   * @param bounds
-   * @param dst
-   * @param spacing
-   * @param color
-   * @param msg
    */
   void draw_one_fallback_tiled(World &world, const Viewport &vp,
                                const CameraBounds &bounds, TexelVector2 dst,
@@ -64,7 +51,7 @@ namespace {
 
 
   /**
-   * @brief Draw a single entity.
+   * @brief Draw a single entity
    * @param world world
    * @param vp viewport
    * @param bounds camera bounds
@@ -75,14 +62,13 @@ namespace {
                             const CameraBounds &bounds, entt::entity ent,
                             TexelVector2 dst) {
     Sprite *sprite = world.state.registry.try_get<Sprite>(ent);
-    TexelVector2 floored_dst{std::floorf(dst.x), std::floorf(dst.y)};
     TexelVector2 tile_spacing{tile_to_tx(world, world.config.width),
                               tile_to_tx(world, world.config.height)};
 
     // fallback: no sprite
     if (!sprite) {
       if (!world.config.wrap) {
-        draw_one_fallback(world, vp, floored_dst, COLOR_NO_SPRITE, "no sprite");
+        draw_one_fallback(world, vp, dst, COLOR_NO_SPRITE, "no sprite");
       } else {
         draw_one_fallback_tiled(world, vp, bounds, dst, tile_spacing,
                                 COLOR_NO_SPRITE, "no_sprite");
@@ -96,15 +82,15 @@ namespace {
     // draw
     if (!world.config.wrap) {
       Rectangle dst_rec{
-          floored_dst.x,
-          floored_dst.y,
+          dst.x,
+          dst.y,
           sheet.sprite_width,
           sheet.sprite_height,
       };
       draw_texture_pro_tx(vp.tx_size, tex, src_rec, dst_rec, {}, 0, WHITE);
 
     } else {
-      draw_tiled_tx(bounds, tile_spacing, floored_dst, [&](TexelVector2 pos) {
+      draw_tiled_tx(bounds, tile_spacing, dst, [&](TexelVector2 pos) {
         Rectangle dst_rec{
             pos.x,
             pos.y,

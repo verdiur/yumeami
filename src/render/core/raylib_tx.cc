@@ -2,6 +2,7 @@
 #include "common/raii/texture.hh"
 #include "common/units/px.hh"
 #include "common/units/tx.hh"
+#include <cmath>
 #include <raylib.h>
 
 
@@ -11,19 +12,23 @@ namespace {
 
   Vector2 scale_vec(px tx_scale, Vector2 vec) {
     return {
-        .x = vec.x * (float)tx_scale,
-        .y = vec.y * (float)tx_scale,
+        .x = std::floorf(vec.x * (float)tx_scale),
+        .y = std::floorf(vec.y * (float)tx_scale),
     };
   }
 
 
   Rectangle scale_rec(px tx_scale, Rectangle rec) {
     return {
-        .x = rec.x * (float)tx_scale,
-        .y = rec.y * (float)tx_scale,
-        .width = rec.width * (float)tx_scale,
-        .height = rec.height * (float)tx_scale,
+        .x = std::floorf(rec.x * (float)tx_scale),
+        .y = std::floorf(rec.y * (float)tx_scale),
+        .width = std::floorf(rec.width * (float)tx_scale),
+        .height = std::floorf(rec.height * (float)tx_scale),
     };
+  }
+
+  float scale_val(px tx_scale, tx val) {
+    return std::floorf((float)tx_scale * (float)val);
   }
 
 
@@ -43,14 +48,13 @@ void yumeami::draw_line_tx(px tx_scale, Vector2 startPos, Vector2 endPos,
 
 void yumeami::draw_circle_tx(px tx_scale, Vector2 center, tx radius,
                              Color color) {
-  DrawCircleV(scale_vec(tx_scale, center), (float)radius * (float)tx_scale,
-              color);
+  DrawCircleV(scale_vec(tx_scale, center), scale_val(tx_scale, radius), color);
 }
 
 
 void yumeami::draw_circle_lines_tx(px tx_scale, Vector2 center, tx radius,
                                    Color color) {
-  DrawCircleLinesV(scale_vec(tx_scale, center), (float)radius * (float)tx_scale,
+  DrawCircleLinesV(scale_vec(tx_scale, center), scale_val(tx_scale, radius),
                    color);
 }
 
@@ -58,7 +62,7 @@ void yumeami::draw_circle_lines_tx(px tx_scale, Vector2 center, tx radius,
 void yumeami::draw_circle_sector_tx(px tx_scale, Vector2 center, tx radius,
                                     float startAngle, float endAngle,
                                     int segments, Color color) {
-  DrawCircleSector(scale_vec(tx_scale, center), (float)radius * (float)tx_scale,
+  DrawCircleSector(scale_vec(tx_scale, center), scale_val(tx_scale, radius),
                    startAngle, endAngle, segments, color);
 }
 
@@ -68,7 +72,7 @@ void yumeami::draw_circle_sector_lines_tx(px tx_scale, Vector2 center,
                                           float endAngle, int segments,
                                           Color color) {
   DrawCircleSectorLines(scale_vec(tx_scale, center),
-                        (float)radius * (float)tx_scale, startAngle, endAngle,
+                        scale_val(tx_scale, radius), startAngle, endAngle,
                         segments, color);
 }
 
@@ -96,7 +100,7 @@ void yumeami::draw_texture_ex_tx(px tx_scale, SafeTexture &texture,
                                  Vector2 position, float rotation, float scale,
                                  Color tint) {
   DrawTextureEx(texture, scale_vec(tx_scale, position), rotation,
-                scale * (float)tx_scale, tint);
+                scale_val(tx_scale, scale), tint);
 }
 
 
@@ -110,7 +114,13 @@ void yumeami::draw_texture_pro_tx(px tx_scale, SafeTexture &texture,
 
 void yumeami::draw_text_tx(px tx_scale, const std::string text, tx posX,
                            tx posY, tx fontSize, Color color) {
-  DrawText(text.c_str(), (float)posX * (float)tx_scale,
-           (float)posY * (float)tx_scale, (float)fontSize * (float)tx_scale,
-           color);
+  DrawText(text.c_str(), scale_val(tx_scale, posX), scale_val(tx_scale, posY),
+           scale_val(tx_scale, fontSize), color);
+}
+
+
+void yumeami::draw_text_tx_raw(px tx_scale, const std::string text, tx posX,
+                               tx posY, px fontSize, Color color) {
+  DrawText(text.c_str(), scale_val(tx_scale, posX), scale_val(tx_scale, posY),
+           fontSize, color);
 }

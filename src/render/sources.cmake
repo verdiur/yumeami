@@ -4,8 +4,8 @@ set(SOURCES
   core/raylib_tx.hh
   core/tiled.cc
   core/tiled.hh
-  sprite/draw.cc
-  sprite/draw.hh
+  tile_entity/draw.cc
+  tile_entity/draw.hh
   viewport/draw.cc
   viewport/draw.hh
 )
