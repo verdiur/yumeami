@@ -16,6 +16,6 @@ namespace yumeami {
    */
   void draw_tiled_tx(const CameraBounds &cam_bounds, TexelVector2 spacing,
                      TexelVector2 offset,
-                     std::function<void(TexelVector2)> draw_func);
+                     std::function<void(TexelVector2 pos)> draw_func);
 
 } // namespace yumeami
